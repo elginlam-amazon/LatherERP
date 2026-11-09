@@ -1,8 +1,9 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.EntitiesModel.BaseModel;
 using ERP.EntitiesModel.OperationModel;
@@ -44,18 +45,18 @@ namespace ERP_Leather.Controllers
         {
             if (model.RequestID == null)
             {
-                var msg = objBLLStockAdjust.SaveAdjustItemRequest(model, Convert.ToInt32(Session["UserID"]));
+                var msg = objBLLStockAdjust.SaveAdjustItemRequest(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
                 var requestID = objBLLStockAdjust.GetRequestID();
                 var requestDetails = objDalAdjustItem.GetRequestDetails((requestID).ToString());
 
-                return Json(new { Msg = msg, requestID = requestID, requestDetails = requestDetails }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = msg, requestID = requestID, requestDetails = requestDetails });
             }
             else
             {
-                var msg = objBLLStockAdjust.UpdateAdjustItemRequest(model, Convert.ToInt32(Session["UserID"]));
+                var msg = objBLLStockAdjust.UpdateAdjustItemRequest(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
                 var requestDetails = objDalAdjustItem.GetRequestDetails(model.RequestID);
 
-                return Json(new { Msg = msg, requestDetails = requestDetails }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = msg, requestDetails = requestDetails });
             }
         }
 
@@ -66,7 +67,7 @@ namespace ERP_Leather.Controllers
             var msg = objBLLStockAdjust.UpdateAdjustmentRequestWithItemValue(model);
             var requestDetails = objDalAdjustItem.GetRequestDetails(model.RequestID);
 
-            return Json(new { Msg = msg, requestDetails = requestDetails }, JsonRequestBehavior.AllowGet);
+            return Json(new { Msg = msg, requestDetails = requestDetails });
         }
 
         // To Find Supplier list according to LeatherType & ReceiveStore
@@ -76,7 +77,7 @@ namespace ERP_Leather.Controllers
             DalInvLeatherStockAdjustItem objStockAdjustItem= new DalInvLeatherStockAdjustItem();
             var AllSupplier = objStockAdjustItem.FindSupplierForAdjust(leatherType, receiveStore);
 
-            return Json(AllSupplier, JsonRequestBehavior.AllowGet);
+            return Json(AllSupplier);
         }
 
 
@@ -87,34 +88,34 @@ namespace ERP_Leather.Controllers
             DalInvLeatherStockAdjustItem objStockAdjustItem = new DalInvLeatherStockAdjustItem();
             var AllChallan = objStockAdjustItem.FindChallanForAdjust(leatherType, receiveStore, supplierID);
 
-            return Json(AllChallan, JsonRequestBehavior.AllowGet);
+            return Json(AllChallan);
         }
 
         public ActionResult ConfirmAdjustRequest(string requestID, string confirmComment)
         {
             DalInvLeatherStockAdjustItem objItem = new DalInvLeatherStockAdjustItem();
-            bool checkConfirm = objItem.ConfirmAdjustRequest(requestID, confirmComment, Convert.ToInt32(Session["UserID"]));
+            bool checkConfirm = objItem.ConfirmAdjustRequest(requestID, confirmComment, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             if(checkConfirm)
             {
-                return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Success" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
         public ActionResult ApproveAdjustRequest(string requestID, string approvalComment )
         {
             DalInvLeatherStockAdjustItem objItem = new DalInvLeatherStockAdjustItem();
-            bool checkApprove = objItem.ApproveAdjustRequest(requestID, approvalComment, Convert.ToInt32(Session["UserID"]));
+            bool checkApprove = objItem.ApproveAdjustRequest(requestID, approvalComment, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             if (checkApprove)
             {
-                return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Success" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
 
         }
@@ -132,7 +133,7 @@ namespace ERP_Leather.Controllers
             DalInvLeatherStockAdjustItem objAdjustmentItem = new DalInvLeatherStockAdjustItem();
             var AllRequest = objAdjustmentItem.GetAllNCFRequestList();
 
-            return Json(AllRequest, JsonRequestBehavior.AllowGet);
+            return Json(AllRequest);
         }
 
         public ActionResult GetAllCNFRequestList()
@@ -140,7 +141,7 @@ namespace ERP_Leather.Controllers
             DalInvLeatherStockAdjustItem objAdjustmentItem = new DalInvLeatherStockAdjustItem();
             var AllRequest = objAdjustmentItem.GetAllCNFRequestList();
 
-            return Json(AllRequest, JsonRequestBehavior.AllowGet);
+            return Json(AllRequest);
         }
 
         public ActionResult GetRequestDetails(string RequestID)
@@ -148,7 +149,7 @@ namespace ERP_Leather.Controllers
             DalInvLeatherStockAdjustItem objAdjustmentItem = new DalInvLeatherStockAdjustItem();
 
             var RequestDetails = objAdjustmentItem.GetRequestDetails(RequestID);
-            return Json(RequestDetails, JsonRequestBehavior.AllowGet);
+            return Json(RequestDetails);
         }
 
 
@@ -160,20 +161,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDalAdjustItem.DeleteAdjustItem(AdjustID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
@@ -185,20 +186,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDalAdjustItem.DeleteAdjustmentRequest(RequestID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 	}

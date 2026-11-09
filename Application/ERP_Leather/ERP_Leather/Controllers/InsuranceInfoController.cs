@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.Utility;
@@ -9,8 +11,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ERP_Leather.Controllers
 {
@@ -35,7 +36,7 @@ namespace ERP_Leather.Controllers
         {          
             var lstLcOpening = dalLC.GetLCList();            
             ViewBag.SearchTitle = "LC NO :";
-            return Json(lstLcOpening, JsonRequestBehavior.AllowGet);
+            return Json(lstLcOpening);
         }
 
         public ActionResult SearchLCNoByLCNo(string search)
@@ -45,13 +46,13 @@ namespace ERP_Leather.Controllers
                          where (temp.LCNo.ToUpper().StartsWith(search) || temp.LCNo.ToUpper() == search)
                         select temp).OrderByDescending(o => o.LCID);
                
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetLCNoSearch()
         {
             var search = dalLC.GetLCList().ToList().Select(ob => ob.LCNo);
-            return Json(search, JsonRequestBehavior.AllowGet);
+            return Json(search);
         }
        
         [HttpPost]
@@ -104,9 +105,9 @@ namespace ERP_Leather.Controllers
                 obInsurance.RunningStatus = dataSet.RunningStatus;
                 obInsurance.RecordStatus = "NCF";
                 obInsurance.SetOn = DateTime.Now;
-                obInsurance.SetBy = Convert.ToInt32(Session["UserID"]);
+                obInsurance.SetBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                 obInsurance.ModifiedOn = DateTime.Now;
-                obInsurance.ModifiedBy = Convert.ToInt32(Session["UserID"]);
+                obInsurance.ModifiedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                 obInsurance.IPAddress = GetIPAddress.LocalIPAddress();
                 if(!string.IsNullOrEmpty(dataSet.PIID.ToString()))
                 {
@@ -224,7 +225,7 @@ namespace ERP_Leather.Controllers
                                       RecordStatus = temp.RecordStatus
                                   }; //obLCOpeningDAL.GetLCOpeningInfo();
 
-            return Json(lstData.OrderByDescending(o => o.InsuranceID), JsonRequestBehavior.AllowGet);
+            return Json(lstData.OrderByDescending(o => o.InsuranceID));
         }
         public ActionResult SearchLcmInsuranceByInsuranceNo(string search)
         {
@@ -240,13 +241,13 @@ namespace ERP_Leather.Controllers
                             RecordStatus =DalCommon.ReturnRecordStatus(temp.RecordStatus)
                          };
 
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
 
         public ActionResult GetAutoCompleteData()
         {
             var data = repo.LcmInsuranceRpository.Get().Select(ob => ob.InsuranceNo);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
         // ##################### Search END ##############
@@ -312,7 +313,7 @@ namespace ERP_Leather.Controllers
             obInsurance.CINo = dataSet.CINo;
             if (dataSet.PIID != null) { obInsurance.PIID = dataSet.PIID.ToString(); }
             else { obInsurance.PIID = ""; }           
-            return Json(obInsurance, JsonRequestBehavior.AllowGet);
+            return Json(obInsurance);
         }
 
         [HttpPost]
@@ -360,7 +361,7 @@ namespace ERP_Leather.Controllers
                     obInsurance.PaidAmount = (decimal)dataSet.PaidAmount;
                     obInsurance.RevisionNo = dataSet.RevisionNo;
                     obInsurance.RevisionDate = DalCommon.SetDate(dataSet.RevisionDate == null?"": dataSet.RevisionDate.ToString());
-                    obInsurance.ModifiedBy = Convert.ToInt32(Session["UserID"]);
+                    obInsurance.ModifiedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                     obInsurance.ApprovalAdvice =dataSet.ApprovalAdvice;
                     if (dataSet.CIID != 0) { obInsurance.CIID = Convert.ToInt32(dataSet.CIID); }
                    
@@ -466,7 +467,7 @@ namespace ERP_Leather.Controllers
                     if (ob.RecordStatus == "NCF")
                     {                       
                         ob.RecordStatus = "CNF";
-                        ob.CheckedBy = Convert.ToInt32(Session["UserID"]);
+                        ob.CheckedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                         ob.CheckDate = DateTime.Now;
                         repo.LcmInsuranceRpository.Update(ob);
                         int flag = repo.Save();

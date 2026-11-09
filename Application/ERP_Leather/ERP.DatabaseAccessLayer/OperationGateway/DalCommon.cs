@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
-using DatabaseUtility;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.Utility;
 using ERP.EntitiesModel.OperationModel;

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
+using Microsoft.AspNetCore.Mvc;
+
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
@@ -35,32 +34,32 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult Update(string models)
         {
-            var sysGradeRange = new JavaScriptSerializer().Deserialize<IList<SysGradeRange>>(models).FirstOrDefault();
+            var sysGradeRange = Newtonsoft.Json.JsonConvert.DeserializeObject<IList<SysGradeRange>>(models).FirstOrDefault();
             _vmMsg = _dalGradeRange.Update(sysGradeRange);
 
             var result = new { data = sysGradeRange, message = _vmMsg };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         [HttpPost]
         public ActionResult Create(string models)
         {
-            var sysGradeRange = new JavaScriptSerializer().Deserialize<IList<SysGradeRange>>(models).FirstOrDefault();
+            var sysGradeRange = Newtonsoft.Json.JsonConvert.DeserializeObject<IList<SysGradeRange>>(models).FirstOrDefault();
             _vmMsg = _dalGradeRange.Create(sysGradeRange); 
 
             var result = new { data = sysGradeRange, message = _vmMsg };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public JsonResult GetGradeRangeList()
         {
-            return new JsonResult { Data = _dalGradeRange.GetAll().OrderByDescending(s => s.GradeRangeID) };
+            return Json(_dalGradeRange.GetAll().OrderByDescending(s => s.GradeRangeID));
         }
 
         [HttpPost]
         public ActionResult Delete(string models)
         {
-            var sysGradeRange = new JavaScriptSerializer().Deserialize<IList<SysGradeRange>>(models).FirstOrDefault();
+            var sysGradeRange = Newtonsoft.Json.JsonConvert.DeserializeObject<IList<SysGradeRange>>(models).FirstOrDefault();
             _vmMsg = _dalGradeRange.Delete(sysGradeRange);
             ViewBag.Message = _vmMsg.Msg;
 

@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.Utility;
@@ -37,27 +37,27 @@ namespace ERP_Leather.Controllers
 
         public ActionResult Save(ExpTransportChallan model)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalExpTransportChallan.Save(model, _userId);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Confirm(long id, string note)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalExpTransportChallan.Confirm(id, _userId, note);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Delete(long id)
         {
             _validationMsg = _dalExpTransportChallan.Delete(id);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
         public ActionResult DeleteTrnsChlnCi(long id, long id2)
         {
             _validationMsg = _dalExpTransportChallan.DeleteTrnsChlnCi(id, id2);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult GetDlvryChln()
@@ -71,7 +71,7 @@ namespace ERP_Leather.Controllers
                 DeliverChallanDate = string.Format("{0:dd/MM/yyyy}",chln.DeliverChallanDate),
                 RecordStatus  = DalCommon.ReturnRecordStatus(chln.RecordStatus)
             }).ToList();
-            return Json(result.OrderByDescending(ob => ob.DeliverChallanID), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderByDescending(ob => ob.DeliverChallanID));
         }
 
         public ActionResult GetTransChln()
@@ -85,13 +85,13 @@ namespace ERP_Leather.Controllers
                 TransportChallanDate = string.Format("{0:dd/MM/yyyy}",chln.TransportChallanDate),
                 RecordStatus = DalCommon.ReturnRecordStatus(chln.RecordStatus)
             }).ToList();
-            return Json(result.OrderByDescending(ob => ob.TransportChallanID), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderByDescending(ob => ob.TransportChallanID));
         }
 
         public ActionResult GetTransChlnById(long id)
         {
             var chln = _dalExpTransportChallan.GetTranportChallan(id);
-            return Json(chln, JsonRequestBehavior.AllowGet);
+            return Json(chln);
         }
     }
 }

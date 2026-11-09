@@ -1,9 +1,9 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Helpers;
-using System.Web.Mvc;
+
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.Utility;
 using ERP.EntitiesModel.BaseModel;
@@ -47,7 +47,7 @@ namespace ERP_Leather.Controllers
                 OrdDeliveryMode = DalCommon.ReturnOrderDeliveryMode(inv.OrdDeliveryMode),
                 RecordStatus = DalCommon.ReturnRecordStatus(inv.RecordStatus)
             });
-            return Json(result.OrderByDescending(ob => ob.CIID), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderByDescending(ob => ob.CIID));
         }
 
         public ActionResult GetPackingListA()
@@ -63,7 +63,7 @@ namespace ERP_Leather.Controllers
                 PLDate = string.Format("{0:dd/MM/yyyy}", ob.PLDate),
                 RecordStatus = DalCommon.ReturnRecordStatus(ob.RecordStatus)
             }).ToList();
-            return Json(pl.OrderByDescending(ob => ob.PLID), JsonRequestBehavior.AllowGet);
+            return Json(pl.OrderByDescending(ob => ob.PLID));
         }
 
         public ActionResult GetPackingListB(long ciid)
@@ -79,7 +79,7 @@ namespace ERP_Leather.Controllers
                 PLDate = string.Format("{0:dd/MM/yyyy}", ob.PLDate),
                 RecordStatus = DalCommon.ReturnRecordStatus(ob.RecordStatus)
             }).ToList();
-            return Json(pl.OrderByDescending(ob => ob.PLID), JsonRequestBehavior.AllowGet);
+            return Json(pl.OrderByDescending(ob => ob.PLID));
         }
 
         public ActionResult GetBol()
@@ -96,7 +96,7 @@ namespace ERP_Leather.Controllers
                 BLDate = string.Format("{0:dd/MM/yyyy}", ob.BLDate),
                 RecordStatus = DalCommon.ReturnRecordStatus(ob.RecordStatus)
             }).ToList();
-            return Json(result.OrderByDescending(ob => ob.BLID), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderByDescending(ob => ob.BLID));
         }
 
         public ActionResult GetBolById(long id)
@@ -141,34 +141,34 @@ namespace ERP_Leather.Controllers
                     cont.Measurement
                 }).ToList()
             };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult Save(ExpBillOfLading model)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalExpBillOfLading.Save(model, _userId);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Check(long id, string note)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalExpBillOfLading.Check(id, note, _userId);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Confrim(long id, string note)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalExpBillOfLading.Confirm(id, note, _userId);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult CheckContainerNo(string cntNo)
         {
             var chkCnt = _unit.ExpBillOfLadingContainerRepository.Get().Where(ob => ob.ContainerNo == cntNo);
-            return chkCnt.Any() ? Json(true, JsonRequestBehavior.AllowGet) : Json(false, JsonRequestBehavior.AllowGet);
+            return chkCnt.Any() ? Json(true) : Json(false);
         }
 
         public ActionResult Delete(long id, string del)
@@ -182,13 +182,13 @@ namespace ERP_Leather.Controllers
                 _validationMsg = _dalExpBillOfLading.DeleteCont(id);
             }
 
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult CheckBillNo(string billNo)
         {
             var chkBill = _unit.ExpBillOfLadingRepository.Get().Where(ob => ob.BLNo == billNo);
-            return chkBill.Any() ? Json(true, JsonRequestBehavior.AllowGet) : Json(false, JsonRequestBehavior.AllowGet);
+            return chkBill.Any() ? Json(true) : Json(false);
         }
     }
 }

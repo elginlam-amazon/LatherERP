@@ -1,6 +1,6 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.BusinessLogicLayer.OperationManager;
 using ERP.EntitiesModel.OperationModel;
@@ -29,34 +29,34 @@ namespace ERP_Leather.Controllers
         {
             if (model.ArticleChallanID == 0)
             {
-                var msg = objBll.Save(model, Convert.ToInt32(Session["UserID"]));
+                var msg = objBll.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
                 long ArticleChallanID = objBll.GetChallanID();
 
                 var DetailList = objDal.GetArticleDetailListAfterSave(ArticleChallanID);
                 var ColorList = objDal.GetArticleColorListAfterSave(ArticleChallanID);
-                return Json(new { Msg = msg, ArticleChallanID = ArticleChallanID, DetailList = DetailList, ColorList = ColorList }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = msg, ArticleChallanID = ArticleChallanID, DetailList = DetailList, ColorList = ColorList });
             }
             else
             {
-                var msg = objBll.Update(model, Convert.ToInt32(Session["UserID"]));
+                var msg = objBll.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
                 var DetailList = objDal.GetArticleDetailListAfterSave(model.ArticleChallanID);
                 var ColorList = objDal.GetArticleColorListAfterSave(model.ArticleChallanID);
 
 
-                return Json(new { Msg = msg, DetailList = DetailList, ColorList = ColorList }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = msg, DetailList = DetailList, ColorList = ColorList });
             }
         }
 
         public ActionResult GetSearchInformation()
         {
-            return Json(objDal.GetSearchInformation(), JsonRequestBehavior.AllowGet);
+            return Json(objDal.GetSearchInformation());
         }
 
         public ActionResult GetChallanDetails(string _ArticleChallanID)
         {
              var DetailList = objDal.GetArticleDetailListAfterSave(Convert.ToInt64(_ArticleChallanID));
              var ColorList = objDal.GetArticleColorListAfterSave(Convert.ToInt64(_ArticleChallanID));
-             return Json(new { DetailList = DetailList, ColorList = ColorList }, JsonRequestBehavior.AllowGet);
+             return Json(new { DetailList = DetailList, ColorList = ColorList });
         }
 
         public ActionResult DeleteColorItem(string _ArticleChallanIDColor, string _PageStatus)
@@ -67,20 +67,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDal.DeleteColorItem(_ArticleChallanIDColor);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
@@ -93,20 +93,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDal.DeleteArticleDetail(_ArticleChallanDtlID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
@@ -118,20 +118,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDal.DeleteChallan(_ArticleChallanID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
 
 
@@ -144,11 +144,11 @@ namespace ERP_Leather.Controllers
 
             if (checkConfirm)
             {
-                return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Success" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 	}

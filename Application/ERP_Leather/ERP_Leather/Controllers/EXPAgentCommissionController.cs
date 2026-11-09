@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.EntitiesModel.AppSetupModel;
@@ -6,8 +7,7 @@ using ERP.EntitiesModel.OperationModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP_Leather.ActionFilters;
 
 namespace ERP_Leather.Controllers
@@ -35,52 +35,52 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult EXPAgentCommission(EXPAgentCommission model)
         {
-            _vmMsg = model.AgentComID == 0 ? Dalobject.Save(model, Convert.ToInt32(Session["UserID"]), "EXPAgentCommission/EXPAgentCommission") : Dalobject.Update(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = model.AgentComID == 0 ? Dalobject.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "EXPAgentCommission/EXPAgentCommission") : Dalobject.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { AgentComID = Dalobject.GetAgentComID(), AgentComNo = Dalobject.GetAgentComNo(), msg = _vmMsg });
         }
 
         [HttpPost]
         public ActionResult ConfirmedEXPAgentCommission(EXPAgentCommission model)
         {
-            _vmMsg = Dalobject.ConfirmedEXPAgentCommission(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.ConfirmedEXPAgentCommission(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
         [HttpPost]
         public ActionResult CheckedEXPAgentCommission(EXPAgentCommission model)
         {
-            _vmMsg = Dalobject.CheckedEXPAgentCommission(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.CheckedEXPAgentCommission(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
         //public ActionResult GetBuyerAgentList(string BuyerType)
         //{
         //    var buyerlist = Dalobject.GetBuyerAgentList(BuyerType);
-        //    return Json(buyerlist, JsonRequestBehavior.AllowGet);
+        //    return Json(buyerlist);
         //}
 
         public ActionResult GetBuyerAgentList(string CIID, string CIAmount)
         {
             var buyerlist = Dalobject.GetBuyerAgentList(CIID, CIAmount);
-            return Json(buyerlist, JsonRequestBehavior.AllowGet);
+            return Json(buyerlist);
         }
 
         public ActionResult GetPIInfoList(string CIID)
         {
             var pIInfoList = Dalobject.GetPIInfoList(CIID);
-            return Json(pIInfoList, JsonRequestBehavior.AllowGet);
+            return Json(pIInfoList);
         }
 
         public ActionResult GetBuyerAgentPopupList()
         {
             var agentPopupList = Dalobject.GetBuyerAgentPopupList();
-            return Json(agentPopupList, JsonRequestBehavior.AllowGet);
+            return Json(agentPopupList);
         }
 
         //public ActionResult GetBuyerList(string BuyerAgentID)
         //{
         //    var buyerlist = Dalobject.GetBuyerList(BuyerAgentID);
-        //    return Json(buyerlist, JsonRequestBehavior.AllowGet);
+        //    return Json(buyerlist);
         //}
 
         //public ActionResult GetCINoList(string BuyerID)
@@ -88,51 +88,51 @@ namespace ERP_Leather.Controllers
         {
             //var buyerlist = Dalobject.GetCINoList(BuyerID);
             var buyerlist = Dalobject.GetCINoList();
-            return Json(buyerlist, JsonRequestBehavior.AllowGet);
+            return Json(buyerlist);
         }
 
         public ActionResult GetAllActiveCurrency()
         {
             var buyerlist = objCurrency.GetAllActiveCurrency();
-            return Json(buyerlist, JsonRequestBehavior.AllowGet);
+            return Json(buyerlist);
         }
 
         public ActionResult GetAgentCommissionInformation()
         {
-            return Json(Dalobject.GetAgentCommissionInformation(), JsonRequestBehavior.AllowGet);
+            return Json(Dalobject.GetAgentCommissionInformation());
         }
 
         public ActionResult GetAgentCommissionBuyerList(string AgentComID)
         {
-            return Json(Dalobject.GetAgentCommissionBuyerList(AgentComID), JsonRequestBehavior.AllowGet);
+            return Json(Dalobject.GetAgentCommissionBuyerList(AgentComID));
         }
 
         public ActionResult GetAgentCommissionBuyerCIList(string AgentComID, string BuyerID)
         {
             EXPAgentCommission model = new EXPAgentCommission();
-            if (string.IsNullOrEmpty(AgentComID)) return Json(model, JsonRequestBehavior.AllowGet);
+            if (string.IsNullOrEmpty(AgentComID)) return Json(model);
             model.EXPAgentCommissionBuyerList = Dalobject.GetAgentCommissionBuyerList(AgentComID);
             if (model.EXPAgentCommissionBuyerList.Count > 0)
                 model.EXPAgentCommissionBuyerCIList = Dalobject.GetAgentCommissionBuyerCIList(AgentComID, BuyerID);
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return Json(model);
         }
 
         public ActionResult GetAllGridList(string AgentComID)
         {
             EXPAgentCommission model = new EXPAgentCommission();
-            if (string.IsNullOrEmpty(AgentComID)) return Json(model, JsonRequestBehavior.AllowGet);
+            if (string.IsNullOrEmpty(AgentComID)) return Json(model);
             //model.EXPAgentCommissionBuyerList = Dalobject.GetAgentCommissionBuyerList(AgentComID);
             //if (model.EXPAgentCommissionBuyerList.Count > 0)
             model.EXPAgentCommissionBuyerCIList = Dalobject.GetAgentCommissionBuyerCIList(AgentComID);
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return Json(model);
         }
 
         public ActionResult GetAgentCommBuyerCIList(string AgentComID, string BuyerID)
         {
-            return Json(Dalobject.GetAgentCommissionBuyerCIList(AgentComID, BuyerID), JsonRequestBehavior.AllowGet);
+            return Json(Dalobject.GetAgentCommissionBuyerCIList(AgentComID, BuyerID));
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedAgentCom(string AgentComID)
         {
             long? agentComID = Convert.ToInt64(AgentComID);
@@ -140,7 +140,7 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedAgentComBuyer(string AgentComID, string BuyerID)
         {
             long? agentComID = Convert.ToInt64(AgentComID);
@@ -149,7 +149,7 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         //public ActionResult DeletedAgentComBuyerCI(string AgentComID, string BuyerID, string CIID)
         public ActionResult DeletedAgentComBuyerCI(string AgentComCIID)
         {

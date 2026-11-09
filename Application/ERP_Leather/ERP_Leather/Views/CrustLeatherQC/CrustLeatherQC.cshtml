@@ -43,7 +43,7 @@
                 <label>QC Performed By</label>
             </div>
             <div class="col-lg-2">
-                <input type="text" id="CrustLeatherQCBy" class="txtBox" name="ArticleName" tabindex="" value="@Session["UserName"]" readonly="readonly" />
+                <input type="text" id="CrustLeatherQCBy" class="txtBox" name="ArticleName" tabindex="" value="@Context.Session.GetString("UserName")" readonly="readonly" />
             </div>
         </div>
         <div class="row">
@@ -77,13 +77,13 @@
                 <label>Checked By</label>
             </div>
             <div class="col-lg-2">
-                <input type="text" id="txtCheckedBy" class="txtCommandBox ReadOnlyTextbox" name="" tabindex="" readonly="readonly" value="@Session["UserName"]" />
+                <input type="text" id="txtCheckedBy" class="txtCommandBox ReadOnlyTextbox" name="" tabindex="" readonly="readonly" value="@Context.Session.GetString("UserName")" />
             </div>
             <div class="col-lg-2">
                 <label>Confirmed By</label>
             </div>
             <div class="col-lg-2">
-                <input type="text" id="txtApprovedBy" class="txtCommandBox ReadOnlyTextbox" name="" tabindex="" readonly="readonly" value="@Session["UserName"]" />
+                <input type="text" id="txtApprovedBy" class="txtCommandBox ReadOnlyTextbox" name="" tabindex="" readonly="readonly" value="@Context.Session.GetString("UserName")" />
             </div>
         </div>
 

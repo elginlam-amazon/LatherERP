@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
+
+using Microsoft.AspNetCore.Mvc;
+
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
@@ -36,11 +37,11 @@ namespace ERP_Leather.Controllers
         {
             if (model != null && model.PreDefineValueForID != 0)
             {
-                _vmMsg = _dalSysPreDefineValue.Update(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysPreDefineValue.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             else
             {
-                _vmMsg = _dalSysPreDefineValue.Save(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysPreDefineValue.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             return Json(new { PreDefineValueForID = _dalSysPreDefineValue.GetPreDefineValueForId(), msg = _vmMsg });
         }
@@ -48,7 +49,7 @@ namespace ERP_Leather.Controllers
         public ActionResult GetPreDefineValueList(string PreDefineValueForID) 
         {
             var _sysPreDefineValue = _dalSysPreDefineValue.GetPreDefineValueList(PreDefineValueForID).OrderByDescending(m=>m.PreDefineValueID);
-            return Json(_sysPreDefineValue, JsonRequestBehavior.AllowGet); 
+            return Json(_sysPreDefineValue); 
         }
 
         [HttpPost]
@@ -58,7 +59,7 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedPreDefineValue(string PreDefineValueId)
         {
             _vmMsg = _dalSysPreDefineValue.DeletedPreDefineValue(PreDefineValueId);
@@ -68,13 +69,13 @@ namespace ERP_Leather.Controllers
         public ActionResult GetConcernPageList()
         {
             var buyerAgentList = _dalSysPreDefineValue.GetConcernPageList();
-            return Json(buyerAgentList, JsonRequestBehavior.AllowGet);
+            return Json(buyerAgentList);
         }
 
         public ActionResult GetPreDefineValueForSearchList()
         {
             var searchList = _dalSysPreDefineValue.GetPreDefineValueForForSearchList().OrderByDescending(m => m.PreDefineValueForID);
-            return Json(searchList, JsonRequestBehavior.AllowGet);
+            return Json(searchList);
         }
     }
 }

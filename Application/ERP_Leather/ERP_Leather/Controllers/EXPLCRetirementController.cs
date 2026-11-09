@@ -1,10 +1,11 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.Utility;
@@ -36,14 +37,14 @@ namespace ERP_Leather.Controllers
         public ActionResult GetLCNoList()
         {
             var lcList = objDalEXPLCRetirement.GetLCNoList();
-            return Json(lcList, JsonRequestBehavior.AllowGet);
+            return Json(lcList);
         }
 
 
         [HttpPost]
         public ActionResult Save(EXP_LCRetirement dataSet)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
 
             objValMssg = objDalEXPLCRetirement.SaveLCM_LCRetirement(dataSet, _userId, "EXPLCRetirement/EXPLCRetirement");
             return Json(new { msg = objValMssg });
@@ -52,7 +53,7 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult Update(EXP_LCRetirement dataSet)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             objValMssg = objDalEXPLCRetirement.UpdateLCM_LCRetirement(dataSet, _userId);
             return Json(new { msg = objValMssg });
         }
@@ -74,20 +75,20 @@ namespace ERP_Leather.Controllers
                                                   BillValue = temp.BillValue,
                                                   RecordStatus = DalCommon.ReturnRecordStatus(temp.RecordStatus),
                                                 }; //obLCOpeningDAL.GetLCOpeningInfo();
-            return Json(listLcmRetirementInfo, JsonRequestBehavior.AllowGet);
+            return Json(listLcmRetirementInfo);
         }
         public ActionResult SearchLcmRetirementInfoByLCNo(string search)//InsuranceNo
         {
             var lcInfo = from temp in objRepository.EXPLCRetirementRepository.Get().Where(ob => ob.LCNo.StartsWith(search) || ob.LCNo == search)
                          select new { temp.LCID, temp.LCNo, temp.LCRetirementID, temp.LCRetirementNo, temp.LCRetirementDate, temp.BillValue };
 
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
 
         public ActionResult GetAutoCompleteData()
         {
             var data = objRepository.EXPLCRetirementRepository.Get().Select(ob => ob.LCNo);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
         public ActionResult GetLcmRetirementByLCRetirementID(string LCRetirementID)
@@ -147,7 +148,7 @@ namespace ERP_Leather.Controllers
 
 
 
-            return Json(ob, JsonRequestBehavior.AllowGet);
+            return Json(ob);
 
         }
 
@@ -156,7 +157,7 @@ namespace ERP_Leather.Controllers
         public ActionResult DeleteLCRetirementID(int lcRetirementID)
         {
             objValMssg = objDalEXPLCRetirement.DeleteLCRetirementID(lcRetirementID);//DeletePackingList(cnfBillID);
-            return Json(objValMssg, JsonRequestBehavior.AllowGet);
+            return Json(objValMssg);
         }
 
 

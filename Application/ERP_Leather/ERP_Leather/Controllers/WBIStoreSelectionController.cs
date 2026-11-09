@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.Utility;
@@ -5,8 +6,7 @@ using ERP.EntitiesModel.BaseModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.OperationModel;
@@ -56,26 +56,26 @@ namespace ERP_Leather.Controllers
         public ActionResult GetWBSelectionInfo(string StoreID)
         {
             var packItemList = _dalWBIStoreSelectionObj.GetWBSelectionInfo(StoreID);
-            return Json(packItemList, JsonRequestBehavior.AllowGet);
+            return Json(packItemList);
         }
         public ActionResult GetWBSelectionGrade(string WBSelectionID, string IssueFrom, string SupplierID, string PurchaseID, string ItemTypeID, string LeatherStatusID)
         {
             //var packItemList = _dalWBIStoreSelectionObj.GetWBSelectionGrade(WBSelectItemID);
             var packItemList = _dalWBIStoreSelectionObj.GetWBSelectionGrade(WBSelectionID, IssueFrom, SupplierID, PurchaseID, ItemTypeID, LeatherStatusID);
-            return Json(packItemList, JsonRequestBehavior.AllowGet);
+            return Json(packItemList);
         }
 
 
         public ActionResult GetStockGradeInfo(string StoreID)
         {
             var packItemList = _dalWBIStoreSelectionObj.GetStockGradeInfo(StoreID);
-            return Json(packItemList, JsonRequestBehavior.AllowGet);
+            return Json(packItemList);
         }
         public ActionResult GetWBGradeforGrid(string IssueFrom, string SupplierID, string PurchaseID, string ItemTypeID, string LeatherStatusID)
         {
             //var packItemList = _dalWBIStoreSelectionObj.GetWBSelectionGrade(WBSelectItemID);
             var packItemList = _dalWBIStoreSelectionObj.GetWBGradeforGrid(IssueFrom, SupplierID, PurchaseID, ItemTypeID, LeatherStatusID);
-            return Json(packItemList, JsonRequestBehavior.AllowGet);
+            return Json(packItemList);
         }
         public ActionResult SearchWBSelectionNo(string search, string WBSelectionNo)
         {
@@ -92,7 +92,7 @@ namespace ERP_Leather.Controllers
                                  Remarks = temp.Remarks,
 
                              };
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(result);
             }
             else
             {
@@ -108,14 +108,14 @@ namespace ERP_Leather.Controllers
                                  SelectedBy = temp.SelectedBy,
                                  Remarks = temp.Remarks,
                              };
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(result);
             }
 
         }
         public ActionResult GetWBSelectionNoAutocompleteData()
         {
             var search = repository.PrdWBSelectionRepository.Get().Select(ob => ob.WBSelectionNo);
-            return Json(search, JsonRequestBehavior.AllowGet);
+            return Json(search);
         }
         #endregion
 
@@ -127,7 +127,7 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult WBIStoreSelection(wbSelectionIssue model)
         {
-            _vmMsg = model.IssueID == 0 ? _dalWBIStoreSelectionObj.Save(model, Convert.ToInt32(Session["UserID"]), "WBIStoreSelection/WBIStoreSelection") : _dalWBIStoreSelectionObj.Update(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = model.IssueID == 0 ? _dalWBIStoreSelectionObj.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "WBIStoreSelection/WBIStoreSelection") : _dalWBIStoreSelectionObj.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { IssueID = _dalWBIStoreSelectionObj.GetIssueID(), WBSIssueItemID = _dalWBIStoreSelectionObj.GetWBSIssueItemID(), IssueNo = _dalWBIStoreSelectionObj.GetIssueNo(), msg = _vmMsg });
         }
 
@@ -177,7 +177,7 @@ namespace ERP_Leather.Controllers
 
 
                                      };
-            return Json(searchIssueDetails, JsonRequestBehavior.AllowGet);
+            return Json(searchIssueDetails);
         }
 
         public ActionResult SearchWetBlueIssueNo(string search)
@@ -208,19 +208,19 @@ namespace ERP_Leather.Controllers
                           }).ToList();
 
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetAutoCompleteData()
         {
             var search = repository.PrdWBSellectionIssueRepository.Get().Select(ob => ob.IssueNo);
-            return Json(search, JsonRequestBehavior.AllowGet);
+            return Json(search);
         }
 
         public ActionResult GetIssueInfoForSearch(string WBSIssueItemID, string IssueFrom, string SupplierID, string PurchaseID, string ItemTypeID, string LeatherStatusID)
         {
             var searchIssueDetails = _dalWBIStoreSelectionObj.SearchIssueInfo(WBSIssueItemID, IssueFrom, SupplierID, PurchaseID, ItemTypeID, LeatherStatusID);
-            return Json(searchIssueDetails, JsonRequestBehavior.AllowGet);
+            return Json(searchIssueDetails);
         }
 
 
@@ -232,7 +232,7 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult ConfirmWetBlueSelectionStock(long issueID, long wbSIssueItemID, bool isSelectionLock, long wbSelectionID)
         {
-            _vmMsg = _dalWBIStoreSelectionObj.ConfirmWetBlueSelectionStock(issueID, wbSIssueItemID, Convert.ToInt32(Session["UserID"]), isSelectionLock, wbSelectionID);
+            _vmMsg = _dalWBIStoreSelectionObj.ConfirmWetBlueSelectionStock(issueID, wbSIssueItemID, Convert.ToInt32(HttpContext.Session.GetString("UserID")), isSelectionLock, wbSelectionID);
             return Json(new { msg = _vmMsg });
         }
         #endregion
@@ -242,8 +242,8 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult CheckedRecordStatus(long IssueID, string status)
         {
-            ValidationMsg _vmMsg = _dalWBIStoreSelectionObj.CheckedRecordStatus(IssueID, status, Convert.ToInt32(Session["UserID"]));
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+            ValidationMsg _vmMsg = _dalWBIStoreSelectionObj.CheckedRecordStatus(IssueID, status, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
+            return Json(_vmMsg);
         }
 
         #endregion
@@ -301,7 +301,7 @@ namespace ERP_Leather.Controllers
 
             }
 
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+            return Json(_vmMsg);
         }
 
 
@@ -316,7 +316,7 @@ namespace ERP_Leather.Controllers
                              GradeID = temp.GradeID,
                              GradeName = temp.GradeName
                          };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
         #endregion
 
@@ -325,7 +325,7 @@ namespace ERP_Leather.Controllers
         //{
         //    var allGrade = _dalWBIStoreSelectionObj.GetWBSelectionGrade(IssueFrom, SupplierID, PurchaseID, ItemTypeID,LeatherStatusID);
 
-        //    return Json(allGrade, JsonRequestBehavior.AllowGet);
+        //    return Json(allGrade);
         //}
 
 
@@ -339,20 +339,20 @@ namespace ERP_Leather.Controllers
         //        CheckStatus = _dalWBIStoreSelectionObj.DeleteItem(_WBSIssueGradeID);
         //        if (CheckStatus)
         //        {
-        //            return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+        //            return Json(new { Msg = "Success" });
         //        }
         //        else
         //        {
-        //            return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+        //            return Json(new { Msg = "Fail" });
         //        }
         //    }
         //    else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
         //    {
-        //        return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+        //        return Json(new { Msg = "CNF" });
         //    }
         //    else
         //    {
-        //        return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+        //        return Json(new { Msg = "Fail" });
         //    }
         //}
 
@@ -386,7 +386,7 @@ namespace ERP_Leather.Controllers
                 }
 
             }
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+            return Json(_vmMsg);
         }
 
 
@@ -421,7 +421,7 @@ namespace ERP_Leather.Controllers
 
             }
 
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+            return Json(_vmMsg);
         }
 
 

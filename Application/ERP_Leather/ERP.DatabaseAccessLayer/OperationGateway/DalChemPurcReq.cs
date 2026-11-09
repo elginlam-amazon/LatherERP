@@ -10,7 +10,6 @@ using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.Utility;
 using ERP.EntitiesModel.BaseModel;
 using ERP.EntitiesModel.OperationModel;
-using Microsoft.Scripting.Hosting;
 
 namespace ERP.DatabaseAccessLayer.OperationGateway
 {

@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
@@ -57,7 +58,7 @@ namespace ERP_Leather.Controllers
                 if (suppAdd != null) supplier.ContactPerson = suppAdd.ContactPerson;
                 suppliers.Add(supplier);
             }
-            return Json(suppliers, JsonRequestBehavior.AllowGet);
+            return Json(suppliers);
         }
 
         public ActionResult GetBillById(long billId)
@@ -74,7 +75,7 @@ namespace ERP_Leather.Controllers
                 PayableAmt = bill.PayableAmt,
                 ApprovedAmt = bill.ApprovedAmt
             };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetBillPay()
@@ -90,7 +91,7 @@ namespace ERP_Leather.Controllers
                 SupplierName = bill.SupplierID == 0 ? "": _unit.SysSupplierRepository.GetByID(bill.SupplierID).SupplierName,
                 RecordStatus = DalCommon.ReturnRecordStatus(bill.RecordStatus)
             });
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetBillPayById(long paymentId)
@@ -150,46 +151,46 @@ namespace ERP_Leather.Controllers
                         }).ToList()
             };
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult DeleteRef(long paymentId)
         {
             var delete = _dalPrqChemLocalPurcBillPay.DeleteRef(paymentId);
-            return Json(delete, JsonRequestBehavior.AllowGet);
+            return Json(delete);
         }
 
         public ActionResult Delete(long paymentId)
         {
             var delete = _dalPrqChemLocalPurcBillPay.Delete(paymentId);
-            return Json(delete, JsonRequestBehavior.AllowGet);
+            return Json(delete);
         }
 
         public ActionResult Save(PrqChemLocalPurcBillPay model)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalPrqChemLocalPurcBillPay.Save(model, _userId);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Check(long paymentId, string comment)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalPrqChemLocalPurcBillPay.Check(paymentId, _userId, comment);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Confirm(long paymentId)
         {
             _validationMsg = _dalPrqChemLocalPurcBillPay.BillConfirm(paymentId);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Approve(long paymentId, string comment)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalPrqChemLocalPurcBillPay.Approve(paymentId, _userId, comment);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
     }
 

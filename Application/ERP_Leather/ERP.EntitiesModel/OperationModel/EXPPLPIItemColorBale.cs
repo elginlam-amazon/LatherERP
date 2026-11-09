@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
+using Microsoft.AspNetCore.Http;
 
 namespace ERP.EntitiesModel.OperationModel
 {
@@ -34,6 +34,6 @@ namespace ERP.EntitiesModel.OperationModel
     }
     public class MyModel
     {
-        public HttpPostedFileBase MyFile { get; set; }
+        public IFormFile MyFile { get; set; }
     }
 }

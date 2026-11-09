@@ -1,10 +1,11 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.Utility;
@@ -37,8 +38,8 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult SaveAndUpdate(EXPBankLoan model)
         {
-            objValMssg = model.expBankLoanList[0].BankLoanID == 0 ? objDalEXPBankLoan.Save(model, Convert.ToInt32(Session["UserID"]), "EXPBankLoan/EXPBankLoan") :
-                                                    objDalEXPBankLoan.Update(model, Convert.ToInt32(Session["UserID"]));
+            objValMssg = model.expBankLoanList[0].BankLoanID == 0 ? objDalEXPBankLoan.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "EXPBankLoan/EXPBankLoan") :
+                                                    objDalEXPBankLoan.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = objValMssg });
         }
 
@@ -50,7 +51,7 @@ namespace ERP_Leather.Controllers
         public ActionResult GetBankList()
         {
             var bankList = objDalEXPBankLoan.GetLCBankList();
-            return Json(bankList, JsonRequestBehavior.AllowGet);
+            return Json(bankList);
         }
         public ActionResult SearchBankbyBankName(string search)//InsuranceNo
         {
@@ -61,7 +62,7 @@ namespace ERP_Leather.Controllers
                               BankName = temp.BankName,
                           });
 
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
         public ActionResult BtnSearchBankByBankName(string search)
         {
@@ -72,12 +73,12 @@ namespace ERP_Leather.Controllers
                               BankName = temp.BankName,
                           });
 
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
         public ActionResult GetAutoCompleteBankPopupData()
         {
             var data = objRepository.BankRepository.Get().Select(ob => ob.BankCode);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
         // ********************* END of Bank Pop UP ****************
 
@@ -86,7 +87,7 @@ namespace ERP_Leather.Controllers
         public ActionResult GetCIList()
         {
             var bankList = objDalEXPBankLoan.GetCIList();
-            return Json(bankList, JsonRequestBehavior.AllowGet);
+            return Json(bankList);
         }
         public ActionResult SearchCIbyCINo(string search)//InsuranceNo
         {
@@ -97,7 +98,7 @@ namespace ERP_Leather.Controllers
                               CIRefNo = temp.CIRefNo,
                           });
 
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
         public ActionResult BtnSearchCIByCINo(string search)
         {
@@ -108,12 +109,12 @@ namespace ERP_Leather.Controllers
                               CIRefNo = temp.CIRefNo,
                           });
 
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
         public ActionResult GetAutoCompleteCIPopupData()
         {
             var data = objRepository.ExpCommercialInvoiceRepository.Get().Select(ob => ob.CIRefNo);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
         // ********************* END of CI Pop UP ****************
 
@@ -123,7 +124,7 @@ namespace ERP_Leather.Controllers
         public ActionResult GetHeadList()
         {
             var bankList = objDalEXPBankLoan.GetHeadList();
-            return Json(bankList, JsonRequestBehavior.AllowGet);
+            return Json(bankList);
         }
         public ActionResult SearchHeadbyHeadName(string search)//InsuranceNo
         {
@@ -135,7 +136,7 @@ namespace ERP_Leather.Controllers
                               HeadName = temp.HeadName,
                           });
 
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
         public ActionResult BtnSearchHeadbyHeadName(string search)
         {
@@ -147,12 +148,12 @@ namespace ERP_Leather.Controllers
                               HeadName = temp.HeadName,
                           });
 
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
         public ActionResult GetAutoCompleteHeadPopupData()
         {
             var data = objRepository.SysTransHeadRepository.Get().Select(ob => ob.HeadName);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
         // ********************* END of CI Pop UP ****************
 
@@ -187,7 +188,7 @@ namespace ERP_Leather.Controllers
                                        RecordStatus = DalCommon.ReturnRecordStatus(temp.RecordStatus),
 
                                    }).OrderByDescending(ob => ob.BankLoanID);
-            return Json(listCnFBillInfo, JsonRequestBehavior.AllowGet);
+            return Json(listCnFBillInfo);
         }
         public ActionResult SearchLcmCnFBillInfoByLCNo(string search)//InsuranceNo
         {
@@ -215,17 +216,17 @@ namespace ERP_Leather.Controllers
                                        RecordStatus = DalCommon.ReturnRecordStatus(temp.RecordStatus),
 
                           }).OrderByDescending(ob => ob.BankLoanID);
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
         public ActionResult GetAutoCompleteData()
         {
             var data = objRepository.ExpBankLoanRepository.Get().Select(ob => ob.BankLoanID);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
         public ActionResult GetBankLoanByBankLoanID()
         {
             var searchBankLoanDetails = objDalEXPBankLoan.SearchBankLoanDetails();
-            return Json(searchBankLoanDetails, JsonRequestBehavior.AllowGet);
+            return Json(searchBankLoanDetails);
 
         }
 
@@ -233,7 +234,7 @@ namespace ERP_Leather.Controllers
         public ActionResult GetBankLoanOnSelectedBank(long BankID, long BranchID)
         {
             var searchBankLoanDetails = objDalEXPBankLoan.SearchBankLoanDetailsOnSelectedBank(BankID, BranchID);
-            return Json(searchBankLoanDetails, JsonRequestBehavior.AllowGet);
+            return Json(searchBankLoanDetails);
 
         }
         // ##################### Search END ##############
@@ -327,7 +328,7 @@ namespace ERP_Leather.Controllers
                 }
 
             }
-            return Json(objValMssg, JsonRequestBehavior.AllowGet);
+            return Json(objValMssg);
         }
 
 
@@ -372,7 +373,7 @@ namespace ERP_Leather.Controllers
                 }
 
             }
-            return Json(objValMssg, JsonRequestBehavior.AllowGet);
+            return Json(objValMssg);
         }
 
 
@@ -387,7 +388,7 @@ namespace ERP_Leather.Controllers
         public ActionResult DeleteBankLoanList(int bankLoanID)
         {
             objValMssg = objDalEXPBankLoan.DeleteBankLoanList(bankLoanID);//DeletePackingList(cnfBillID);
-            return Json(objValMssg, JsonRequestBehavior.AllowGet);
+            return Json(objValMssg);
         }
 
 

@@ -1,8 +1,9 @@
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
 using System;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using ERP_Leather.ActionFilters;
 
@@ -33,11 +34,11 @@ namespace ERP_Leather.Controllers
         {
             if (model != null && model.BranchID != 0)
             {
-                _vmMsg = _dalSysBranch.Update(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysBranch.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             else
             {
-                _vmMsg = _dalSysBranch.Save(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysBranch.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             return Json(new { BranchID = _dalSysBranch.GetBranchID(), msg = _vmMsg });
         }
@@ -49,11 +50,11 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public ActionResult GetBranchList()
         {
             var sysBranch = _dalSysBranch.GetAll().OrderByDescending(s => s.BranchID);
-            return Json(sysBranch, JsonRequestBehavior.AllowGet);
+            return Json(sysBranch);
         }
 	}
 }

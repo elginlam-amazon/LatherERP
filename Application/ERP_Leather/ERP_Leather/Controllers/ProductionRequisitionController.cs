@@ -1,6 +1,6 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.BusinessLogicLayer.OperationManager;
 using ERP.EntitiesModel.OperationModel;
@@ -38,13 +38,13 @@ namespace ERP_Leather.Controllers
         {
             if (model.RequisitionID == 0)
             {
-                //Convert.ToInt32(Session["UserID"])
+                //Convert.ToInt32(HttpContext.Session.GetString("UserID"))
                 var msg = objBLL.Save(model, 1, "ProductionRequisition/ProductionRequisition");
                 var RequisitionID = objBLL.GetRequisitionID();
                 var RequisitionNo = objDal.GetRequisitionNo(RequisitionID);
                 var RequisitionTo = objDal.GetRequisitionToInfo(RequisitionID);
                 var RequisitionItemList = objDal.GetRequisitionItemList(RequisitionID, RequisitionTo);
-                return Json(new { Msg = msg, RequisitionID = RequisitionID, RequisitionNo = RequisitionNo, RequisitionItemList = RequisitionItemList }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = msg, RequisitionID = RequisitionID, RequisitionNo = RequisitionNo, RequisitionItemList = RequisitionItemList });
             }
             else
             {
@@ -52,7 +52,7 @@ namespace ERP_Leather.Controllers
                 var RequisitionTo = objDal.GetRequisitionToInfo(model.RequisitionID);
                 var RequisitionItemList = objDal.GetRequisitionItemList(model.RequisitionID, RequisitionTo);
 
-                return Json(new { Msg = msg, RequisitionItemList = RequisitionItemList }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = msg, RequisitionItemList = RequisitionItemList });
             }
         }
 
@@ -60,19 +60,19 @@ namespace ERP_Leather.Controllers
         {
             var Data = objDal.GetRecipeForFixedCategory(_RecipeFor);
 
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetRecipeItemListForFixedRecipe(int _RecipeID, byte _RequisitionTo, byte _RequisitionFrom)
         {
             var Data = objDal.GetRecipeItemListForFixedRecipe(_RecipeID, _RequisitionTo, _RequisitionFrom);
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult RecalculateItemQuantity(int _RecipeID, decimal _Factor, byte _StoreID)
         {
             var Data = objDal.RecalculateItemQuantity(_RecipeID, _Factor, _StoreID);
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetRequistionInfoForSearch(int pageSize, int skip)
@@ -92,13 +92,13 @@ namespace ERP_Leather.Controllers
             }
 
             var total = filteredData.Count();
-            return Json(new { total = total, data = FinalData }, JsonRequestBehavior.AllowGet);
+            return Json(new { total = total, data = FinalData });
         }
 
         public ActionResult GetRequisitionDetailsAfterSearch(int _RequisitionID)
         {
             var Data = objDal.GetRequisitionDetailsAfterSearch(_RequisitionID);
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult DeleteRequisitionItem(string _RequisitionItemID, string _PageStatus)
@@ -109,20 +109,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDal.DeleteRequisitionItem(_RequisitionItemID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed" || _PageStatus == "APV" || _PageStatus == "Approved")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
@@ -134,20 +134,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDal.DeleteRequisition(_RequisitionID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed" || _PageStatus == "APV" || _PageStatus == "Approved")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
 
         }
@@ -159,11 +159,11 @@ namespace ERP_Leather.Controllers
 
             if (Data)
             {
-                return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Success" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
@@ -174,17 +174,17 @@ namespace ERP_Leather.Controllers
 
             if (Data)
             {
-                return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Success" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
         public ActionResult GetChemicalItemWithStock(byte _RequisitionFrom, byte _RequisitionTo)
         {
-            return Json(objDal.GetChemicalItemWithStock(_RequisitionFrom, _RequisitionTo), JsonRequestBehavior.AllowGet);
+            return Json(objDal.GetChemicalItemWithStock(_RequisitionFrom, _RequisitionTo));
         }
 
        

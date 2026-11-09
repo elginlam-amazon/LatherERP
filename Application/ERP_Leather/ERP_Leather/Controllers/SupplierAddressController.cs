@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
+using Microsoft.AspNetCore.Mvc;
+
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
@@ -31,40 +31,40 @@ namespace ERP_Leather.Controllers
         //[HttpPost]
         //public ActionResult Update(string models)
         //{
-        //    var sysSupplierAddress = new JavaScriptSerializer().Deserialize<IList<SysSupplierAddress>>(models).FirstOrDefault();
+        //    var sysSupplierAddress = Newtonsoft.Json.JsonConvert.DeserializeObject<IList<SysSupplierAddress>>(models).FirstOrDefault();
         //    _vmMsg = _dalSysSupplierAddress.Update(sysSupplierAddress);
 
         //    var result = new { data = sysSupplierAddress, message = _vmMsg };
-        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //    return Json(result);
         //}
 
         //[HttpPost]
         //public ActionResult Create(string models)
         //{
-        //    var sysSupplierAddress = new JavaScriptSerializer().Deserialize<IList<SysSupplierAddress>>(models).FirstOrDefault();
+        //    var sysSupplierAddress = Newtonsoft.Json.JsonConvert.DeserializeObject<IList<SysSupplierAddress>>(models).FirstOrDefault();
         //    _vmMsg = _dalSysSupplierAddress.Create(sysSupplierAddress);
 
         //    var result = new { data = sysSupplierAddress, message = _vmMsg };
-        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //    return Json(result);
         //}
 
         //public JsonResult GetSupplierAddressList()
         //{
-        //    return new JsonResult { Data = _dalSysSupplierAddress.GetAll().OrderByDescending(s => s.SupplierAddressID) };
+        //    return Json(_dalSysSupplierAddress.GetAll().OrderByDescending(s => s.SupplierAddressID));
         //}
 
         //public ActionResult GetSupplierList()
         //{
         //    var allGradeItem = _dalSysSupplierAddress.GetSupplierList();
 
-        //    return Json(allGradeItem, JsonRequestBehavior.AllowGet);
+        //    return Json(allGradeItem);
         //}
 
 
         //[HttpPost]
         //public ActionResult Delete(string models)
         //{
-        //    var sysSupplierAddress = new JavaScriptSerializer().Deserialize<IList<SysSupplierAddress>>(models).FirstOrDefault();
+        //    var sysSupplierAddress = Newtonsoft.Json.JsonConvert.DeserializeObject<IList<SysSupplierAddress>>(models).FirstOrDefault();
         //    _vmMsg = _dalSysSupplierAddress.Delete(sysSupplierAddress);
 
         //    return Json(_vmMsg);

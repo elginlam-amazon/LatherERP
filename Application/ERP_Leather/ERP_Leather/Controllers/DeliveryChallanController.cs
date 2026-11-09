@@ -1,10 +1,11 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Mvc;
+
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.Utility;
@@ -33,12 +34,12 @@ namespace ERP_Leather.Controllers
         public ActionResult GetCIList()
         {
             var CIList = objDalDeliveryChallan.GetCIList();
-            return Json(CIList, JsonRequestBehavior.AllowGet);
+            return Json(CIList);
         }
         public ActionResult GetPLList()
         {
             var PLList = objDalDeliveryChallan.GetPLList();
-            return Json(PLList, JsonRequestBehavior.AllowGet);
+            return Json(PLList);
         }
 
 
@@ -48,7 +49,7 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult Save(EXPDeliveryChallan dataSet)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
 
             objValMssg = objDalDeliveryChallan.Save(dataSet, _userId);
             return Json(new { msg = objValMssg });
@@ -57,7 +58,7 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult Update(EXPDeliveryChallan dataSet)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             objValMssg = objDalDeliveryChallan.Update(dataSet, _userId);
             return Json(new { msg = objValMssg });
         }
@@ -96,7 +97,7 @@ namespace ERP_Leather.Controllers
                                       RecordStatus = DalCommon.ReturnRecordStatus(temp.RecordStatus),
 
                                   }).OrderByDescending(ob => ob.DeliverChallanID); //obLCOpeningDAL.GetLCOpeningInfo();
-            return Json(listLcmLimInfo, JsonRequestBehavior.AllowGet);
+            return Json(listLcmLimInfo);
         }
 
 
@@ -127,19 +128,19 @@ namespace ERP_Leather.Controllers
 
                           }).OrderByDescending(ob => ob.DeliverChallanID); //obLCOpeningDAL.GetLCOpeningInfo();
 
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
 
         public ActionResult GetAutoCompleteData()
         {
             var data = objRepository.EXPDeliveryChallanRepository.Get().Select(ob => ob.DeliverChallanNo);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
         public ActionResult GetInsuranceInfoByBankID(string DeliverChallanID)
         {
             var searchIssueDetails = objDalDeliveryChallan.SearchDeliveryChallanCI(DeliverChallanID);
-            return Json(searchIssueDetails, JsonRequestBehavior.AllowGet);
+            return Json(searchIssueDetails);
 
 
         }
@@ -151,7 +152,7 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult ConfirmRecordStatus(string deliverChallanID)
         {
-            objValMssg = objDalDeliveryChallan.ConfirmDeliveryChallan(Convert.ToInt32(Session["UserID"]), deliverChallanID);
+            objValMssg = objDalDeliveryChallan.ConfirmDeliveryChallan(Convert.ToInt32(HttpContext.Session.GetString("UserID")), deliverChallanID);
             return Json(new { msg = objValMssg });
         }
         #endregion
@@ -193,8 +194,8 @@ namespace ERP_Leather.Controllers
 //using System.Data.Entity.Validation;
 //using System.Linq;
 //using System.Text;
-//using System.Web;
-//using System.Web.Mvc;
+//
+//using Microsoft.AspNetCore.Mvc;
 //using ERP.DatabaseAccessLayer.DB;
 //using ERP.DatabaseAccessLayer.OperationGateway;
 //using ERP.DatabaseAccessLayer.Utility;
@@ -223,12 +224,12 @@ namespace ERP_Leather.Controllers
 //        public ActionResult GetCIList()
 //        {
 //            var CIList = objDalDeliveryChallan.GetCIList();
-//            return Json(CIList, JsonRequestBehavior.AllowGet);
+//            return Json(CIList);
 //        }
 //        public ActionResult GetPLList()
 //        {
 //            var PLList = objDalDeliveryChallan.GetPLList();
-//            return Json(PLList, JsonRequestBehavior.AllowGet);
+//            return Json(PLList);
 //        }
 
 
@@ -238,7 +239,7 @@ namespace ERP_Leather.Controllers
 //        //[HttpPost]
 //        //public ActionResult Save(EXPDeliveryChallan dataSet)
 //        //{
-//        //    _userId = Convert.ToInt32(Session["UserID"]);
+//        //    _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
 
 //        //    objValMssg = objDalDeliveryChallan.Save(dataSet, _userId);
 //        //    return Json(new { msg = objValMssg });
@@ -247,7 +248,7 @@ namespace ERP_Leather.Controllers
 //        //[HttpPost]
 //        //public ActionResult Update(EXPDeliveryChallan dataSet)
 //        //{
-//        //    _userId = Convert.ToInt32(Session["UserID"]);
+//        //    _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
 //        //    objValMssg = objDalDeliveryChallan.Update(dataSet, _userId);
 //        //    return Json(new { msg = objValMssg });
 //        //}
@@ -287,7 +288,7 @@ namespace ERP_Leather.Controllers
 
 //        //                          }).OrderByDescending(ob => ob.LCID); //obLCOpeningDAL.GetLCOpeningInfo();
 
-//        //    return Json(listLcmLimInfo, JsonRequestBehavior.AllowGet);
+//        //    return Json(listLcmLimInfo);
 //        //}
 
 
@@ -315,13 +316,13 @@ namespace ERP_Leather.Controllers
 //        //                      IsActive = temp.IsActive == true ? "Active" : "Inactive"
 //        //                  }).OrderBy(ob => ob.BankName);
 
-//        //    return Json(lcInfo, JsonRequestBehavior.AllowGet);
+//        //    return Json(lcInfo);
 //        //}
 
 //        //public ActionResult GetAutoCompleteData()
 //        //{
 //        //    var data = objRepository.BankRepository.Get().Select(ob => ob.BankCode);
-//        //    return Json(data, JsonRequestBehavior.AllowGet);
+//        //    return Json(data);
 //        //}
 
 //        //public ActionResult GetInsuranceInfoByBankID(string bankId)
@@ -348,7 +349,7 @@ namespace ERP_Leather.Controllers
 //        //            IsActive = bank.IsActive == true ? "Active" : "Inactive",
 //        //        }).ToList()
 //        //    };
-//        //    return Json(result, JsonRequestBehavior.AllowGet);
+//        //    return Json(result);
 
 
 //        //}

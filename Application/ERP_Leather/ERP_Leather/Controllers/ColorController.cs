@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
 using System;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using ERP_Leather.ActionFilters;
 
@@ -33,11 +34,11 @@ namespace ERP_Leather.Controllers
         {
             if (model != null && model.ColorID != 0)
             {
-                _vmMsg = _dalSysColor.Update(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysColor.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             else
             {
-                _vmMsg = _dalSysColor.Save(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysColor.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             return Json(new { ColorID = _dalSysColor.GetColorID(), msg = _vmMsg });
         }
@@ -46,7 +47,7 @@ namespace ERP_Leather.Controllers
         public ActionResult GetPreDefineValue()
         {
             var preDefineValue = _dalSysColor.GetPreDefineValue("1", "00042");
-            return Json(preDefineValue, JsonRequestBehavior.AllowGet);
+            return Json(preDefineValue);
         }
 
         [HttpPost]
@@ -56,11 +57,11 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public ActionResult GetColorList()
         {
             var sysColor = _dalSysColor.GetAll().OrderByDescending(s => s.ColorID);
-            return Json(sysColor, JsonRequestBehavior.AllowGet);
+            return Json(sysColor);
         }
     }
 }

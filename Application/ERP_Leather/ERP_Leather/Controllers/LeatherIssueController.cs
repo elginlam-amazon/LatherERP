@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.EntitiesModel.AppSetupModel;
@@ -6,8 +7,7 @@ using ERP.EntitiesModel.OperationModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP_Leather.ActionFilters;
 
 namespace ERP_Leather.Controllers
@@ -36,21 +36,21 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult LeatherIssue(InvLeatherIssue model)
         {
-            _vmMsg = model.IssueID == 0 ? DalObj.Save(model, Convert.ToInt32(Session["UserID"])) : DalObj.Update(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = model.IssueID == 0 ? DalObj.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID"))) : DalObj.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { IssueID = DalObj.GetIssueID(), msg = _vmMsg });
         }
 
         [HttpPost]
         public ActionResult LeatherIssueChecked(string issueId, string checkComment)
         {
-            _vmMsg = DalObj.LeatherIssueChecked(Convert.ToInt32(issueId),checkComment, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = DalObj.LeatherIssueChecked(Convert.ToInt32(issueId),checkComment, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
         [HttpPost]
         public ActionResult LeatherIssueConfirmed(InvLeatherIssue model)
         {
-            _vmMsg = DalObj.LeatherIssueConfirmed(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = DalObj.LeatherIssueConfirmed(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
@@ -59,13 +59,13 @@ namespace ERP_Leather.Controllers
             DalInvLeatherIssueItem dalLeatherIssueItem = new DalInvLeatherIssueItem();
             int storeid = string.IsNullOrEmpty(StoreID) ? 0 : Convert.ToInt16(StoreID);
             var supplierIDList = dalLeatherIssueItem.GetSupplierList(storeid);
-            return Json(supplierIDList, JsonRequestBehavior.AllowGet);
+            return Json(supplierIDList);
         }
 
         public JsonResult GetChallanList(string SupplierID)
         {
             var challanList = DalObj.GetChallanListInfo(SupplierID);
-            return Json(challanList, JsonRequestBehavior.AllowGet);
+            return Json(challanList);
         }
 
         //public JsonResult GetLeatherInfoList(string storeid, string supplierid)
@@ -74,21 +74,21 @@ namespace ERP_Leather.Controllers
         //    byte storid = Convert.ToByte(storeid);
         //    int suppliid = string.IsNullOrEmpty(supplierid) ? 0 : Convert.ToInt32(supplierid);
         //    var leatherInfoList = dalChallan.GetLeatherInfoList(storid, suppliid);
-        //    return Json(leatherInfoList, JsonRequestBehavior.AllowGet);
+        //    return Json(leatherInfoList);
         //}
 
         public ActionResult GetLeatherInfoList(string ConcernStore, string SupplierID)
         {
             DalInvLeatherIssueItem dalInvLeatherIssueItem = new DalInvLeatherIssueItem();
             var packItemList = dalInvLeatherIssueItem.GetLeatherInfoList(ConcernStore, SupplierID);
-            return Json(packItemList, JsonRequestBehavior.AllowGet);
+            return Json(packItemList);
         }
 
         public ActionResult GetLeatherIssueList()
         {
             //int issId = string.IsNullOrEmpty(issueId) ? 0 : Convert.ToInt16(issueId);
             var issueList = DalObj.GetLeatherIssueList();
-            return Json(issueList, JsonRequestBehavior.AllowGet);
+            return Json(issueList);
         }
 
         public JsonResult GetLeatherIssueItemList(string issueId, string IssueFrom)
@@ -97,16 +97,16 @@ namespace ERP_Leather.Controllers
             long issueid = string.IsNullOrEmpty(issueId) ? 0 : Convert.ToInt64(issueId);
             byte storeid = Convert.ToByte(IssueFrom);
             var leatherInfoList = dalChallan.GetLeatherIssueItemList(issueid, storeid);
-            return Json(leatherInfoList, JsonRequestBehavior.AllowGet);
+            return Json(leatherInfoList);
         }
 
         public ActionResult GetIssueFromAndToList(string issuefor)
         {
             var issueFromAndToList = DalObj.GetIssueFromAndToList(issuefor);
-            return Json(issueFromAndToList, JsonRequestBehavior.AllowGet);
+            return Json(issueFromAndToList);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedIssue(string issueId)
         {
             int issueid = string.IsNullOrEmpty(issueId) ? 0 : Convert.ToInt16(issueId);
@@ -114,7 +114,7 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedIssueItem(string itemIssueId)
         {
             int itemissueId = string.IsNullOrEmpty(itemIssueId) ? 0 : Convert.ToInt16(itemIssueId);
@@ -126,7 +126,7 @@ namespace ERP_Leather.Controllers
         {
             //var supplierAgentList = DalObj.GetSupplierListForSearch(StoreID);
             var supplierAgentList = DalObj.GetSupplierListForSearch();
-            return Json(supplierAgentList, JsonRequestBehavior.AllowGet);
+            return Json(supplierAgentList);
         }
         public ActionResult GetBillPaymentListForSearch(string storeId, string supplier)
         {
@@ -135,7 +135,7 @@ namespace ERP_Leather.Controllers
             int storeid = string.IsNullOrEmpty(storeId) ? 0 : Convert.ToInt16(storeId);
             model.SupplierList = dalChallan.GetSupplierList(storeid).Where(m => m.SupplierName.StartsWith(supplier)).ToList();
             model.Count = model.SupplierList.Count > 1 ? model.Count = 0 : model.Count = 1;
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return Json(model);
         }
     }
 }

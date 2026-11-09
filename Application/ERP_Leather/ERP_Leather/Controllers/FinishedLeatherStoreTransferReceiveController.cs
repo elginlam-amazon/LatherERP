@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.Utility;
@@ -49,7 +49,7 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult Save(InvFinishLeatherReceive dataSet)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
 
             _vmMsg = _objDalFinishedLeatherStoreTransferReceive.Save(dataSet, _userId, "FinishedLeatherStoreTransferReceive/FinishedLeatherStoreTransferReceive");
             return Json(new { FNReceiveID = _objDalFinishedLeatherStoreTransferReceive.GetFNReceiveID(), FNReceiveNo = _objDalFinishedLeatherStoreTransferReceive.GetFNReceiveNo(), msg = _vmMsg });
@@ -58,7 +58,7 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult Update(InvFinishLeatherReceive dataSet)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _vmMsg = _objDalFinishedLeatherStoreTransferReceive.Update(dataSet, _userId);
             return Json(new { msg = _vmMsg });
         }
@@ -118,7 +118,7 @@ namespace ERP_Leather.Controllers
 
             }
 
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+            return Json(_vmMsg);
         }
         
         
@@ -131,19 +131,19 @@ namespace ERP_Leather.Controllers
         public ActionResult GetPopUpDetail(string IssueFrom)
         {
             var StockDetail = _objDalFinishedLeatherStoreTransferReceive.GetPopUpDetail(IssueFrom);
-            return Json(StockDetail, JsonRequestBehavior.AllowGet);
+            return Json(StockDetail);
         }
 
         public ActionResult GetItemGridStockDetail(long FinishLeatherIssueID)
         {
             var StockDetail = _objDalFinishedLeatherStoreTransferReceive.GetItemGridStockDetail(FinishLeatherIssueID);
-            return Json(StockDetail, JsonRequestBehavior.AllowGet);
+            return Json(StockDetail);
         }
 
         public ActionResult GetColorGridStockDetail(long FinishLeatherIssueItemID)
         {
             var StockDetail = _objDalFinishedLeatherStoreTransferReceive.GetColorGridStockDetail(FinishLeatherIssueItemID);
-            return Json(StockDetail, JsonRequestBehavior.AllowGet);
+            return Json(StockDetail);
         }
 
         public ActionResult SearchIssueNo(string search)
@@ -171,7 +171,7 @@ namespace ERP_Leather.Controllers
                                  //StoreID = temp3.StoreID,
                                  //StoreName = temp3.StoreName
                              };
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(result);
             }
             else
             {
@@ -195,14 +195,14 @@ namespace ERP_Leather.Controllers
                                  ItemTypeID = temp.ItemTypeID,
                                  ItemTypeName = temp6.ItemTypeName
                              };
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(result);
             }
 
         }
         public ActionResult GetIssueNoAutocompleteData()
         {
             var search = repository.FinishLeatherIssue.Get().Select(ob => ob.FinishLeatherIssueNo);
-            return Json(search, JsonRequestBehavior.AllowGet);
+            return Json(search);
         }
         #endregion
 
@@ -231,7 +231,7 @@ namespace ERP_Leather.Controllers
                                          ReceiveAtName = t.ReceiveAtName,
                                          RecordStatus = t.RecordStatus,//DalCommon.ReturnRecordStatus(t.RecordStatus),
                                      }).OrderByDescending(m=>m.FNReceiveID);
-            return Json(searchIssueDetails, JsonRequestBehavior.AllowGet);
+            return Json(searchIssueDetails);
         }
 
 
@@ -254,7 +254,7 @@ namespace ERP_Leather.Controllers
                                           LeatherStatusName = t.LeatherStatusName,
                                           ArticleChallanNo = t.ArticleChallanNo
                                       }).OrderByDescending(m => m.FNReceiveItemID);
-            return Json(searchIssueDetails, JsonRequestBehavior.AllowGet);
+            return Json(searchIssueDetails);
         }
 
 
@@ -284,19 +284,19 @@ namespace ERP_Leather.Controllers
                           }).ToList();
 
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetAutoCompleteData()
         {
             var search = repository.FinishLeatherReceiveRepository.Get().Select(ob => ob.FNReceiveNo);
-            return Json(search, JsonRequestBehavior.AllowGet);
+            return Json(search);
         }
 
         public ActionResult GetReceiveItemColorDetailInfoForSearch(long FNReceiveItemID)//long FNReceiveItemID
         {
             var searchIssueDetails = _objDalFinishedLeatherStoreTransferReceive.SearchReceiveItemColorDetailInfo(FNReceiveItemID);
-            return Json(searchIssueDetails, JsonRequestBehavior.AllowGet);
+            return Json(searchIssueDetails);
         }
 
 

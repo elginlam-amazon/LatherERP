@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
@@ -11,8 +12,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP_Leather.ActionFilters;
 
 namespace ERP_Leather.Controllers
@@ -38,11 +38,11 @@ namespace ERP_Leather.Controllers
             return View();
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public ActionResult GetAllComodityData()
         {
             var sysArticle = dalSysComodity.GetCommodity().OrderByDescending(s => s.ComodityID);
-            return Json(sysArticle, JsonRequestBehavior.AllowGet);
+            return Json(sysArticle);
         }
 
 
@@ -51,11 +51,11 @@ namespace ERP_Leather.Controllers
         {
             if (model != null && model.ComodityID != 0)
             {
-                _vmMsg = dalSysComodity.Update(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = dalSysComodity.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             else
             {
-                _vmMsg = dalSysComodity.Save(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = dalSysComodity.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             return Json(new { ComodityID = dalSysComodity.GetComodityID(), msg = _vmMsg });
         }
@@ -73,19 +73,19 @@ namespace ERP_Leather.Controllers
         //                               ComodityName = temp.ComodityName,                                 
         //                               IsActive = temp.IsActive == true ? "Active" : "Inactive"
         //                           }).OrderByDescending(ob => ob.ComodityID); //obLCOpeningDAL.GetLCOpeningInfo();
-        //    return Json(listComodity, JsonRequestBehavior.AllowGet);
+        //    return Json(listComodity);
         //}
         //public ActionResult SearchLcmCnFBillInfoByLCNo(string search)//InsuranceNo
         //{
         //    var commodityInfo = from temp in repository.SysComodityRepository.Get().Where(ob => ob.ComodityCode.StartsWith(search) || ob.ComodityCode == search)
         //                 select new { temp.ComodityID, temp.ComodityCode, temp.ComodityName, temp.IsActive};
-        //    return Json(commodityInfo, JsonRequestBehavior.AllowGet);
+        //    return Json(commodityInfo);
         //}
 
         //public ActionResult GetAutoCompleteData()
         //{
         //    var data = repository.SysComodityRepository.Get().Select(ob => ob.ComodityCode);
-        //    return Json(data, JsonRequestBehavior.AllowGet);
+        //    return Json(data);
         //}
 
         //public ActionResult GetComodityInfoByComodityID(string ComodityID)
@@ -101,7 +101,7 @@ namespace ERP_Leather.Controllers
         //    ob.ComodityName = dataSet.ComodityName;
         //  //  ob.IsActive = dataSet.IsActive;
 
-        //    return Json(ob, JsonRequestBehavior.AllowGet);
+        //    return Json(ob);
 
         //}
 
@@ -111,7 +111,7 @@ namespace ERP_Leather.Controllers
         public ActionResult DeleteComodityFromGrid(long ComodityID, int userid)
         {
             var data = dalSysComodity.DeleteComodityFromGrid(ComodityID, userid);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
 	}

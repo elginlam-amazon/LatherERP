@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.Utility;
@@ -10,8 +12,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 
 
@@ -44,7 +45,7 @@ namespace ERP_Leather.Controllers
         public ActionResult GetBankList()
         {
             var bankList = objDalLCM_LimInfo.GetLCBankList();
-            return Json(bankList, JsonRequestBehavior.AllowGet);
+            return Json(bankList);
         }
 
         public ActionResult SearchBankbyBankName(string search)//InsuranceNo
@@ -56,7 +57,7 @@ namespace ERP_Leather.Controllers
                               BankName = temp.BankName,
                           });
 
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
 
         public ActionResult BtnSearchBankByBankName(string search)
@@ -68,14 +69,14 @@ namespace ERP_Leather.Controllers
                               BankName = temp.BankName,
                           });
 
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
 
 
         public ActionResult GetAutoCompleteBankPopupData()
         {
             var data = objRepository.BankRepository.Get().Select(ob => ob.BankCode);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
 
@@ -83,7 +84,7 @@ namespace ERP_Leather.Controllers
 
         public ActionResult Save(LCM_LimInfo dataSet)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
 
             objValMssg = objDalLCM_LimInfo.SaveLCM_LimInfo(dataSet, "LimInfo/LimInfo", _userId);
             return Json(new { msg = objValMssg });
@@ -92,7 +93,7 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult Update(LCM_LimInfo dataSet)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             objValMssg = objDalLCM_LimInfo.UpdateLCM_LimInfo(dataSet, _userId);
             return Json(new { msg = objValMssg });
         }
@@ -123,7 +124,7 @@ namespace ERP_Leather.Controllers
                                       RecordStatus = DalCommon.ReturnRecordStatus(temp.RecordStatus),
 
                                   }).OrderByDescending(ob => ob.LimID); //obLCOpeningDAL.GetLCOpeningInfo();
-            return Json(listLcmLimInfo, JsonRequestBehavior.AllowGet);
+            return Json(listLcmLimInfo);
         }
         public ActionResult SearchLcmLimInfoByLCNo(string search)//InsuranceNo
         {
@@ -149,13 +150,13 @@ namespace ERP_Leather.Controllers
                               RecordStatus = DalCommon.ReturnRecordStatus(temp.RecordStatus)
                           }).OrderByDescending(ob => ob.LimID);
 
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
 
         public ActionResult GetAutoCompleteData()
         {
             var data = objRepository.LimInfoRepository.Get().Select(ob => ob.LCNo);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
         public ActionResult GetLimInfoByLCID(string LimID)
@@ -302,7 +303,7 @@ namespace ERP_Leather.Controllers
 
 
 
-            return Json(ob, JsonRequestBehavior.AllowGet);
+            return Json(ob);
 
         }
 
@@ -343,7 +344,7 @@ namespace ERP_Leather.Controllers
                 ob.LimBranchID = limInfo.Sys_Branch.BranchID;
                 ob.RecordStatus = limInfo.RecordStatus;
             }
-            return Json(ob, JsonRequestBehavior.AllowGet);
+            return Json(ob);
         }
 
         public ActionResult UpdateRecordStatus(string remarks, string limID)
@@ -404,7 +405,7 @@ namespace ERP_Leather.Controllers
         //            if (ob.RecordStatus == "NCF")
         //            {
         //                ob.RecordStatus = "CNF";
-        //                ob.CheckedBy = Convert.ToInt32(Session["UserID"]);
+        //                ob.CheckedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
         //                ob.CheckDate = DateTime.Now;
         //                objRepository.LimInfoRepository.Update(ob);
         //                int flag = objRepository.Save();
@@ -452,7 +453,7 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult ConfirmRecordStatus(string limID, string branchID)
         {
-            objValMssg = objDalLCM_LimInfo.ConfirmLimInformation(Convert.ToInt32(Session["UserID"]), limID, branchID);
+            objValMssg = objDalLCM_LimInfo.ConfirmLimInformation(Convert.ToInt32(HttpContext.Session.GetString("UserID")), limID, branchID);
             return Json(new { msg = objValMssg });
         }
         #endregion
@@ -462,7 +463,7 @@ namespace ERP_Leather.Controllers
         public ActionResult DeleteLimInfoList(int limID)
         {
             objValMssg = objDalLCM_LimInfo.DeleteLimInfoList(limID);
-            return Json(objValMssg, JsonRequestBehavior.AllowGet);
+            return Json(objValMssg);
         }
 
 

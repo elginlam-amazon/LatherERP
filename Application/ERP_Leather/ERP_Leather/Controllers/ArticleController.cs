@@ -1,9 +1,9 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
+using Microsoft.AspNetCore.Mvc;
+
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
@@ -36,11 +36,11 @@ namespace ERP_Leather.Controllers
         {
             if (model != null && model.ArticleID != 0)
             {
-                _vmMsg = _dalSysArticle.Update(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysArticle.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             else
             {
-                _vmMsg = _dalSysArticle.Create(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysArticle.Create(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             return Json(new { ArticleID = _dalSysArticle.GetArticleID(), msg = _vmMsg });
         }
@@ -48,15 +48,15 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult Delete(string sourceId)
         {
-            _vmMsg = _dalSysArticle.Delete(sourceId, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = _dalSysArticle.Delete(sourceId, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public ActionResult GetArticleList()
         {
             var sysArticle = _dalSysArticle.GetAll().OrderByDescending(s => s.ArticleID);
-            return Json(sysArticle, JsonRequestBehavior.AllowGet);
+            return Json(sysArticle);
         }
     }
 }

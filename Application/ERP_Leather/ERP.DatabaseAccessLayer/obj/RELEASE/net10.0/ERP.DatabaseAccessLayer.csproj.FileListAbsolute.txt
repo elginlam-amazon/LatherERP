@@ -1,0 +1,17 @@
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.DatabaseAccessLayer/bin/RELEASE/net10.0/ERP.DatabaseAccessLayer.dll.config
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.DatabaseAccessLayer/bin/RELEASE/net10.0/ERP.DatabaseAccessLayer.deps.json
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.DatabaseAccessLayer/bin/RELEASE/net10.0/ERP.DatabaseAccessLayer.runtimeconfig.json
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.DatabaseAccessLayer/bin/RELEASE/net10.0/ERP.DatabaseAccessLayer.dll
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.DatabaseAccessLayer/bin/RELEASE/net10.0/ERP.DatabaseAccessLayer.pdb
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.DatabaseAccessLayer/bin/RELEASE/net10.0/ERP.EntitiesModel.dll
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.DatabaseAccessLayer/bin/RELEASE/net10.0/ERP.EntitiesModel.pdb
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.DatabaseAccessLayer/obj/RELEASE/net10.0/ERP.DatabaseAccessLayer.csproj.AssemblyReference.cache
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.DatabaseAccessLayer/obj/RELEASE/net10.0/ERP.DatabaseAccessLayer.GeneratedMSBuildEditorConfig.editorconfig
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.DatabaseAccessLayer/obj/RELEASE/net10.0/ERP.DatabaseAccessLayer.csproj.CoreCompileInputs.cache
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.DatabaseAccessLayer/obj/RELEASE/net10.0/ERP.DatabaseAccessLayer.sourcelink.json
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.DatabaseAccessLayer/obj/RELEASE/net10.0/ERP.Data.00E5C7ED.Up2Date
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.DatabaseAccessLayer/obj/RELEASE/net10.0/ERP.DatabaseAccessLayer.dll
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.DatabaseAccessLayer/obj/RELEASE/net10.0/refint/ERP.DatabaseAccessLayer.dll
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.DatabaseAccessLayer/obj/RELEASE/net10.0/ERP.DatabaseAccessLayer.pdb
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.DatabaseAccessLayer/obj/RELEASE/net10.0/ERP.DatabaseAccessLayer.genruntimeconfig.cache
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.DatabaseAccessLayer/obj/RELEASE/net10.0/ref/ERP.DatabaseAccessLayer.dll

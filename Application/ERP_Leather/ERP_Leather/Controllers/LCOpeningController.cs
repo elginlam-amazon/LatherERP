@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
@@ -9,8 +11,8 @@ using ERP_Leather.ActionFilters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+
+using Microsoft.AspNetCore.Mvc;
 
 namespace ERP_Leather.Controllers
 {
@@ -52,25 +54,25 @@ namespace ERP_Leather.Controllers
         {
             int bank = Convert.ToInt32(bankId);
             var lstBank = repo.BranchRepository.Get(filter: ob => ob.BankID == bank && ob.BranchName == branchName && ob.IsActive == true);
-            return Json(lstBank, JsonRequestBehavior.AllowGet);
+            return Json(lstBank);
         }
 
         public ActionResult GetBenificiaryInfo()
         {
             var benificiaryInfo = obLCOpeningDAL.GetBeneficiaryInfo();
-            return Json(benificiaryInfo, JsonRequestBehavior.AllowGet);
+            return Json(benificiaryInfo);
         }
 
         public ActionResult GetBeneficiarySearch()
         {
             var benificiaryInfo = repo.SysSupplierRepository.Get(filter: ob => ob.IsActive == true).Select(ob => ob.SupplierName);
-            return Json(benificiaryInfo, JsonRequestBehavior.AllowGet);
+            return Json(benificiaryInfo);
         }
 
         public ActionResult SearchBenificiaryByBenificiary(string beni)
         {
             var benificiaryInfo = obLCOpeningDAL.SearchBenificiaryByBenificiary(beni);
-            return Json(benificiaryInfo, JsonRequestBehavior.AllowGet);
+            return Json(benificiaryInfo);
         }
 
 
@@ -118,13 +120,13 @@ namespace ERP_Leather.Controllers
                 lstPI.Add(obPI);
             }
 
-            return Json(lstPI, JsonRequestBehavior.AllowGet);
+            return Json(lstPI);
         }
 
         public ActionResult GetPISearch()
         {
             var benificiaryInfo = repo.PRQ_ChemicalPIRepository.Get().Select(ob => ob.PINo);
-            return Json(benificiaryInfo, JsonRequestBehavior.AllowGet);
+            return Json(benificiaryInfo);
         }
 
         public ActionResult SearchPIByPI(string beni)
@@ -139,21 +141,21 @@ namespace ERP_Leather.Controllers
                 obPI.PIDate = Convert.ToDateTime(item.PIDate).ToShortDateString();
                 lstPI.Add(obPI);
             }
-            return Json(lstPI, JsonRequestBehavior.AllowGet);
+            return Json(lstPI);
         }
 
 
         [HttpPost]
         public ActionResult Save(LcmLcOpening dataSet)
         {
-            _vmMsg = obLCOpeningDAL.SaveLCOpeningInfo(dataSet, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = obLCOpeningDAL.SaveLCOpeningInfo(dataSet, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
         [HttpPost]
         public ActionResult Update(LcmLcOpening dataSet)
         {
-            _vmMsg = obLCOpeningDAL.UpdateLCOpeningInfo(dataSet, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = obLCOpeningDAL.UpdateLCOpeningInfo(dataSet, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
@@ -161,12 +163,12 @@ namespace ERP_Leather.Controllers
         public ActionResult GetLCBankList(string bankCategory, string bankType)
         {
             var lstBank = obLCOpeningDAL.GetLCBankList(bankCategory, bankType);
-            return Json(lstBank, JsonRequestBehavior.AllowGet);
+            return Json(lstBank);
         }
         public ActionResult GetLcAdvBenfBankList(string bankCategory, string bankType)
         {
             var lstBank = obLCOpeningDAL.GetLcAdvBenfBankList(bankCategory);
-            return Json(lstBank, JsonRequestBehavior.AllowGet);
+            return Json(lstBank);
         }
         
         public ActionResult SearchLCBankByBank(string bank, string bankCategory, string bankType)
@@ -174,12 +176,12 @@ namespace ERP_Leather.Controllers
             bank = bank.ToUpper();
             var lstBank = obLCOpeningDAL.GetLCBankList(bankCategory, bankType);
             var result = from temp in lstBank where (temp.BankName.ToUpper().StartsWith(bank) || temp.BankName.ToUpper() == bank) select temp;
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
         public ActionResult GetLCBankNameList(string bankCategory, string bankType)
         {
             var lstBank = repo.BankRepository.Get(filter: ob => ob.BankCategory == bankCategory && ob.BankType == bankType && ob.IsActive == true).Select(ob => ob.BankName);
-            return Json(lstBank, JsonRequestBehavior.AllowGet);
+            return Json(lstBank);
         }
 
         public ActionResult GetLCOpeningInfo()
@@ -250,7 +252,7 @@ namespace ERP_Leather.Controllers
                 ob.OfferValidityDays = item.OfferValidityDays;
                 lst.Add(ob);
             }
-            return Json(lst, JsonRequestBehavior.AllowGet);
+            return Json(lst);
         }
         public ActionResult SearchLCByLCNo(string search)
         {
@@ -265,7 +267,7 @@ namespace ERP_Leather.Controllers
                              LCMargin = temp.LCMargin
                          };
 
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
         public ActionResult BtnSearchLCByLCNo(string search)
         {
@@ -281,27 +283,27 @@ namespace ERP_Leather.Controllers
 
                          };
 
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
 
         public ActionResult GetLCNOList()
         {
             var lcInfo = repo.LCOpeningRepository.Get().OrderByDescending(o => o.LCID).Select(ob => ob.LCNo);
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
 
 
         [HttpPost]
         public ActionResult UpdateRecordStatus(string note, string lcId)
         {
-            _vmMsg = obLCOpeningDAL.UpdateRecordStatus(note, lcId, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = obLCOpeningDAL.UpdateRecordStatus(note, lcId, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
         [HttpPost]
         public ActionResult UpdateConfRecordStatus(string lcId, string approvalAdvice)
         {
-            _vmMsg = obLCOpeningDAL.UpdateConfRecordStatus(lcId, approvalAdvice, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = obLCOpeningDAL.UpdateConfRecordStatus(lcId, approvalAdvice, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
         public ActionResult GetLcDetailsInfoByLcNo(string LCID)
@@ -410,7 +412,7 @@ namespace ERP_Leather.Controllers
                 else
                 { ob.InsuranceNo = ""; }
             }
-            return Json(ob, JsonRequestBehavior.AllowGet);
+            return Json(ob);
         }
         public ActionResult GetPIDetailsInfo(string PINO)
         {
@@ -505,7 +507,7 @@ namespace ERP_Leather.Controllers
 
                 lst.Add(ob);
             }
-            return Json(lst.OrderByDescending(ob => ob.InsuranceID), JsonRequestBehavior.AllowGet);
+            return Json(lst.OrderByDescending(ob => ob.InsuranceID));
         }
 
         public ActionResult SearchInsuranceByInsurance(string ins)
@@ -528,13 +530,13 @@ namespace ERP_Leather.Controllers
                 lst.Add(ob);
             }
             var result = from temp in lst where (temp.InsuranceNo.ToUpper().StartsWith(InsuranceNo) || temp.InsuranceNo.ToUpper() == InsuranceNo) select temp;
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetInsuranceAutocompleteData()
         {
             var search = repo.LcmInsuranceRpository.Get().Select(ob => ob.InsuranceNo);
-            return Json(search, JsonRequestBehavior.AllowGet);
+            return Json(search);
         }
 
         #endregion

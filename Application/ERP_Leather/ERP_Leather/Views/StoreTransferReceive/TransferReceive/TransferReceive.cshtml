@@ -117,13 +117,13 @@
                 <label>Checked By</label>
             </div>
             <div class="col-lg-2">
-                <input type="text" id="txtCheckedBy" class="txtCommandBox" name="" tabindex="" readonly="readonly" value="@Session["UserName"]" />
+                <input type="text" id="txtCheckedBy" class="txtCommandBox" name="" tabindex="" readonly="readonly" value="@Context.Session.GetString("UserName")" />
             </div>
             <div class="col-lg-2">
                 <label>Confirmed By</label>
             </div>
             <div class="col-lg-2">
-                <input type="text" id="txtApprovedBy" class="txtCommandBox" name="" tabindex="" readonly="readonly" value="@Session["UserName"]" />
+                <input type="text" id="txtApprovedBy" class="txtCommandBox" name="" tabindex="" readonly="readonly" value="@Context.Session.GetString("UserName")" />
             </div>
         </div>
         @*<div class="row">

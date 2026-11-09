@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
@@ -35,51 +35,51 @@ namespace ERP_Leather.Controllers
             var objUnit = new DalSysUnit();
 
             var allData = objUnit.GetAllActiveLeatherChemical();
-            return Json(allData, JsonRequestBehavior.AllowGet);
+            return Json(allData);
         }
 
         public ActionResult GetAllActiveChemicalItem()
         {
             var allData = new DalSysChemicalItem().GetAllActiveChemicalItem();
-            return Json(allData, JsonRequestBehavior.AllowGet);
+            return Json(allData);
         }
 
         public ActionResult GetAllChemicalSupplier()
         {
             var allData = new DalSysSupplier().GetAllChemicalSupplier();
-            return Json(allData, JsonRequestBehavior.AllowGet);
+            return Json(allData);
         }
 
         public ActionResult GetLocalChemicalSupplierList()
         {
             var supplier = _objSupplier.GetAllLocalChemicalSupplier();
-            return Json(supplier, JsonRequestBehavior.AllowGet);
+            return Json(supplier);
         }
 
         public ActionResult GetChemicalSupplierByType(string supplierType)
         {
             var type = supplierType == "LP" ? "Local" : "Foreign";
             var allData = new DalSysSupplier().GetChemicalSupplierByType(type);
-            return Json(allData, JsonRequestBehavior.AllowGet);
+            return Json(allData);
         }
         public ActionResult GetChemicalSupplierByTypeForSearch(string supplierType)
         {
             var type = supplierType == "LP" ? "Local" : "Foreign";
             var allData = new DalSysSupplier().GetChemicalSupplierByType(type).Select(s => s.SupplierName);
-            return Json(allData, JsonRequestBehavior.AllowGet);
+            return Json(allData);
         }
         public ActionResult GetAllUnitForChemical()
         {
             var chemicalUnit = _unit.SysUnitRepository.Get().Where(ob => ob.UnitCategory == "Chemical" && ob.IsDelete != true).ToList();
             var lstChemicalUnit = chemicalUnit.Select(item => new SysUnit { UnitID = item.UnitID, UnitName = item.UnitName }).ToList();
-            return Json(lstChemicalUnit, JsonRequestBehavior.AllowGet);
+            return Json(lstChemicalUnit);
         }
 
         public ActionResult GetAllChemicalItemType()
         {
             var chemicalItemType = _unit.SysChemicalItemRepository.Get().Where(ob => ob.IsActive != false).ToList();
             var lstChemicalItemType = chemicalItemType.Select(item => new SysChemicalItem { ItemID = item.ItemID, ItemName = item.ItemName, HSCode = item.HSCode, ItemCategory = DalCommon.ReturnChemicalItemCategory(item.ItemCategory) }).ToList();
-            return Json(lstChemicalItemType.OrderBy(ob => ob.ItemName), JsonRequestBehavior.AllowGet);
+            return Json(lstChemicalItemType.OrderBy(ob => ob.ItemName));
         }
 
         public ActionResult GetAllChemicalUnit()
@@ -87,7 +87,7 @@ namespace ERP_Leather.Controllers
             var chemicalUnit = _unit.SysUnitRepository.Get().Where(ob => ob.UnitCategory == "ChemicalPack" && ob.IsActive && ob.IsDelete == false).ToList();
             var lstChemicalUnit =
                 chemicalUnit.Select(item => new Sys_Unit { UnitID = item.UnitID, UnitName = item.UnitName }).ToList();
-            return Json(lstChemicalUnit, JsonRequestBehavior.AllowGet);
+            return Json(lstChemicalUnit);
         }
 
         public ActionResult GetCommonChemicalUnit()
@@ -95,7 +95,7 @@ namespace ERP_Leather.Controllers
             var chemicalUnit = _unit.SysUnitRepository.Get().Where(ob => (ob.UnitCategory == "Chemical" || ob.UnitCategory == "Common") && ob.IsActive && ob.IsDelete == false).ToList();
             var lstChemicalUnit =
                 chemicalUnit.Select(item => new Sys_Unit { UnitID = item.UnitID, UnitName = item.UnitName }).ToList();
-            return Json(lstChemicalUnit, JsonRequestBehavior.AllowGet);
+            return Json(lstChemicalUnit);
         }
 
         public ActionResult GetAllManufacturer()
@@ -104,21 +104,21 @@ namespace ERP_Leather.Controllers
             var lstManufacturer =
                 manufactutrer.Select(
                     item => new SysSupplier { SupplierID = item.SupplierID, SupplierName = item.SupplierName, SupplierCode = item.SupplierCode, SupplierType = item.SupplierType }).ToList();
-            return Json(lstManufacturer, JsonRequestBehavior.AllowGet);
+            return Json(lstManufacturer);
         }
 
         public ActionResult GetAllSize()
         {
             var sizes = _unit.SysSizeRepository.Get().Where(ob => ob.SizeCategory == "ChemicalPack").ToList();
             var sizeList = sizes.Select(item => new SysSize { SizeID = item.SizeID, SizeName = item.SizeName }).ToList();
-            return Json(sizeList, JsonRequestBehavior.AllowGet);
+            return Json(sizeList);
         }
         public ActionResult GetAllPackUnitForChemical()
         {
             var chemicalUnit = _unit.SysUnitRepository.Get().Where(ob => ob.UnitCategory == "ChemicalPack" || ob.UnitCategory == "Common" && ob.IsActive && !ob.IsDelete).ToList();
             var lstChemicalUnit =
                 chemicalUnit.Select(item => new PackUnit { PackUnitID = item.UnitID, PackUnitName = item.UnitName }).ToList();
-            return Json(lstChemicalUnit, JsonRequestBehavior.AllowGet);
+            return Json(lstChemicalUnit);
         }
 
         public ActionResult GetAllPackSizeForChemical()
@@ -126,9 +126,9 @@ namespace ERP_Leather.Controllers
             var packSizeUnit = _unit.SysSizeRepository.Get().Where(ob => ob.SizeCategory == "ChemicalPack" && ob.IsActive && !ob.IsDelete).OrderBy(o=>Convert.ToInt32(o.SizeName)).ToList();
             var lstPackSizeUnit =
                 packSizeUnit.Select(item => new SysSize() { SizeID = item.SizeID, SizeName = item.SizeName }).ToList();
-            return Json(lstPackSizeUnit, JsonRequestBehavior.AllowGet);
+            return Json(lstPackSizeUnit);
             //var data = new DalChemicalForeignPurchaseOrder().GetAllPackSizeForChemical();
-            //return Json(data, JsonRequestBehavior.AllowGet);
+            //return Json(data);
         }
 
         public ActionResult GetChemicalItemsForSearch()
@@ -143,7 +143,7 @@ namespace ERP_Leather.Controllers
                         ob.HSCode,
                         ItemCategory = DalCommon.ReturnChemicalItemCategory(ob.ItemCategory)
                     }).ToList();
-            return Json(chemItems, JsonRequestBehavior.AllowGet);
+            return Json(chemItems);
         }
 
         public ActionResult GetChemicalUnit()
@@ -153,7 +153,7 @@ namespace ERP_Leather.Controllers
                     .Where(ob => ob.UnitCategory == "Chemical" && ob.IsActive && !ob.IsDelete)
                     .Select(unit => new { unit.UnitID, unit.UnitName })
                     .ToList();
-            return Json(chemUnit, JsonRequestBehavior.AllowGet);
+            return Json(chemUnit);
         }
 
         public ActionResult GetChemicalPackUnit()
@@ -163,7 +163,7 @@ namespace ERP_Leather.Controllers
                 .Where(ob => ob.UnitCategory == "ChemicalPack" && ob.IsActive && !ob.IsDelete)
                 .Select(unit => new { unit.UnitID, unit.UnitName })
                 .ToList();
-            return Json(chemPackUnit, JsonRequestBehavior.AllowGet);
+            return Json(chemPackUnit);
         }
 
         public ActionResult GetManufacturer()
@@ -172,7 +172,7 @@ namespace ERP_Leather.Controllers
                 _unit.SysSupplierRepository.Get()
                     .Where(ob => ob.SupplierType == "Manufacturer" && ob.IsActive && !ob.IsDelete)
                     .Select(sup => new { sup.SupplierID, sup.SupplierCode, sup.SupplierName });
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetLocalPurchaseBill()
@@ -186,7 +186,7 @@ namespace ERP_Leather.Controllers
                      SupplierName = _unit.SysSupplierRepository.GetByID(bill.SupplierID).SupplierName,
                      SupplierBillNo = bill.SupplierBillNo
                  }).ToList();
-            return Json(bills, JsonRequestBehavior.AllowGet);
+            return Json(bills);
         }
 
         public ActionResult GetLocalPurchaseBillBySup(int supplierId)
@@ -200,7 +200,7 @@ namespace ERP_Leather.Controllers
                      SupplierName = _unit.SysSupplierRepository.GetByID(bill.SupplierID).SupplierName,
                      SupplierBillNo = bill.SupplierBillNo
                  }).ToList();
-            return Json(bills, JsonRequestBehavior.AllowGet);
+            return Json(bills);
         }
 
         public ActionResult GetAllWetBlueBuyer()
@@ -209,7 +209,7 @@ namespace ERP_Leather.Controllers
                 _unit.SysBuyerRepository.Get()
                     .Where(ob => ob.BuyerCategory == "Buyer" && ob.IsActive == true)
                     .Select(b => new { b.BuyerID, b.BuyerCode, b.BuyerName }).OrderBy(o => o.BuyerID).ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetAllUnitForThickness()
@@ -219,7 +219,7 @@ namespace ERP_Leather.Controllers
                 .Where(ob => ob.UnitCategory == "Thickness" && ob.IsActive && !ob.IsDelete)
                 .Select(unit => new { unit.UnitID, unit.UnitName })
                 .ToList();
-            return Json(thicknessUnit, JsonRequestBehavior.AllowGet);
+            return Json(thicknessUnit);
         }
 
         public ActionResult GetChemLcList()
@@ -235,7 +235,7 @@ namespace ERP_Leather.Controllers
                                     RecordStatus = DalCommon.ReturnOrderStatus(b.RecordStatus)
                                 }
                                 ).ToList().OrderByDescending(s => s.LCID);
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetAllActiveArticleItem()
@@ -250,7 +250,7 @@ namespace ERP_Leather.Controllers
                      ArticleColor = a.ArticleColor,
                      ColorName = a.ArticleColor != null ? _unit.SysColorRepository.GetByID(a.ArticleColor).ColorName : ""
                  }).ToList();
-            return Json(bills, JsonRequestBehavior.AllowGet);
+            return Json(bills);
         }
 
         public ActionResult GetGrade()
@@ -264,7 +264,7 @@ namespace ERP_Leather.Controllers
                 }
                 ).ToList();
 
-            return Json(grades.OrderBy(ob => ob.GradeName), JsonRequestBehavior.AllowGet);
+            return Json(grades.OrderBy(ob => ob.GradeName));
 
         }
 
@@ -280,7 +280,7 @@ namespace ERP_Leather.Controllers
                     BuyerAddressId = _unit.BuyerAddressRepository.Get().FirstOrDefault(ob => ob.BuyerID == buyer.BuyerID).BuyerAddressID,
                     _unit.BuyerAddressRepository.Get().FirstOrDefault(ob => ob.BuyerID == buyer.BuyerID).Address
                 }).ToList();
-            return Json(buyers.OrderBy(ob => ob.BuyerName), JsonRequestBehavior.AllowGet);
+            return Json(buyers.OrderBy(ob => ob.BuyerName));
         }
 
         public ActionResult BuyerOrder(long buyerId)
@@ -295,7 +295,7 @@ namespace ERP_Leather.Controllers
                     BuyerName = order.BuyerID == null ? "" : _unit.SysBuyerRepository.GetByID(order.BuyerID).BuyerName,
                     RecordStatus = DalCommon.ReturnRecordStatus(order.RecordStatus)
                 }).ToList();
-            return Json(orders.OrderByDescending(ob => ob.BuyerOrderID), JsonRequestBehavior.AllowGet);
+            return Json(orders.OrderByDescending(ob => ob.BuyerOrderID));
         }
 
         public ActionResult GetGrades()
@@ -307,7 +307,7 @@ namespace ERP_Leather.Controllers
                 grade.Description
             }).ToList();
 
-            return Json(grades.OrderBy(ob => ob.GradeName), JsonRequestBehavior.AllowGet);
+            return Json(grades.OrderBy(ob => ob.GradeName));
         }
 
         public ActionResult GetArticles()
@@ -322,7 +322,7 @@ namespace ERP_Leather.Controllers
                         article.ArticleName,
                         article.ArticleChallanNo
                     }).ToList();
-            return Json(articles.OrderBy(ob => ob.ArticleName), JsonRequestBehavior.AllowGet);
+            return Json(articles.OrderBy(ob => ob.ArticleName));
         }
 
         public ActionResult GetColors()
@@ -335,7 +335,7 @@ namespace ERP_Leather.Controllers
                     color.ColorCode,
                     color.ColorName
                 }).ToList();
-            return Json(colors.OrderBy(ob => ob.ColorCode), JsonRequestBehavior.AllowGet);
+            return Json(colors.OrderBy(ob => ob.ColorCode));
         }
 
         public ActionResult GetIssue()
@@ -347,7 +347,7 @@ namespace ERP_Leather.Controllers
                 CrustLeatherIssueDate = string.Format("{0:dd/MM/yyyy}", issue.CrustLeatherIssueDate),
                 RecordStatus = DalCommon.ReturnRecordStatus(issue.RecordStatus)
             }).ToList();
-            return Json(issues.OrderBy(ob => ob.CrustLeatherIssueDate), JsonRequestBehavior.AllowGet);
+            return Json(issues.OrderBy(ob => ob.CrustLeatherIssueDate));
         }
 
         public ActionResult GetUnitsForLeather()
@@ -358,7 +358,7 @@ namespace ERP_Leather.Controllers
                     unit.UnitID,
                     unit.UnitName
                 }).ToList();
-            return Json(units.OrderBy(ob => ob.UnitName), JsonRequestBehavior.AllowGet);
+            return Json(units.OrderBy(ob => ob.UnitName));
         }
 
         public ActionResult GetShipperInfo()
@@ -371,7 +371,7 @@ namespace ERP_Leather.Controllers
                 info.BuyerName,
                 info.BuyerType
             }).ToList();
-            return Json(allShipperInfo, JsonRequestBehavior.AllowGet);
+            return Json(allShipperInfo);
         }
 
         public ActionResult GetPortInfo()
@@ -384,7 +384,7 @@ namespace ERP_Leather.Controllers
                 info.PortName,
                 info.PortAdress
             }).ToList();
-            return Json(allPortInfo, JsonRequestBehavior.AllowGet);
+            return Json(allPortInfo);
         }
 
         public ActionResult GetAllCountry()
@@ -396,7 +396,7 @@ namespace ERP_Leather.Controllers
                 cntry.CountryCode,
                 cntry.CountryName
             }).ToList();
-            return Json(result.OrderBy(ob => ob.CountryName), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderBy(ob => ob.CountryName));
         }
 
         public ActionResult GetAllBuyer()
@@ -414,7 +414,7 @@ namespace ERP_Leather.Controllers
                 x.Address = add == null ? "" : add.Address;
                 result.Add(x);
             }
-            return Json(result.OrderBy(ob => ob.BuyerName), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderBy(ob => ob.BuyerName));
         }
 
         public ActionResult GetAllBanks()
@@ -432,7 +432,7 @@ namespace ERP_Leather.Controllers
             }).ToList().OrderBy(ob => ob.BankName);
             //}).ToList().OrderByDescending(m => m.BankID);
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetBranchByBank(int bankId)
@@ -459,7 +459,7 @@ namespace ERP_Leather.Controllers
                 branch.LIMBalance,
                 IsActive = branch.IsActive == true ? "Active" : "Inactive"
             }).ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetAllBranches()
@@ -477,18 +477,18 @@ namespace ERP_Leather.Controllers
                 x.Address3 = branch.Address3;
                 result.Add(x);
             }
-            return Json(result.OrderBy(ob => ob.BranchName), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderBy(ob => ob.BranchName));
         }
 
         public ActionResult ArticleChallanList()
         {
             var data = new DalWetBlueIssue().GetAllActiveChallanArticleWithoutBuyer();
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
         public ActionResult ArticleList()
         {
             var data = new DalWetBlueIssue().GetAllActiveArticle();
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
     }
 

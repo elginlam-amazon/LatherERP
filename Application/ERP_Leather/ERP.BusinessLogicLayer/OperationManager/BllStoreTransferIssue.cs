@@ -2,7 +2,6 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Transactions;
-using DatabaseUtility;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.EntitiesModel.BaseModel;
 using ERP.EntitiesModel.OperationModel;
@@ -14,8 +13,6 @@ namespace ERP.BusinessLogicLayer.OperationManager
     public class BllStoreTransferIssue
     {
         #region Private Variables
-
-        private readonly DatabseManager _databseManager;
         private DalStoreTransferIssue _dalStoreTransferIssue;
 
         //private int _result;
@@ -27,8 +24,6 @@ namespace ERP.BusinessLogicLayer.OperationManager
 
         public BllStoreTransferIssue()
         {
-            _databseManager = new DatabseManager(DatabaseConfiguration.ConnectionString, DatabaseConfiguration.DatabaseProvider);
-
         }
 
         #endregion

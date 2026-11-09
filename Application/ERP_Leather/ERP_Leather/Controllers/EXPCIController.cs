@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.EntitiesModel.AppSetupModel;
@@ -6,8 +7,7 @@ using ERP.EntitiesModel.OperationModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP_Leather.ActionFilters;
 
 namespace ERP_Leather.Controllers
@@ -35,78 +35,78 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult EXPCI(EXPCI model)
         {
-            _vmMsg = model.CIID == 0 ? Dalobject.Save(model, Convert.ToInt32(Session["UserID"]), "EXPCI/EXPCI") : Dalobject.Update(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = model.CIID == 0 ? Dalobject.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "EXPCI/EXPCI") : Dalobject.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { CIID = Dalobject.GetCIID(), CINo = Dalobject.GetCINo(), CIPIID = Dalobject.GetCIPIID(), msg = _vmMsg });
         }
 
         [HttpPost]
         public ActionResult ConfirmedEXPCI(EXPCI model)
         {
-            _vmMsg = Dalobject.ConfirmedEXPCI(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.ConfirmedEXPCI(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
         [HttpPost]
         public ActionResult CheckedEXPCI(EXPCI model)
         {
-            _vmMsg = Dalobject.ConfirmedEXPCI(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.ConfirmedEXPCI(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
         public ActionResult GetBuyerList()
         {
             var buyerlist = Dalobject.GetBuyerList();
-            return Json(buyerlist, JsonRequestBehavior.AllowGet);
+            return Json(buyerlist);
         }
 
         public ActionResult GetCIInformation()
         {
-            return Json(Dalobject.GetCIInformation(), JsonRequestBehavior.AllowGet);
+            return Json(Dalobject.GetCIInformation());
         }
 
         public ActionResult GetCIPIInformation(string CIID)
         {
-            return Json(Dalobject.GetCIPIInformation(CIID), JsonRequestBehavior.AllowGet);
+            return Json(Dalobject.GetCIPIInformation(CIID));
         }
 
         public ActionResult GetExpPIList(string _BuyerID)
         {
-            return Json(Dalobject.GetExpPIList(_BuyerID), JsonRequestBehavior.AllowGet);
+            return Json(Dalobject.GetExpPIList(_BuyerID));
         }
 
         public ActionResult GetExpPIItemAndColorList(string PIID, string OrdDeliveryMode)
         {
             EXPCI model = new EXPCI();
-            if (string.IsNullOrEmpty(PIID)) return Json(model, JsonRequestBehavior.AllowGet);
+            if (string.IsNullOrEmpty(PIID)) return Json(model);
             model.ExpCIPIItemList = Dalobject.GetExpPIItemList(PIID, OrdDeliveryMode);
             if (model.ExpCIPIItemList.Count > 0)
             {
                 model.ExpCIPIItemColorList = Dalobject.GetExpPIItemColorList(model.ExpCIPIItemList[0].PIItemID.ToString(), OrdDeliveryMode);
                 //model.BuyerOrderPriceList = Dalobject.GetBuyerOrderPriceList(PIID);
             }
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return Json(model);
         }
 
         public ActionResult GetExpPIItemColorList(string PIItemID, string OrdDeliveryMode)
         {
             var packItemList = Dalobject.GetExpPIItemColorList(PIItemID, OrdDeliveryMode);
-            return Json(packItemList, JsonRequestBehavior.AllowGet);
+            return Json(packItemList);
         }
 
         public ActionResult GetExpCIItemColorList(string CIPIItemID, string PIItemID, string OrdDeliveryMode)
         {
             var packItemList = Dalobject.GetExpCIItemColorList(CIPIItemID);
             if (packItemList.Count > 0)
-                return Json(packItemList, JsonRequestBehavior.AllowGet);
+                return Json(packItemList);
             else
                 packItemList = Dalobject.GetExpPIItemColorList(PIItemID, OrdDeliveryMode);
-            return Json(packItemList, JsonRequestBehavior.AllowGet);
+            return Json(packItemList);
         }
 
         public ActionResult GetAllGridList(string CIPIID)
         {
             EXPCI model = new EXPCI();
-            if (string.IsNullOrEmpty(CIPIID)) return Json(model, JsonRequestBehavior.AllowGet);
+            if (string.IsNullOrEmpty(CIPIID)) return Json(model);
             model.ExpCIPIItemList = Dalobject.GetExpCIPIItemList(CIPIID);
             if (model.ExpCIPIItemList.Count > 0)
             {
@@ -114,10 +114,10 @@ namespace ERP_Leather.Controllers
                 //model.BuyerOrderPriceList = Dalobject.GetBuyerOrderPriceList(PIID);
             }
 
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return Json(model);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedCIInfo(string CIID)
         {
             long? cIID = Convert.ToInt64(CIID);
@@ -125,7 +125,7 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedCIPIItem(string CIPIItemID)
         {
             long? cIPIItemID = Convert.ToInt64(CIPIItemID);
@@ -133,7 +133,7 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedCIPIItemColor(string CIPIItemColorID)
         {
             long? cIPIItemColorID = Convert.ToInt64(CIPIItemColorID);

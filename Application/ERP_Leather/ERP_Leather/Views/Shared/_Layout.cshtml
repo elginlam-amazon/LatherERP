@@ -83,7 +83,7 @@
                         </div>
                         <div class="col-lg-5" style="padding: 0 0 0 0;">
                             <label id="userinfo" style="padding-top:15px; color: #556b2f; font-weight: bold; font-size: 16px; float:right">
-                                User Name : @Session["UserName"]
+                                User Name : @Context.Session.GetString("UserName")
                             </label>
                         </div>
                         

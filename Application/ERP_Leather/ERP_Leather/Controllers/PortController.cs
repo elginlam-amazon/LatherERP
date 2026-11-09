@@ -1,11 +1,11 @@
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
 using System;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using ERP_Leather.ActionFilters;
-using System.Web;
 
 namespace ERP_Leather.Controllers
 {
@@ -32,11 +32,11 @@ namespace ERP_Leather.Controllers
         {
             if (model != null && model.PortID != 0)
             {
-                _vmMsg = _dalSysPort.Update(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysPort.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             else
             {
-                _vmMsg = _dalSysPort.Save(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysPort.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             return Json(new { PortID = _dalSysPort.GetPortID(), msg = _vmMsg });
         }
@@ -48,14 +48,14 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public ActionResult GetPortList()
         {
             var sysPort = _dalSysPort.GetAll().OrderByDescending(s => s.PortID);
-            return Json(sysPort, JsonRequestBehavior.AllowGet);
+            return Json(sysPort);
         }
 
-        public ActionResult UploadFile(HttpPostedFileBase file)
+        public ActionResult UploadFile(IFormFile file)
         {
             return View();
         }

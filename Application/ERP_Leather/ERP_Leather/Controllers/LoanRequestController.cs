@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
@@ -10,8 +11,8 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Mvc;
+
+using Microsoft.AspNetCore.Mvc;
 
 namespace ERP_Leather.Controllers
 {
@@ -44,13 +45,13 @@ namespace ERP_Leather.Controllers
             {
                 var lst = from temp in repository.StoreRepository.Get(filter: ob => ob.IsActive == true && ob.IsDelete==false ) 
                       select new { temp.StoreID, temp.StoreName, temp.StoreCode };
-                return Json(lst, JsonRequestBehavior.AllowGet);
+                return Json(lst);
             }
             else
             {
                 var lst = from temp in repository.StoreRepository.Get(filter: ob => ob.IsActive == true && ob.IsDelete == false && ob.StoreCategory == storeCategory && ob.StoreType == "Chemical")
                           select new { temp.StoreID, temp.StoreName, temp.StoreCode };
-                return Json(lst, JsonRequestBehavior.AllowGet);
+                return Json(lst);
             }
            
         }
@@ -58,7 +59,7 @@ namespace ERP_Leather.Controllers
         //{
         //    var lst = from temp in repository.StoreRepository.Get(filter: ob => ob.IsActive == true && ob.IsDelete == false && ob.StoreCategory == "Chemical" && ob.StoreType == "Chemical")
         //                  select new { temp.StoreID, temp.StoreName, temp.StoreCode };
-        //        return Json(lst, JsonRequestBehavior.AllowGet);
+        //        return Json(lst);
          
         //}
         public ActionResult SearchStoreByStore(string search)
@@ -73,7 +74,7 @@ namespace ERP_Leather.Controllers
                              temp.StoreCode
                          };
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult SearchChemicalStoreByStore(string search)
@@ -88,25 +89,25 @@ namespace ERP_Leather.Controllers
                              temp.StoreCode
                          };
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetStoreSearch()
         {
             var search = repository.StoreRepository.Get(filter: ob => ob.IsActive == true, orderBy: q => q.OrderByDescending(d => d.StoreID)).Select(ob => ob.StoreName);
-            return Json(search, JsonRequestBehavior.AllowGet);
+            return Json(search);
         }
 
         public ActionResult GetChemicalStoreSearch()
         {
             var search = repository.StoreRepository.Get(filter: ob => ob.IsActive == true && ob.IsDelete == false && ob.StoreCategory == "Chemical" && ob.StoreType == "Chemical", orderBy: q => q.OrderByDescending(d => d.StoreID)).Select(ob => ob.StoreName);
-            return Json(search, JsonRequestBehavior.AllowGet);
+            return Json(search);
         }
 
         public ActionResult GetSupplierList()
         {
             var result = from temp in repository.SysSupplierRepository.Get(filter: ob => ob.IsActive == true) select new { temp.SupplierID,temp.SupplierCode,temp.SupplierName,temp.SupplierCategory};
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
 
@@ -120,7 +121,7 @@ namespace ERP_Leather.Controllers
                              temp.HSCode,
                              temp.ItemCategory
                          }; 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
         public object SearchChemicalByName(string search)
         {
@@ -132,14 +133,14 @@ namespace ERP_Leather.Controllers
                              temp.HSCode,
                              temp.ItemCategory
                          }; 
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
 
         }
 
         public object GetLCNoSearch()
         {
             var data = repository.SysChemicalItemRepository.Get().Select(ob => ob.ItemName);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
         [HttpPost]
@@ -148,7 +149,7 @@ namespace ERP_Leather.Controllers
             try
             {
                 //######################################
-               // Session["UserID"] = 1;
+               // HttpContext.Session.SetString("UserID", 1);
                 if (dataSet.RequestID == 0)
                 {
                     INV_TransRequest ob = new INV_TransRequest();
@@ -177,8 +178,8 @@ namespace ERP_Leather.Controllers
                     ob.ExpectetReturnTime = Convert.ToByte(dataSet.ExpectetReturnTime);
                     ob.RecordStatus = "NCF";
                     ob.SetOn = DateTime.Now;
-                    ob.SetBy = Convert.ToInt32(Session["UserID"]);
-                    ob.ModifiedBy = Convert.ToInt32(Session["UserID"]);
+                    ob.SetBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
+                    ob.ModifiedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                     ob.ModifiedOn = DateTime.Now;
                   
                     ob.IPAddress = GetIPAddress.LocalIPAddress();
@@ -190,8 +191,8 @@ namespace ERP_Leather.Controllers
                     //obRef.RefRequestID = ob.RequestID;
                     obRef.ReturnMethod = dataSet.ReturnMethod;
                     obRef.SetOn = DateTime.Now;
-                    obRef.SetBy = Convert.ToInt32(Session["UserID"]);
-                    obRef.ModifiedBy = Convert.ToInt32(Session["UserID"]);
+                    obRef.SetBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
+                    obRef.ModifiedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                     obRef.ModifiedOn = DateTime.Now;
                     obRef.IPAddress = GetIPAddress.LocalIPAddress();
                     repository.InvTransRequestRefRepository.Insert(obRef);
@@ -219,9 +220,9 @@ namespace ERP_Leather.Controllers
                            
                             if (item.RefSupplierID > 0) { obReqItem.RefSupplierID = Convert.ToInt32(item.RefSupplierID); }
                           
-                            obReqItem.SetBy = Convert.ToInt32(Session["UserID"]);
+                            obReqItem.SetBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                             obReqItem.SetOn = DateTime.Now;
-                            obReqItem.ModifiedBy = Convert.ToInt32(Session["UserID"]);
+                            obReqItem.ModifiedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                             obReqItem.ModifiedOn = DateTime.Now;
                             obReqItem.IPAddress = GetIPAddress.LocalIPAddress();
                             repository.InvTransRequestItemRepository.Insert(obReqItem);
@@ -250,7 +251,7 @@ namespace ERP_Leather.Controllers
                         ob.ReturnMethod = dataSet.ReturnMethod;
                         ob.ExpectetReturnTime = Convert.ToByte(dataSet.ExpectetReturnTime);                   
                         ob.ModifiedOn = DateTime.Now;
-                        ob.ModifiedBy = Convert.ToInt32(Session["UserID"]);
+                        ob.ModifiedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                         ob.FromSource = "STR";
                         if (ob.RequestType == "LNIR")
                         {
@@ -270,7 +271,7 @@ namespace ERP_Leather.Controllers
 
                         INV_TransRequestRef obRef = repository.InvTransRequestRefRepository.Get(filter: o=>o.RequestID == dataSet.RequestID).FirstOrDefault();
                         obRef.ReturnMethod = dataSet.ReturnMethod;                      
-                        obRef.ModifiedBy = Convert.ToInt32(Session["UserID"]);
+                        obRef.ModifiedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                         obRef.ModifiedOn = DateTime.Now;
                         obRef.IPAddress = GetIPAddress.LocalIPAddress();
                         repository.InvTransRequestRefRepository.Update(obRef);
@@ -304,9 +305,9 @@ namespace ERP_Leather.Controllers
                                     {
                                         obReqItem.RefSupplierID = Convert.ToInt32(item.RefSupplierID);
                                     }     
-                                    obReqItem.SetBy = Convert.ToInt32(Session["UserID"]);
+                                    obReqItem.SetBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                                     obReqItem.SetOn = DateTime.Now;
-                                    obReqItem.ModifiedBy = Convert.ToInt32(Session["UserID"]);
+                                    obReqItem.ModifiedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                                     obReqItem.ModifiedOn = DateTime.Now;
                                     obReqItem.IPAddress = GetIPAddress.LocalIPAddress();
                                     repository.InvTransRequestItemRepository.Insert(obReqItem);
@@ -335,7 +336,7 @@ namespace ERP_Leather.Controllers
                                     { 
                                         obReqItem.RefSupplierID = Convert.ToInt32(item.RefSupplierID); 
                                     }                             
-                                    obReqItem.ModifiedBy = Convert.ToInt32(Session["UserID"]);
+                                    obReqItem.ModifiedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                                     obReqItem.ModifiedOn = DateTime.Now;
                                     obReqItem.IPAddress = GetIPAddress.LocalIPAddress();
                                     repository.InvTransRequestItemRepository.Update(obReqItem);
@@ -464,7 +465,7 @@ namespace ERP_Leather.Controllers
                 lst.Add(ob);
             }
             var data = (from temp in lst select new { temp.RequestID, temp.RequestFrom, temp.RequestTo, temp.RequestNo, temp.RequestFromName, temp.RequestToName, temp.ReturnMethod, temp.RequestDate, temp.RecordStatus }).OrderByDescending(ob => ob.RequestID);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
         public ActionResult SearchLoanReceiveRequest(string search)
@@ -485,13 +486,13 @@ namespace ERP_Leather.Controllers
                 lst.Add(ob);
             }
             var data = from temp in lst select new { temp.RequestID,temp.RequestNo, temp.ReturnMethod, temp.RequestDate, temp.RecordStatus };
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
         public ActionResult GetAutoCompleteData()
         {
             var search = repository.InvTransRequestRepository.Get(filter:o=>o.RequestType=="LNRR",orderBy: q => q.OrderByDescending(d => d.RequestDate)).Select(ob => ob.RequestNo);
-            return Json(search, JsonRequestBehavior.AllowGet);
+            return Json(search);
         }
 
         public ActionResult GetLoanIssueRequestList()
@@ -577,7 +578,7 @@ namespace ERP_Leather.Controllers
                 lst.Add(ob);
             }
             var data = (from temp in lst select new { temp.RequestID, temp.RequestNo, temp.ReturnMethod, temp.RequestFrom, temp.RequestFromName, temp.RequestTo, temp.RequestToName, temp.RequestDate, temp.RecordStatus, temp.ToSource }).OrderByDescending(ob => ob.RequestID);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
         public ActionResult SearchLoanIssueRequest(string search)
@@ -598,13 +599,13 @@ namespace ERP_Leather.Controllers
                 lst.Add(ob);
             }
             var data = from temp in lst select new { temp.RequestID, temp.RequestNo, temp.ReturnMethod, temp.RequestDate, temp.RecordStatus };
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
         public ActionResult GetAutoCompleteIssueData()
         {
             var search = repository.InvTransRequestRepository.Get(filter: o => o.RequestType == "LNIR", orderBy: q => q.OrderByDescending(d => d.RequestDate)).Select(ob => ob.RequestNo);
-            return Json(search, JsonRequestBehavior.AllowGet);
+            return Json(search);
         }
 
         public ActionResult GetLoanReceiveRequestByID(long RequestID)
@@ -692,7 +693,7 @@ namespace ERP_Leather.Controllers
                 obItem.ReferenceUnitID = item.ReferenceUnit.ToString();              
                 ob.ChemicalSelectedList.Add(obItem);
             }
-            return Json(ob, JsonRequestBehavior.AllowGet);
+            return Json(ob);
         }
 
         public ActionResult CheckRecordStatus(string note, long RequestID)
@@ -706,7 +707,7 @@ namespace ERP_Leather.Controllers
                     {
                         ob.CheckComments = note;
                         ob.RecordStatus = "CHK";
-                        ob.CheckedBy = Convert.ToInt32(Session["UserID"]);
+                        ob.CheckedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                         ob.CheckDate = DateTime.Now;
                         repository.InvTransRequestRepository.Update(ob);
                         int flag = repository.Save();
@@ -751,7 +752,7 @@ namespace ERP_Leather.Controllers
                     {
                         ob.ApproveComments = note;
                         ob.RecordStatus = "CNF";
-                        ob.ApprovedBy = Convert.ToInt32(Session["UserID"]);
+                        ob.ApprovedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                         ob.ApproveDate = DateTime.Now;
                         repository.InvTransRequestRepository.Update(ob);
                         int flag = repository.Save();
@@ -785,23 +786,23 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public ActionResult GetUnit()
         {
             var sysUnit = (from t in repository.SysUnitRepository.Get(filter: ob => ob.IsActive == true && ob.IsDelete == false && ob.UnitCategory == "ChemicalPack")
                          select new { UnitID = t.UnitID, UnitName = t.UnitName }).OrderBy(o=>o.UnitName);
-            return Json(sysUnit, JsonRequestBehavior.AllowGet);
+            return Json(sysUnit);
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public ActionResult GetUnit2()
         {
             var sysUnit = (from t in repository.SysUnitRepository.Get(filter: ob => ob.IsActive == true && ob.IsDelete == false && ob.UnitCategory == "Chemical")
                            select new { UnitID = t.UnitID, UnitName = t.UnitName }).OrderBy(o => o.UnitName);
-            return Json(sysUnit, JsonRequestBehavior.AllowGet);
+            return Json(sysUnit);
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public ActionResult GetSize()
         {
             var sysSize = (from t in repository.SysSizeRepository.Get(filter: ob => ob.IsActive == true && ob.IsDelete == false && ob.SizeCategory == "ChemicalPack")
@@ -809,16 +810,16 @@ namespace ERP_Leather.Controllers
                               SizeID = t.SizeID,
                               SizeName = t.SizeName
                           }).OrderBy(o => o.SizeName); ;
-            return Json(sysSize, JsonRequestBehavior.AllowGet);
+            return Json(sysSize);
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public ActionResult GetChemicalSupplier()
         {
             DalSysSupplier ob = new DalSysSupplier();
             var sysSupp = ob.GetChemicalSupplier();
 
-            return Json(sysSupp, JsonRequestBehavior.AllowGet);
+            return Json(sysSupp);
         }
 
         //public ActionResult GetLoanStockInfo()
@@ -829,7 +830,7 @@ namespace ERP_Leather.Controllers
             var result = from temp in repository.StoreRepository.Get(filter: o => o.IsActive == true && o.IsDelete == false && o.StoreCategory == "Chemical" && o.StoreType == "Loan")
                          select new { StoreID = temp.StoreID, ChemicalStoreName = temp.StoreName, StoreCode = temp.StoreCode };
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult SearchLoanStockByFirstName(string search)
@@ -839,13 +840,13 @@ namespace ERP_Leather.Controllers
                          where ((temp.StoreName.ToUpper().StartsWith(search) || temp.StoreName.ToUpper() == search))
                          select new { StoreID = temp.StoreID, ChemicalStoreName = temp.StoreName, StoreCode = temp.StoreCode };
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetLoanStockAutocompleteData()
         {
             var search = repository.StoreRepository.Get(filter: o => o.IsActive == true && o.IsDelete == false && o.StoreCategory == "Chemical" && o.StoreType == "Loan", orderBy: q => q.OrderByDescending(d => d.StoreID)).Select(ob => ob.StoreName);
-            return Json(search, JsonRequestBehavior.AllowGet);
+            return Json(search);
         }
 
         public ActionResult DeleteChemicalItem(long ItemID)
@@ -876,7 +877,7 @@ namespace ERP_Leather.Controllers
                 }
 
             }
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+            return Json(_vmMsg);
         }
 
         public ActionResult DeleteLoanRequest(long id)
@@ -914,7 +915,7 @@ namespace ERP_Leather.Controllers
 
             }
 
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+            return Json(_vmMsg);
         }
 	}
 }

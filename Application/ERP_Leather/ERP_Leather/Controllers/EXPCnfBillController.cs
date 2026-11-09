@@ -1,10 +1,12 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Mvc;
+
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
@@ -43,20 +45,20 @@ namespace ERP_Leather.Controllers
         public ActionResult GetCnFBuyerList()
         {
             var bankList = objDalEXPCnfBill.GetCnFBuyerList();
-            return Json(bankList, JsonRequestBehavior.AllowGet);
+            return Json(bankList);
         }
 
         public ActionResult GetLCNoList()
         {
             var result = objDalEXPCnfBill.GetLCList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         #region Start EXPCnfBill Save & Update
         [HttpPost]
         public ActionResult Save(EXP_CnFBill dataSet)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
 
             _vmMsg = objDalEXPCnfBill.Save(dataSet, _userId, "EXPCnfBill/EXPCnfBill");
             return Json(new { msg = _vmMsg });
@@ -65,7 +67,7 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult Update(EXP_CnFBill dataSet)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _vmMsg = objDalEXPCnfBill.Update(dataSet, _userId);
             return Json(new { msg = _vmMsg });
         }
@@ -95,7 +97,7 @@ namespace ERP_Leather.Controllers
                                        RecordStatus = DalCommon.ReturnRecordStatus(temp.RecordStatus),
 
                                    }).OrderByDescending(ob => ob.CnfBillID); 
-            return Json(listCnFBillInfo, JsonRequestBehavior.AllowGet);
+            return Json(listCnFBillInfo);
         }
         public ActionResult SearchLcmCnFBillInfoByLCNo(string search)//InsuranceNo
         {
@@ -121,12 +123,12 @@ namespace ERP_Leather.Controllers
                                        RecordStatus = DalCommon.ReturnRecordStatus(temp.RecordStatus),
 
                                    }).OrderByDescending(ob => ob.CnfBillID); 
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
         public ActionResult GetAutoCompleteData()
         {
             var data = repository.ExpCnfBill.Get().Select(ob => ob.CnfBillNo);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
         public ActionResult GetCnFBillInfoByCnfBillID(string CnfBillID)
         {
@@ -190,7 +192,7 @@ namespace ERP_Leather.Controllers
 
 
 
-            return Json(ob, JsonRequestBehavior.AllowGet);
+            return Json(ob);
 
         }
 
@@ -252,7 +254,7 @@ namespace ERP_Leather.Controllers
         public ActionResult DeleteCnFBillList(int cnfBillID)
         {
             _vmMsg = objDalEXPCnfBill.DeleteCnFBillList(cnfBillID);//DeletePackingList(cnfBillID);
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+            return Json(_vmMsg);
         }
     }
 }

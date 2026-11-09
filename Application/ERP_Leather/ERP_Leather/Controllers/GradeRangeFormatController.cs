@@ -1,7 +1,8 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
+using Microsoft.AspNetCore.Mvc;
+
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
@@ -33,40 +34,40 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult Update(string models)
         {
-            var sysGradeRangeFormat = new JavaScriptSerializer().Deserialize<IList<SysGradeRangeFormat>>(models).FirstOrDefault();
-            _vmMsg = _dalGradeRangeFormat.Update(sysGradeRangeFormat, Convert.ToInt32(Session["UserID"]));
+            var sysGradeRangeFormat = Newtonsoft.Json.JsonConvert.DeserializeObject<IList<SysGradeRangeFormat>>(models).FirstOrDefault();
+            _vmMsg = _dalGradeRangeFormat.Update(sysGradeRangeFormat, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
 
             var result = new { data = sysGradeRangeFormat, message = _vmMsg };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public JsonResult GetGradeRangeFormatList()
         {
-            return new JsonResult { Data = _dalGradeRangeFormat.GetAll().OrderByDescending(s => s.FormatID) };
+            return Json(_dalGradeRangeFormat.GetAll().OrderByDescending(s => s.FormatID));
         }
         public JsonResult GetGradeRangeFormatList2()
         {
-            return new JsonResult { Data = "" };
+            return Json("");
         }
 
         public JsonResult btnSaveGradeRange(GradeRangeTitle model)
         {
-            var allGradeItem = _dalGradeRangeFormat.SaveGradeRange(model, Convert.ToInt32(Session["UserID"]));
-            return Json(allGradeItem, JsonRequestBehavior.AllowGet);
+            var allGradeItem = _dalGradeRangeFormat.SaveGradeRange(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
+            return Json(allGradeItem);
         }
 
         public ActionResult ListOfGradeRange()
         {
             var allData = _dalGradeRangeFormat.GetGradeformation();
-            return Json(allData, JsonRequestBehavior.AllowGet);
+            return Json(allData);
 
         }
 
         [HttpPost]
         public ActionResult Delete(string models)
         {
-            var sysGradeRangeFormat = new JavaScriptSerializer().Deserialize<IList<SysGradeRangeFormat>>(models).FirstOrDefault();
-            _vmMsg = _dalGradeRangeFormat.Delete(sysGradeRangeFormat, Convert.ToInt32(Session["UserID"]));
+            var sysGradeRangeFormat = Newtonsoft.Json.JsonConvert.DeserializeObject<IList<SysGradeRangeFormat>>(models).FirstOrDefault();
+            _vmMsg = _dalGradeRangeFormat.Delete(sysGradeRangeFormat, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
 
             return Json(_vmMsg);
         }
@@ -78,7 +79,7 @@ namespace ERP_Leather.Controllers
             var dalGradeRangeFormat = new DalSysGradeRangeFormat();
             var allGradeItem = dalGradeRangeFormat.GetGradeList();
 
-            return Json(allGradeItem, JsonRequestBehavior.AllowGet);
+            return Json(allGradeItem);
         }
 
         public ActionResult GetAllGradeRangeType()
@@ -86,24 +87,24 @@ namespace ERP_Leather.Controllers
             var dalGradeRangeFormat = new DalSysGradeRangeFormat();
             var allGradeItem = dalGradeRangeFormat.GetGradeRangeList();
 
-            return Json(allGradeItem, JsonRequestBehavior.AllowGet);
+            return Json(allGradeItem);
         }
 
         public ActionResult GetDetailGradeRangeInformation(string GradeRangeID)
         {
             var allGradeItem = _dalGradeRangeFormat.GetDetailGradeRangeInformation(GradeRangeID);
-            return Json(allGradeItem, JsonRequestBehavior.AllowGet);
+            return Json(allGradeItem);
         }
 
         public ActionResult DeleteGradeRangeInfo(string GradeRangeID)
         {
-            var allGradeItem = _dalGradeRangeFormat.DeleteGradeRangeInfo(GradeRangeID, Convert.ToInt32(Session["UserID"]));
-            return Json(allGradeItem, JsonRequestBehavior.AllowGet);
+            var allGradeItem = _dalGradeRangeFormat.DeleteGradeRangeInfo(GradeRangeID, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
+            return Json(allGradeItem);
         }
         [HttpPost]
         public ActionResult DeleteGradeRangeFormatById(string FormatID)
         {
-            _vmMsg = _dalGradeRangeFormat.DeleteGradeRangeFormatById(FormatID, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = _dalGradeRangeFormat.DeleteGradeRangeFormatById(FormatID, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 

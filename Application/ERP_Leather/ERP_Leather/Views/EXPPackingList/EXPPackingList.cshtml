@@ -306,13 +306,13 @@
                 <label>Checked By</label>
             </div>
             <div class="col-lg-2">
-                <input type="text" id="txtCheckedBy" class="txtCommandBox ReadOnlyTextbox" name="" tabindex="" readonly="readonly" value="@Session[" username"]" />
+                <input type="text" id="txtCheckedBy" class="txtCommandBox ReadOnlyTextbox" name="" tabindex="" readonly="readonly" value="@Context.Session.GetString("UserName")" />
             </div>
             <div class="col-lg-2">
                 <label>Confirmed By</label>
             </div>
             <div class="col-lg-2">
-                <input type="text" id="txtApprovedBy" class="txtCommandBox ReadOnlyTextbox" name="" tabindex="" readonly="readonly" value="@Session[" username"]" />
+                <input type="text" id="txtApprovedBy" class="txtCommandBox ReadOnlyTextbox" name="" tabindex="" readonly="readonly" value="@Context.Session.GetString("UserName")" />
             </div>
         </div>
 

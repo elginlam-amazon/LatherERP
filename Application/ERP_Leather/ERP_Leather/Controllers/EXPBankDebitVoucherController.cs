@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
@@ -10,8 +11,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ERP_Leather.Controllers
 {
@@ -36,23 +36,23 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult EXPBankDebitVoucher(EXPBankDebitVoucher model)
         {
-            _vmMsg = model.BDVID == 0 ? Dalobject.Save(model, Convert.ToInt32(Session["UserID"]), "WetBlueProductionSchedule/WetBlueProductionSchedule") : Dalobject.Update(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = model.BDVID == 0 ? Dalobject.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "WetBlueProductionSchedule/WetBlueProductionSchedule") : Dalobject.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { BDVID = Dalobject.GetBDVID(), BDVNo = Dalobject.GetBDVNo(),  msg = _vmMsg });
         }
         public ActionResult GetBDVInformation()
         {
-            return Json(Dalobject.GetBDVInformation(), JsonRequestBehavior.AllowGet);
+            return Json(Dalobject.GetBDVInformation());
         }
         [HttpPost]
         public ActionResult ConfirmedEXPBDV(string BDVID)
         {
-            _vmMsg = Dalobject.ConfirmedEXPBDV(BDVID, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.ConfirmedEXPBDV(BDVID, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
         [HttpPost]
         public ActionResult CheckedEXPBDV(string BDVID)
         {
-            _vmMsg = Dalobject.CheckedEXPBDV(BDVID, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.CheckedEXPBDV(BDVID, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 	}

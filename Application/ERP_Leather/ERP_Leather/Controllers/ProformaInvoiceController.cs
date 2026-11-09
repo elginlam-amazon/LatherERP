@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.BusinessLogicLayer.OperationManager;
 using ERP.EntitiesModel.OperationModel;
@@ -44,23 +44,23 @@ namespace ERP_Leather.Controllers
             if (model.PIID == 0)
             {
 
-                var msg = objBLLPI.Save(model, Convert.ToInt32(Session["UserID"]), "ProformaInvoice/ProformaInvoice");
+                var msg = objBLLPI.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "ProformaInvoice/ProformaInvoice");
                 int PIID = objBLLPI.GetPIID();
                 var PIItemList = objDALPI.GetPIItemList(PIID);
-                return Json(new { Msg = msg, PIID = PIID, PIItemList = PIItemList }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = msg, PIID = PIID, PIItemList = PIItemList });
             }
             else
             {
-                var msg = objBLLPI.Update(model, Convert.ToInt32(Session["UserID"]));
+                var msg = objBLLPI.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
                 var PIItemList = objDALPI.GetPIItemList(model.PIID);
-                return Json(new { Msg = msg, PIItemList = PIItemList }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = msg, PIItemList = PIItemList });
             }
         }
 
         public ActionResult GetBuyerListForPI()
         {
             var Data = objDALPI.GetBuyerListForPI();
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetBeneficiaryAdvisingBankList()
@@ -68,7 +68,7 @@ namespace ERP_Leather.Controllers
             DalSysBranch objBranch = new DalSysBranch();
 
             var Data = objBranch.GetBeneficiaryAdvisingBankList();
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetAllPortList()
@@ -76,7 +76,7 @@ namespace ERP_Leather.Controllers
             DalSysPort objPort = new DalSysPort();
 
             var Data = objPort.GetAll();
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetAllCountryList()
@@ -84,32 +84,32 @@ namespace ERP_Leather.Controllers
             DalSysCountry objCountry = new DalSysCountry();
 
             var Data = objCountry.GetAll();
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetOrderInformationForLOV()
         {
             var Orders = objDALPI.GetOrderInformationForLOV();
-            return Json(Orders, JsonRequestBehavior.AllowGet);
+            return Json(Orders);
         }
 
         public ActionResult GetOrderItemListForLOV(string OrderID)
         {
             var Data = objDALPI.GetOrderItemListForLOV(OrderID);
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetPIInformationForSearch()
         {
             var Data = objDALPI.GetPIInformationForSearch();
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetPIDetailsAfterSearch(int PIID)
         {
             var Data = objDALPI.GetPIDetailsAfterSearch(PIID);
 
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult ConfirPI(string PIID, string confirmComment)
@@ -118,11 +118,11 @@ namespace ERP_Leather.Controllers
 
             if (checkConfirm)
             {
-                return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Success" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
@@ -134,20 +134,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDALPI.DeletePIItem(_PIItemID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
@@ -159,20 +159,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDALPI.DeletePI(_PIID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 	}

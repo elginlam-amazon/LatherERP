@@ -1,9 +1,9 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
+using Microsoft.AspNetCore.Mvc;
+
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
@@ -34,11 +34,11 @@ namespace ERP_Leather.Controllers
         {
             if (model != null && model.LeatherStatusID != 0)
             {
-                _vmMsg = _dalLeatherStatus.Update(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalLeatherStatus.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             else
             {
-                _vmMsg = _dalLeatherStatus.Save(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalLeatherStatus.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             return Json(new { SourceID = _dalLeatherStatus.GetLeatherStatusID(), msg = _vmMsg });
         }
@@ -46,51 +46,51 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult Delete(string leatherStatusId)
         {
-            _vmMsg = _dalLeatherStatus.Delete(leatherStatusId, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = _dalLeatherStatus.Delete(leatherStatusId, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public ActionResult GetLeatherStatus()
         {
             var sysSource = _dalLeatherStatus.GetAll().OrderByDescending(s => s.LeatherStatusID);
-            return Json(sysSource, JsonRequestBehavior.AllowGet);
+            return Json(sysSource);
         }
         //[HttpPost]
         //public ActionResult Create(string models)
         //{
             
-        //    var leatherStatus = new JavaScriptSerializer().Deserialize<IList<SysLeatherStatus>>(models).FirstOrDefault();
+        //    var leatherStatus = Newtonsoft.Json.JsonConvert.DeserializeObject<IList<SysLeatherStatus>>(models).FirstOrDefault();
         //    if (leatherStatus != null)
         //    {
         //       _vmMsg = _dalLeatherStatus.Save(leatherStatus);
         //    }
         //    var result = new { data = leatherStatus, message = _vmMsg };
-        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //    return Json(result);
         //}
 
         //[HttpPost]
         //public ActionResult Update(string models)
         //{
-        //    var leatherStatus = new JavaScriptSerializer().Deserialize<IList<SysLeatherStatus>>(models).FirstOrDefault();
+        //    var leatherStatus = Newtonsoft.Json.JsonConvert.DeserializeObject<IList<SysLeatherStatus>>(models).FirstOrDefault();
 
         //    if (leatherStatus != null)
         //    {
         //     _vmMsg = _dalLeatherStatus.Update(leatherStatus);
         //    }
         //    var result = new { data = leatherStatus, message = _vmMsg };
-        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //    return Json(result);
         //}
 
         //public JsonResult GetLeatherStatus()
         //{
-        //    return new JsonResult { Data = _dalLeatherStatus.GetAll().OrderByDescending(s=>s.LeatherStatusID) };
+        //    return Json(_dalLeatherStatus.GetAll().OrderByDescending(s=>s.LeatherStatusID));
         //}
 
         //[HttpPost]
         //public ActionResult Delete(string models)
         //{
-        //    var leatherStatus = new JavaScriptSerializer().Deserialize<IList<SysLeatherStatus>>(models).FirstOrDefault();
+        //    var leatherStatus = Newtonsoft.Json.JsonConvert.DeserializeObject<IList<SysLeatherStatus>>(models).FirstOrDefault();
         //    _vmMsg = _dalLeatherStatus.Delete(leatherStatus);
         //    ViewBag.Message = _vmMsg.Msg;
 

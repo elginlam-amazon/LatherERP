@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.UI.WebControls;
+
+using Microsoft.AspNetCore.Mvc;
+
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.EntitiesModel.BaseModel;
@@ -36,10 +37,10 @@ namespace ERP_Leather.Controllers
         public ActionResult ChemPurcReq(PrqChemPurcReq modelReq)
         {
             _vmMsg = modelReq != null && modelReq.RequisitionID == 0
-                ? _objChemPurcReq.SaveData(modelReq, Convert.ToInt32(Session["UserID"]), "ChemPurcReq/ChemPurcReq")
-                : _objChemPurcReq.UpdateData(modelReq, Convert.ToInt32(Session["UserID"]));
+                ? _objChemPurcReq.SaveData(modelReq, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "ChemPurcReq/ChemPurcReq")
+                : _objChemPurcReq.UpdateData(modelReq, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
 
-            return Json(new { msg = _vmMsg }, JsonRequestBehavior.AllowGet);
+            return Json(new { msg = _vmMsg });
         }
         [CheckUserAccess("ChemPurcReq/ChemPurcReqApproval")]
         public ActionResult ChemPurcReqApproval()
@@ -62,18 +63,18 @@ namespace ERP_Leather.Controllers
         public ActionResult GetAllChemicalPurchaseItems()
         {
             var recipes = _objChemPurcReq.GetAllChemicalPurchaseItems();
-             return Json(recipes, JsonRequestBehavior.AllowGet);
+             return Json(recipes);
         }
 
         public ActionResult GetAllNcfChemPurcReqList(string pageMode, string reqCategory)
         {
             var chemReq = _objChemPurcReq.GetAllNcfChemPurcReqList(pageMode,reqCategory);
-            return Json(chemReq, JsonRequestBehavior.AllowGet);
+            return Json(chemReq);
         }
         public ActionResult GetRequisitionItemList(int requisitionId)
         {
             var chemReqItems = _objChemPurcReq.GetRequisitionItemList(requisitionId);
-            return Json(chemReqItems, JsonRequestBehavior.AllowGet);
+            return Json(chemReqItems);
         }
         public ActionResult DeletedChemPurcReq(int requisitionId)
         {
@@ -91,21 +92,21 @@ namespace ERP_Leather.Controllers
 
         public ActionResult CheckData(int requisitionId,string chkComment)
         {
-            _vmMsg = _objChemPurcReq.CheckData(requisitionId,chkComment, Convert.ToInt32(Session["UserID"]));
-            return Json(new { msg = _vmMsg }, JsonRequestBehavior.AllowGet);
+            _vmMsg = _objChemPurcReq.CheckData(requisitionId,chkComment, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
+            return Json(new { msg = _vmMsg });
         }
 
         public ActionResult ConfirmData(int requisitionId, string cnfComment)
         {
-            _vmMsg = _objChemPurcReq.ConfirmData(requisitionId,cnfComment, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = _objChemPurcReq.ConfirmData(requisitionId,cnfComment, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
 
-            return Json(new { msg = _vmMsg }, JsonRequestBehavior.AllowGet);
+            return Json(new { msg = _vmMsg });
         }
 
         public ActionResult ApprovedData(PrqChemPurcReq model)
         {
-            _vmMsg = _objChemPurcReq.ApprovedData(model, Convert.ToInt32(Session["UserID"]));
-            return Json(new { msg = _vmMsg }, JsonRequestBehavior.AllowGet);
+            _vmMsg = _objChemPurcReq.ApprovedData(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
+            return Json(new { msg = _vmMsg });
         }
 
         public ActionResult ConcealChemPurcReq(string requisitionId,string recordStatus)
@@ -115,8 +116,8 @@ namespace ERP_Leather.Controllers
 
         public ActionResult CreateChemicalOrderByRequisition(string requisitionIdList)
         {
-            _vmMsg = _objChemPurcReq.CreateChemicalOrderByRequisition(requisitionIdList, Convert.ToInt32(Session["UserID"]));
-            return Json(new { msg = _vmMsg }, JsonRequestBehavior.AllowGet);
+            _vmMsg = _objChemPurcReq.CreateChemicalOrderByRequisition(requisitionIdList, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
+            return Json(new { msg = _vmMsg });
         }
     }
 }

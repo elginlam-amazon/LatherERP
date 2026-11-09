@@ -1,10 +1,10 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO.Pipes;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
@@ -14,7 +14,7 @@ using ERP.BusinessLogicLayer.OperationManager;
 using ERP.EntitiesModel.BaseModel;
 using ERP.EntitiesModel.OperationModel;
 using ERP_Leather.ActionFilters;
-using Microsoft.Ajax.Utilities;
+
 
 namespace ERP_Leather.Controllers
 {
@@ -55,7 +55,7 @@ namespace ERP_Leather.Controllers
         [CheckUserAccess("SupplierBillEntry/SupplierBillEntry")]
         public ActionResult SupplierBillEntry()
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             ViewBag.CurrencyList = _unit.CurrencyRepository.Get().ToList();
             return View();
         }
@@ -71,14 +71,14 @@ namespace ERP_Leather.Controllers
         {
             var challanList = _dalPrqSupplierBill.GetChallanListInfo(supplierId);
             var items = challanList;
-            return Json(items, JsonRequestBehavior.AllowGet);
+            return Json(items);
         }
 
         public ActionResult SaveSupplierBill(PrqSupplierBill billModel, List<PrqSupplierBillItem> billItemModel, List<PrqSupplierBillChallan> billChallanModel)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalPrqSupplierBill.SaveSupplierBill(billModel, billItemModel, billChallanModel, _userId, "SupplierBillEntry/SupplierBillEntry");
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public JsonResult GetCurrencyList()
@@ -90,24 +90,24 @@ namespace ERP_Leather.Controllers
                 CurrencyName = curInf.CurrencyName
             }).ToList();
 
-            return new JsonResult { Data = currencyInfos };
+            return Json(currencyInfos);
         }
 
         public ActionResult ConfirmBill(long billId, string comment)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalPrqSupplierBill.ConfirmBill(billId, comment, _userId);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult BillApproval(PrqSupplierBill billModel, IEnumerable<PrqSupplierBillItem> billItemModel)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             if (!string.IsNullOrEmpty(billModel.SupplierBillID.ToString(CultureInfo.InvariantCulture)))
             {
                 _validationMsg = _dalPrqSupplierBill.ApproveBill(billModel, billItemModel, _userId);
             }
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult GetSupplierBill(int supplierId)
@@ -124,7 +124,7 @@ namespace ERP_Leather.Controllers
             //    RecordStatus = DalCommon.ReturnRecordStatus(bill.RecordStatus)
             //}).ToList();
             var result = _dalPrqSupplierBill.GetBills(supplierId);
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetBills()
@@ -142,7 +142,7 @@ namespace ERP_Leather.Controllers
             //}).ToList();
             //var result1 = result.OrderBy(ob => ob.SupplierName).ThenByDescending(ob => ob.SupplierBillID);
             var result1 = _dalPrqSupplierBill.GetBills(0);
-            return Json(result1, JsonRequestBehavior.AllowGet);
+            return Json(result1);
         }
 
         public ActionResult GetBillById(long billId)
@@ -233,7 +233,7 @@ namespace ERP_Leather.Controllers
                 }
 
             }
-            return Json(new { bill, rchallans, ritems }, JsonRequestBehavior.AllowGet);
+            return Json(new { bill, rchallans, ritems });
         }
 
         public ActionResult GetAllSize()
@@ -244,13 +244,13 @@ namespace ERP_Leather.Controllers
                 SizeID = svm.SizeID,
                 SizeName = svm.SizeName
             }).ToList();
-            return Json(sizes, JsonRequestBehavior.AllowGet);
+            return Json(sizes);
         }
 
         public ActionResult GetItemListForChallan(string ChallanID)
         {
             var itemList = _dalPrqSupplierBillItem.GetItemListForChallan(ChallanID);
-            return Json(itemList, JsonRequestBehavior.AllowGet);
+            return Json(itemList);
         }
 
         public ActionResult GetChallans(long purchaseId)
@@ -263,7 +263,7 @@ namespace ERP_Leather.Controllers
                 ChallanDate = string.Format("{0:dd/MM/yyyy}", challan.ChallanDate),
                 Quantity = _unit.PurchaseChallanItemRepository.Get().Where(ob => ob.ChallanID == challan.ChallanID).Sum(ob => ob.ChallanQty),
             }).ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetChallanById(long challanId)
@@ -284,15 +284,15 @@ namespace ERP_Leather.Controllers
                     ItemQty = item.ChallanQty,
                 }).ToList()
             };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
 
 
         public ActionResult Delete(long id, long billId, string del)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             if (del == "all")
             {
                 _validationMsg = _dalPrqSupplierBill.Delete(billId, _userId);
@@ -305,13 +305,13 @@ namespace ERP_Leather.Controllers
             {
                 _validationMsg = _dalPrqSupplierBill.DeleteItem(id, _userId);
             }
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult GetPurchase(int supplierId)
         {
             var purc = _dalPrqSupplierBill.GetPurchaseListBySupplier(supplierId);
-            return Json(purc, JsonRequestBehavior.AllowGet);
+            return Json(purc);
         }
 
         public ActionResult GetPurchaseById(long purchaseId)
@@ -340,7 +340,7 @@ namespace ERP_Leather.Controllers
                     }).ToList()
                 }).ToList()
             };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetSuppliers()
@@ -362,7 +362,7 @@ namespace ERP_Leather.Controllers
                          }).ToList();
 
             var result = dummy.OrderBy(ob => ob.SupplierCode);
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetSuppliersForSearch()
@@ -372,7 +372,7 @@ namespace ERP_Leather.Controllers
                     .Where(ob => ob.IsDelete == false && ob.IsActive == true)
                     .Select(ob => ob.SupplierName)
                     .ToList();
-            return Json(suppliers, JsonRequestBehavior.AllowGet);
+            return Json(suppliers);
         }
 
         public ActionResult GetSupplierByName(string name)
@@ -392,7 +392,7 @@ namespace ERP_Leather.Controllers
                                 ContactNumber = item.ContactNumber,
                                 ContactPerson = item.ContactPerson
                             });
-            return Json(supplier, JsonRequestBehavior.AllowGet);
+            return Json(supplier);
         }
 
         public ActionResult GetItemsByBillId(long billId)
@@ -422,7 +422,7 @@ namespace ERP_Leather.Controllers
                 AmtUnit = item.AmtUnit ?? 0, item.AvgArea, item.AreaUnit,
                 AreaUnitName = item.AreaUnit == null ? "" : _unit.SysUnitRepository.GetByID(item.AreaUnit).UnitName, item.Remarks,
             }).ToList();
-            return Json(new {rChallans, rItems}, JsonRequestBehavior.AllowGet);
+            return Json(new {rChallans, rItems});
         }
 
         public ActionResult GetBillListForSearch()
@@ -432,7 +432,7 @@ namespace ERP_Leather.Controllers
                     .Where(ob => ob.IsDelete == false)
                     .Select(ob => ob.SupplierBillNo)
                     .ToList();
-            return Json(bills, JsonRequestBehavior.AllowGet);
+            return Json(bills);
         }
 
         public ActionResult GetBillForSearch(string billNo)
@@ -449,7 +449,7 @@ namespace ERP_Leather.Controllers
                 RecordStatus = DalCommon.ReturnRecordStatus(bill.RecordStatus)
             }).ToList();
 
-            return Json(result.OrderBy(ob => ob.SupplierName), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderBy(ob => ob.SupplierName));
         }
     }
 

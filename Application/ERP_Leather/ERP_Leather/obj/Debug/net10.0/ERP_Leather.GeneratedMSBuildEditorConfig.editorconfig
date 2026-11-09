@@ -1,0 +1,856 @@
+is_global = true
+build_property.TargetFramework = net10.0
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v10.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EntryPointFilePath = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = ERP_Leather
+build_property.RootNamespace = ERP_Leather
+build_property.ProjectDir = /mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 10.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
+build_property.MSBuildProjectDirectory = /mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 10.0
+build_property.EnableCodeStyleSeverity = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Article/Article.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXJ0aWNsZS9BcnRpY2xlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Bank/Bank.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmFuay9CYW5rLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/BankDebitVoucher/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmFua0RlYml0Vm91Y2hlci9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/BankVoucher/BankVoucher.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmFua1ZvdWNoZXIvQmFua1ZvdWNoZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/BillOfLading/BillOfLading.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlsbE9mTGFkaW5nL0JpbGxPZkxhZGluZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/BillPayment/BillPayment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlsbFBheW1lbnQvQmlsbFBheW1lbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Branch/Branch.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQnJhbmNoL0JyYW5jaC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Buyer/Buyer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQnV5ZXIvQnV5ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/BuyerAgent/BuyerAgent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQnV5ZXJBZ2VudC9CdXllckFnZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/BuyerPurcOrder/BuyerPurcOrder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQnV5ZXJQdXJjT3JkZXIvQnV5ZXJQdXJjT3JkZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/BuyerPurcOrderAck/BuyerPurcOrderAck.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQnV5ZXJQdXJjT3JkZXJBY2svQnV5ZXJQdXJjT3JkZXJBY2suY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ChemicalApprovedReqList/ChemicalApprovedReqList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2hlbWljYWxBcHByb3ZlZFJlcUxpc3QvQ2hlbWljYWxBcHByb3ZlZFJlcUxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ChemicalConsumption/ChemConsumption.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2hlbWljYWxDb25zdW1wdGlvbi9DaGVtQ29uc3VtcHRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ChemicalConsumptionForCrusting/ChemicalConsumptionForCrusting.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2hlbWljYWxDb25zdW1wdGlvbkZvckNydXN0aW5nL0NoZW1pY2FsQ29uc3VtcHRpb25Gb3JDcnVzdGluZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ChemicalConsumptionForFinishing/ChemicalConsumptionForFinishing.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2hlbWljYWxDb25zdW1wdGlvbkZvckZpbmlzaGluZy9DaGVtaWNhbENvbnN1bXB0aW9uRm9yRmluaXNoaW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ChemicalForeignPurchaseOrder/ChemicalForeignPurchaseOrder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2hlbWljYWxGb3JlaWduUHVyY2hhc2VPcmRlci9DaGVtaWNhbEZvcmVpZ25QdXJjaGFzZU9yZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ChemicalForeignPurchaseOrder/ChemicalLocalPurchaseOrder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2hlbWljYWxGb3JlaWduUHVyY2hhc2VPcmRlci9DaGVtaWNhbExvY2FsUHVyY2hhc2VPcmRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ChemicalItem/ChemicalItem.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2hlbWljYWxJdGVtL0NoZW1pY2FsSXRlbS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ChemicalLocalPurchaseReceive/ChemicalLocalPurchaseReceive.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2hlbWljYWxMb2NhbFB1cmNoYXNlUmVjZWl2ZS9DaGVtaWNhbExvY2FsUHVyY2hhc2VSZWNlaXZlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ChemicalPurchaseReceive/ChemicalPurchaseReceive.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2hlbWljYWxQdXJjaGFzZVJlY2VpdmUvQ2hlbWljYWxQdXJjaGFzZVJlY2VpdmUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ChemicalStockAdjustment/ChemicalCommonInventoryAdjustment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2hlbWljYWxTdG9ja0FkanVzdG1lbnQvQ2hlbWljYWxDb21tb25JbnZlbnRvcnlBZGp1c3RtZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ChemicalStockAdjustment/ChemicalStockAdjustment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2hlbWljYWxTdG9ja0FkanVzdG1lbnQvQ2hlbWljYWxTdG9ja0FkanVzdG1lbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ChemLocalPurcBillEnt/ChemLocalPurcBillEnt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2hlbUxvY2FsUHVyY0JpbGxFbnQvQ2hlbUxvY2FsUHVyY0JpbGxFbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ChemLocalPurcBillPay/ChemLocalPurcBillPay.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2hlbUxvY2FsUHVyY0JpbGxQYXkvQ2hlbUxvY2FsUHVyY0JpbGxQYXkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ChemPurcReq/ChemOrderAgainstReq.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2hlbVB1cmNSZXEvQ2hlbU9yZGVyQWdhaW5zdFJlcS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ChemPurcReq/ChemPurcReq.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2hlbVB1cmNSZXEvQ2hlbVB1cmNSZXEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ChemPurcReq/ChemPurcReqApproval.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2hlbVB1cmNSZXEvQ2hlbVB1cmNSZXFBcHByb3ZhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/CLRequisitionForFinishing/CLRequisitionForFinishing.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ0xSZXF1aXNpdGlvbkZvckZpbmlzaGluZy9DTFJlcXVpc2l0aW9uRm9yRmluaXNoaW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/CnFBill/CnFBill.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ25GQmlsbC9DbkZCaWxsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/CnFBills/CnFBills.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ25GQmlsbHMvQ25GQmlsbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Color/Color.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ29sb3IvQ29sb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/CommercialInvoice/CommercialInvoice.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ29tbWVyY2lhbEludm9pY2UvQ29tbWVyY2lhbEludm9pY2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Common/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ29tbW9uL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Common/_ddStore.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ29tbW9uL19kZFN0b3JlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Common/_ddSupplier.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ29tbW9uL19kZFN1cHBsaWVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Common/_FormHeader.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ29tbW9uL19Gb3JtSGVhZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Common/_Popup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ29tbW9uL19Qb3B1cC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/CommonChemical/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ29tbW9uQ2hlbWljYWwvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Comodity/Comodity.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ29tb2RpdHkvQ29tb2RpdHkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Country/Country.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ291bnRyeS9Db3VudHJ5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/CrustChallanPreparation/CrustChallanPreparation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ3J1c3RDaGFsbGFuUHJlcGFyYXRpb24vQ3J1c3RDaGFsbGFuUHJlcGFyYXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/CrustedLeatherIssueFromStore/CrustedLeatherIssueFromStore.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ3J1c3RlZExlYXRoZXJJc3N1ZUZyb21TdG9yZS9DcnVzdGVkTGVhdGhlcklzc3VlRnJvbVN0b3JlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/CrustedLeatherTransferTreatment/CrustedLeatherTransferTreatment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ3J1c3RlZExlYXRoZXJUcmFuc2ZlclRyZWF0bWVudC9DcnVzdGVkTGVhdGhlclRyYW5zZmVyVHJlYXRtZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/CrustingProductionSchedule/CrustingProductionSchedule.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ3J1c3RpbmdQcm9kdWN0aW9uU2NoZWR1bGUvQ3J1c3RpbmdQcm9kdWN0aW9uU2NoZWR1bGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/CrustLeatherQC/CrustLeatherQC.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ3J1c3RMZWF0aGVyUUMvQ3J1c3RMZWF0aGVyUUMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Currency/Currency.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ3VycmVuY3kvQ3VycmVuY3kuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/DeliveryChallan/DeliveryChallan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGVsaXZlcnlDaGFsbGFuL0RlbGl2ZXJ5Q2hhbGxhbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/EXPAgentCommission/EXPAgentCommission.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRVhQQWdlbnRDb21taXNzaW9uL0VYUEFnZW50Q29tbWlzc2lvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/EXPBankDebitVoucher/EXPBankDebitVoucher.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRVhQQmFua0RlYml0Vm91Y2hlci9FWFBCYW5rRGViaXRWb3VjaGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/EXPBankLoan/EXPBankLoan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRVhQQmFua0xvYW4vRVhQQmFua0xvYW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ExpBillOfLading/ExpBillOfLading.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRXhwQmlsbE9mTGFkaW5nL0V4cEJpbGxPZkxhZGluZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/EXPCI/EXPCI.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRVhQQ0kvRVhQQ0kuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/EXPCnfBill/EXPCnfBill.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRVhQQ25mQmlsbC9FWFBDbmZCaWxsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/EXPLCOpening/EXPLCOpening.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRVhQTENPcGVuaW5nL0VYUExDT3BlbmluZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/EXPLCRetirement/EXPLCRetirement.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRVhQTENSZXRpcmVtZW50L0VYUExDUmV0aXJlbWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ExportForm/ExportForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRXhwb3J0Rm9ybS9FeHBvcnRGb3JtLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ExportPI/ExportPI.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRXhwb3J0UEkvRXhwb3J0UEkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/EXPPackingList/EXPPackingList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRVhQUGFja2luZ0xpc3QvRVhQUGFja2luZ0xpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/FinalGradeSelection/FinalGradeSelection.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRmluYWxHcmFkZVNlbGVjdGlvbi9GaW5hbEdyYWRlU2VsZWN0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/FinalGradeSelection/FinalGrdSelection.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRmluYWxHcmFkZVNlbGVjdGlvbi9GaW5hbEdyZFNlbGVjdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/FinishedLeatherIssueFromStore/FinishedLeatherIssueFromStore.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRmluaXNoZWRMZWF0aGVySXNzdWVGcm9tU3RvcmUvRmluaXNoZWRMZWF0aGVySXNzdWVGcm9tU3RvcmUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/FinishedLeatherStoreTransferReceive/FinishedLeatherStoreTransferReceive.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRmluaXNoZWRMZWF0aGVyU3RvcmVUcmFuc2ZlclJlY2VpdmUvRmluaXNoZWRMZWF0aGVyU3RvcmVUcmFuc2ZlclJlY2VpdmUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/FinishedLeatherTransferTreatment/FinishedLeatherTransferTreatment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRmluaXNoZWRMZWF0aGVyVHJhbnNmZXJUcmVhdG1lbnQvRmluaXNoZWRMZWF0aGVyVHJhbnNmZXJUcmVhdG1lbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/FinishLeatherBuyerQC/FinishLeatherBuyerQC.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRmluaXNoTGVhdGhlckJ1eWVyUUMvRmluaXNoTGVhdGhlckJ1eWVyUUMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/FinishLeatherQC/FinishLeatherQC.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRmluaXNoTGVhdGhlclFDL0ZpbmlzaExlYXRoZXJRQy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/FinishProductionSchedule/FinishProductionSchedule.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRmluaXNoUHJvZHVjdGlvblNjaGVkdWxlL0ZpbmlzaFByb2R1Y3Rpb25TY2hlZHVsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/FreightBillDoc/FreightBillDoc.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRnJlaWdodEJpbGxEb2MvRnJlaWdodEJpbGxEb2MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Grade/Grade.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvR3JhZGUvR3JhZGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/GradeRange/GradeRange.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvR3JhZGVSYW5nZS9HcmFkZVJhbmdlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/GradeRangeFormat/GradeRangeFormat.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvR3JhZGVSYW5nZUZvcm1hdC9HcmFkZVJhbmdlRm9ybWF0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/GradeSelection/GradeSelection.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvR3JhZGVTZWxlY3Rpb24vR3JhZGVTZWxlY3Rpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Home/About.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BYm91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Home/ChangePassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9DaGFuZ2VQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Home/Contact.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Db250YWN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Home/LcOpening.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9MY09wZW5pbmcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Home/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Mb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Home/SessionOutMsg.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9TZXNzaW9uT3V0TXNnLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Insurance/Insurance.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW5zdXJhbmNlL0luc3VyYW5jZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Insurance/Insurances.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW5zdXJhbmNlL0luc3VyYW5jZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/InsuranceInfo/Insurance.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW5zdXJhbmNlSW5mby9JbnN1cmFuY2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/IssueAfterCrustQC/IssueAfterCrustQC.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSXNzdWVBZnRlckNydXN0UUMvSXNzdWVBZnRlckNydXN0UUMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/IssueAfterFinishQC/IssueAfterFinishQC.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSXNzdWVBZnRlckZpbmlzaFFDL0lzc3VlQWZ0ZXJGaW5pc2hRQy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/IssueToProduction/IssueToProduction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSXNzdWVUb1Byb2R1Y3Rpb24vSXNzdWVUb1Byb2R1Y3Rpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ItemType/ItemType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSXRlbVR5cGUvSXRlbVR5cGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/LCMLCRetirement/LCMLCRetirement.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTENNTENSZXRpcmVtZW50L0xDTUxDUmV0aXJlbWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/LCMLimInfo/LimInfo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTENNTGltSW5mby9MaW1JbmZvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/LCOpening/GetPIDetailsInfo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTENPcGVuaW5nL0dldFBJRGV0YWlsc0luZm8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/LCOpening/LCOpening.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTENPcGVuaW5nL0xDT3BlbmluZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/LCRetirement/LCRetirement.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTENSZXRpcmVtZW50L0xDUmV0aXJlbWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/LeatherIssue/LeatherIssue.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTGVhdGhlcklzc3VlL0xlYXRoZXJJc3N1ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/LeatherStatus/LeatherStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTGVhdGhlclN0YXR1cy9MZWF0aGVyU3RhdHVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/LeatherType/LeatherType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTGVhdGhlclR5cGUvTGVhdGhlclR5cGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/LimInfo/LimInfo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTGltSW5mby9MaW1JbmZvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/LoanIssue/LoanIssue.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTG9hbklzc3VlL0xvYW5Jc3N1ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/LoanReceive/LoanReceive.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTG9hblJlY2VpdmUvTG9hblJlY2VpdmUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/LoanRequest/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTG9hblJlcXVlc3QvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/LoanRequest/LoanIssueRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTG9hblJlcXVlc3QvTG9hbklzc3VlUmVxdWVzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/LoanReturnIssue/LoanReturnIssue.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTG9hblJldHVybklzc3VlL0xvYW5SZXR1cm5Jc3N1ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/LoanReturnReceive/LoanReturnReceive.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTG9hblJldHVyblJlY2VpdmUvTG9hblJldHVyblJlY2VpdmUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/LoanReturnRequest/LoanReturnIssue.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTG9hblJldHVyblJlcXVlc3QvTG9hblJldHVybklzc3VlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/LoanReturnRequest/LoanReturnReceiveIssue.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTG9hblJldHVyblJlcXVlc3QvTG9hblJldHVyblJlY2VpdmVJc3N1ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Location/Location.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTG9jYXRpb24vTG9jYXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Machine/Machine.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWFjaGluZS9NYWNoaW5lLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/PackingList/PackingList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGFja2luZ0xpc3QvUGFja2luZ0xpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/PaymentMethod/PaymentMethod.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF5bWVudE1ldGhvZC9QYXltZW50TWV0aG9kLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/PaymentType/PaymentType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF5bWVudFR5cGUvUGF5bWVudFR5cGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Port/Port.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUG9ydC9Qb3J0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/PreDefineValue/PreDefineValue.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJlRGVmaW5lVmFsdWUvUHJlRGVmaW5lVmFsdWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ProductionProces/ProductionProces.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZHVjdGlvblByb2Nlcy9Qcm9kdWN0aW9uUHJvY2VzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ProductionRequisition/ProductionRequisition.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZHVjdGlvblJlcXVpc2l0aW9uL1Byb2R1Y3Rpb25SZXF1aXNpdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/ProformaInvoice/ProformaInvoice.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZm9ybWFJbnZvaWNlL1Byb2Zvcm1hSW52b2ljZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Purchase/Purchase.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHVyY2hhc2UvUHVyY2hhc2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/PurchasePeriod/PurchasePeriod.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHVyY2hhc2VQZXJpb2QvUHVyY2hhc2VQZXJpb2QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/PurchaseTarget/PrqPurchaseYearPeriodItemv.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHVyY2hhc2VUYXJnZXQvUHJxUHVyY2hhc2VZZWFyUGVyaW9kSXRlbXYuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Recipe/Recipe.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVjaXBlL1JlY2lwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/BankDebitInfoEntryReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9CYW5rRGViaXRJbmZvRW50cnlSZXBvcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/BankVoucherRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9CYW5rVm91Y2hlclJwdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/BillOfLading.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9CaWxsT2ZMYWRpbmcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/BillReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9CaWxsUmVwb3J0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/BuyerOrderRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9CdXllck9yZGVyUnB0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/ChemFrnPurcRvcRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9DaGVtRnJuUHVyY1J2Y1JwdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/ChemicalIssueRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9DaGVtaWNhbElzc3VlUnB0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/ChemicalPI.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9DaGVtaWNhbFBJLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/ChemicalStockIssueRec.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9DaGVtaWNhbFN0b2NrSXNzdWVSZWMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/ChemLcReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9DaGVtTGNSZXBvcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/ChemLoanRcvReqRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9DaGVtTG9hblJjdlJlcVJwdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/ChemLocPurcRcvRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9DaGVtTG9jUHVyY1JjdlJwdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/ChemProdRequisitionRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9DaGVtUHJvZFJlcXVpc2l0aW9uUnB0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/ChemPurcRequisition.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9DaGVtUHVyY1JlcXVpc2l0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/ChemStockRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9DaGVtU3RvY2tScHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/CNFBillReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9DTkZCaWxsUmVwb3J0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/CommercialInvoice.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9Db21tZXJjaWFsSW52b2ljZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/CrustChallanPrepRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9DcnVzdENoYWxsYW5QcmVwUnB0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/CrustChemConsumeRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9DcnVzdENoZW1Db25zdW1lUnB0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/CrustIssueAfterQcRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9DcnVzdElzc3VlQWZ0ZXJRY1JwdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/CrustLeatherIssueRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9DcnVzdExlYXRoZXJJc3N1ZVJwdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/CrustLeatherQcRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9DcnVzdExlYXRoZXJRY1JwdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/CrustLeatherRequisitionRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9DcnVzdExlYXRoZXJSZXF1aXNpdGlvblJwdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/CrustProdRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9DcnVzdFByb2RScHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/ExpAgentCommRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9FeHBBZ2VudENvbW1ScHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/ExpBillLadingRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9FeHBCaWxsTGFkaW5nUnB0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/EXPCIReports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9FWFBDSVJlcG9ydHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/EXPCNFBillReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9FWFBDTkZCaWxsUmVwb3J0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/EXPDeliveryChallan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9FWFBEZWxpdmVyeUNoYWxsYW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/ExpFreightBillRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9FeHBGcmVpZ2h0QmlsbFJwdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/EXPLCRetirement.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9FWFBMQ1JldGlyZW1lbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/ExpPackingListRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9FeHBQYWNraW5nTGlzdFJwdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/ExpPiRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9FeHBQaVJwdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/FinalGradeSelectionByGrade.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9GaW5hbEdyYWRlU2VsZWN0aW9uQnlHcmFkZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/FinalGradeSelectionByItemType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9GaW5hbEdyYWRlU2VsZWN0aW9uQnlJdGVtVHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/FinalGradeSelectionReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9GaW5hbEdyYWRlU2VsZWN0aW9uUmVwb3J0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/FinishedChemConsumeRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9GaW5pc2hlZENoZW1Db25zdW1lUnB0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/FinishedIssueAfterQcRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9GaW5pc2hlZElzc3VlQWZ0ZXJRY1JwdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/FinishedLeatherIssueRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9GaW5pc2hlZExlYXRoZXJJc3N1ZVJwdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/FinishedLeatherQcRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9GaW5pc2hlZExlYXRoZXJRY1JwdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/FinishedProdRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9GaW5pc2hlZFByb2RScHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/ForeignChemPurcRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9Gb3JlaWduQ2hlbVB1cmNScHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/GradeReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9HcmFkZVJlcG9ydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/GradeSelectionDetailReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9HcmFkZVNlbGVjdGlvbkRldGFpbFJlcG9ydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/GradeSelectionReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9HcmFkZVNlbGVjdGlvblJlcG9ydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/InsuranceInfoEntryReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9JbnN1cmFuY2VJbmZvRW50cnlSZXBvcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/LcOpeningEntryReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9MY09wZW5pbmdFbnRyeVJlcG9ydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/LCRetirementReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9MQ1JldGlyZW1lbnRSZXBvcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/LimInfoReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9MaW1JbmZvUmVwb3J0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/LocalChemPurcBill.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9Mb2NhbENoZW1QdXJjQmlsbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/LocalChemPurcRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9Mb2NhbENoZW1QdXJjUnB0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/PackingList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9QYWNraW5nTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/PurchaseReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9QdXJjaGFzZVJlcG9ydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/PurchaseWithBillReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9QdXJjaGFzZVdpdGhCaWxsUmVwb3J0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/RawHideYearlyTargetRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9SYXdIaWRlWWVhcmx5VGFyZ2V0UnB0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/RHLPurchaseWithPaymentRpt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9SSExQdXJjaGFzZVdpdGhQYXltZW50UnB0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/StockReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9TdG9ja1JlcG9ydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/WbChemConsumeReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9XYkNoZW1Db25zdW1lUmVwb3J0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/WbProdReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9XYlByb2RSZXBvcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/WBStockIssueReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9XQlN0b2NrSXNzdWVSZXBvcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/WbStockReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9XYlN0b2NrUmVwb3J0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Reports/WBStockRequisitionReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9XQlN0b2NrUmVxdWlzaXRpb25SZXBvcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Shared/_Home.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19Ib21lLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Shared/_LayoutHome.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXRIb21lLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Shared/_LogoutPanel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19Mb2dvdXRQYW5lbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Size/Size.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2l6ZS9TaXplLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Source/Source.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU291cmNlL1NvdXJjZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/StockAdjust/StockAdjust.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3RvY2tBZGp1c3QvU3RvY2tBZGp1c3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/StockAdjust/StockAdjustApprove.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3RvY2tBZGp1c3QvU3RvY2tBZGp1c3RBcHByb3ZlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Store/Store.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3RvcmUvU3RvcmUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/StoreTransfer/StoreTransfer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3RvcmVUcmFuc2Zlci9TdG9yZVRyYW5zZmVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/StoreTransferIssue/StoreTransferIssue.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3RvcmVUcmFuc2Zlcklzc3VlL1N0b3JlVHJhbnNmZXJJc3N1ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/StoreTransferReceive/StoreTransferReceive.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3RvcmVUcmFuc2ZlclJlY2VpdmUvU3RvcmVUcmFuc2ZlclJlY2VpdmUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/StoreTransferReceive/TransferReceive/TransferReceive.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3RvcmVUcmFuc2ZlclJlY2VpdmUvVHJhbnNmZXJSZWNlaXZlL1RyYW5zZmVyUmVjZWl2ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Supplier/Supplier.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3VwcGxpZXIvU3VwcGxpZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/SupplierAddress/SupplierAddress.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3VwcGxpZXJBZGRyZXNzL1N1cHBsaWVyQWRkcmVzcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/SupplierAgent/SupplierAgent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3VwcGxpZXJBZ2VudC9TdXBwbGllckFnZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/SupplierBillApproval/SupplierBillApproval.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3VwcGxpZXJCaWxsQXBwcm92YWwvU3VwcGxpZXJCaWxsQXBwcm92YWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/SupplierBillEntry/SupplierBillApproval.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3VwcGxpZXJCaWxsRW50cnkvU3VwcGxpZXJCaWxsQXBwcm92YWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/SupplierBillEntry/SupplierBillEntry.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3VwcGxpZXJCaWxsRW50cnkvU3VwcGxpZXJCaWxsRW50cnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/TransferReceive/TransferReceive.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVHJhbnNmZXJSZWNlaXZlL1RyYW5zZmVyUmVjZWl2ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/TransHead/TransHead.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVHJhbnNIZWFkL1RyYW5zSGVhZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/TransportChallan/TransportChallan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVHJhbnNwb3J0Q2hhbGxhbi9UcmFuc3BvcnRDaGFsbGFuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/Unit/Unit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVW5pdC9Vbml0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/WBIStoreSelection/WBIStoreSelection.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvV0JJU3RvcmVTZWxlY3Rpb24vV0JJU3RvcmVTZWxlY3Rpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/WBRequisitionForCrusting/WBRequisitionForCrusting.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvV0JSZXF1aXNpdGlvbkZvckNydXN0aW5nL1dCUmVxdWlzaXRpb25Gb3JDcnVzdGluZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/WetBlueIssue/WetBlueIssue.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvV2V0Qmx1ZUlzc3VlL1dldEJsdWVJc3N1ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/WetBlueProductionSchedule/WetBlueProductionSchedule.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvV2V0Qmx1ZVByb2R1Y3Rpb25TY2hlZHVsZS9XZXRCbHVlUHJvZHVjdGlvblNjaGVkdWxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP_Leather/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

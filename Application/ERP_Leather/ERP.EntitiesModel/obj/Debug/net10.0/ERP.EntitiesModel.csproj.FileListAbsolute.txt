@@ -1,0 +1,11 @@
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.EntitiesModel/obj/Debug/net10.0/ERP.EntitiesModel.csproj.AssemblyReference.cache
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.EntitiesModel/obj/Debug/net10.0/ERP.EntitiesModel.GeneratedMSBuildEditorConfig.editorconfig
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.EntitiesModel/obj/Debug/net10.0/ERP.EntitiesModel.csproj.CoreCompileInputs.cache
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.EntitiesModel/obj/Debug/net10.0/ERP.EntitiesModel.sourcelink.json
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.EntitiesModel/bin/Debug/net10.0/ERP.EntitiesModel.deps.json
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.EntitiesModel/bin/Debug/net10.0/ERP.EntitiesModel.dll
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.EntitiesModel/bin/Debug/net10.0/ERP.EntitiesModel.pdb
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.EntitiesModel/obj/Debug/net10.0/ERP.EntitiesModel.dll
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.EntitiesModel/obj/Debug/net10.0/refint/ERP.EntitiesModel.dll
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.EntitiesModel/obj/Debug/net10.0/ERP.EntitiesModel.pdb
+/mnt/efs/dd5779d81afb63f44ba7375eb1ea5cfb/code/Application/ERP_Leather/ERP.EntitiesModel/obj/Debug/net10.0/ref/ERP.EntitiesModel.dll

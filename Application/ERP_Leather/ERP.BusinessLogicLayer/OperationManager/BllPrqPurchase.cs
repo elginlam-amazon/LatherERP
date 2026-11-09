@@ -2,7 +2,6 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Transactions;
-using DatabaseUtility;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.EntitiesModel.BaseModel;
 using ERP.EntitiesModel.OperationModel;
@@ -14,8 +13,6 @@ namespace ERP.BusinessLogicLayer.OperationManager
     public class BllPrqPurchase
     {
         #region Private Variables
-
-        private readonly DatabseManager _databseManager;
         private DalPrqPurchase _dalPrqPurchase;
 
         private int _result;
@@ -28,8 +25,6 @@ namespace ERP.BusinessLogicLayer.OperationManager
 
         public BllPrqPurchase()
         {
-            _databseManager = new DatabseManager(DatabaseConfiguration.ConnectionString, DatabaseConfiguration.DatabaseProvider);
-
         }
 
         #endregion

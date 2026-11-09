@@ -1,9 +1,9 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
+using Microsoft.AspNetCore.Mvc;
+
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
@@ -36,26 +36,26 @@ namespace ERP_Leather.Controllers
         {
             if (model != null && model.SizeID != 0)
             {
-                _vmMsg = _dalSysSize.Update(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysSize.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             else
             {
-                _vmMsg = _dalSysSize.Save(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysSize.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             return Json(new { SizeID = _dalSysSize.GetSizeId(), msg = _vmMsg });
         }
         [HttpPost]
         public ActionResult Delete(string sizeId)
         {
-            _vmMsg = _dalSysSize.Delete(sizeId, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = _dalSysSize.Delete(sizeId, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public ActionResult GetSizeList()
         {
             var sysSource = _dalSysSize.GetAll().OrderByDescending(s => s.SizeID);
-            return Json(sysSource, JsonRequestBehavior.AllowGet);
+            return Json(sysSource);
         }
     }
 }

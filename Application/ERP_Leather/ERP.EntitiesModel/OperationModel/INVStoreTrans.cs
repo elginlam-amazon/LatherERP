@@ -39,7 +39,7 @@ namespace ERP.EntitiesModel.OperationModel
         public string RequiredByTime { get; set; }
         public string ReqRaisedByName { get; set; }
         public string JobOrderNo { get; set; }
-        public string RecordStatus { get; set; }
+        public new string RecordStatus { get; set; }
         public string RecordStatusName { get; set; }
         public string FromSource { get; set; }
         public string FromSourceName { get; set; }

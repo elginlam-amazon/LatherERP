@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
 using System;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using ERP_Leather.ActionFilters;
 
@@ -37,11 +38,11 @@ namespace ERP_Leather.Controllers
         {
             if (model != null && model.ItemID != 0)
             {
-                _vmMsg = _dalSysChemicalItem.Update(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysChemicalItem.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             else
             {
-                _vmMsg = _dalSysChemicalItem.Save(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysChemicalItem.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             return Json(new { ItemID = _dalSysChemicalItem.GetItemID(), msg = _vmMsg });
         }
@@ -53,16 +54,16 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public ActionResult GetChemicalItemList()
         {
             var sysChemicalItem = _dalSysChemicalItem.GetAll().OrderByDescending(s => s.ItemID);
-            return Json(sysChemicalItem, JsonRequestBehavior.AllowGet);
+            return Json(sysChemicalItem);
         }
         public JsonResult GetChemicalListForSearch()
         {
             var supplierAgentList = _dalSysChemicalItem.GetChemicalListForSearch();
-            return Json(supplierAgentList, JsonRequestBehavior.AllowGet);
+            return Json(supplierAgentList);
         }
         public ActionResult GetChemicalListSearchByName(string chemicalName)
         {
@@ -70,7 +71,7 @@ namespace ERP_Leather.Controllers
                 new DalChemPurcReq().GetAllChemicalPurchaseItems()
                     .Where(ob => ob.ItemName.StartsWith(chemicalName))
                     .ToList();
-            return Json(chemicalData, JsonRequestBehavior.AllowGet);
+            return Json(chemicalData);
         }
     }
 }
