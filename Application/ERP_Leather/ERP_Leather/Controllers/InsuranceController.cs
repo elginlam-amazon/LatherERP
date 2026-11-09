@@ -1,10 +1,10 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
@@ -38,7 +38,7 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult Insurances(SysBank model)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             objValMssg = _dalInsurance.Save(model, _userId, "Insurance/Insurances");//, "Insurance/Insurance"
             return Json(new { msg = objValMssg, BankID = _dalInsurance.GetBankID() });
         }
@@ -48,7 +48,7 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult Update(SysBank model)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             objValMssg = _dalInsurance.Update(model, _userId);
             return Json(new { msg = objValMssg });
         }
@@ -77,7 +77,7 @@ namespace ERP_Leather.Controllers
                                          InsuranceTypeName = temp.BankType == "LOC" ? "Local" : "Foreign",
                                          IsActive = temp.IsActive = true ? "Active" : "Inactive"
                                      }).OrderBy(ob => ob.BankName);
-            return Json(listInsuranceInfo, JsonRequestBehavior.AllowGet);
+            return Json(listInsuranceInfo);
         }
 
 
@@ -105,13 +105,13 @@ namespace ERP_Leather.Controllers
                              IsActive = temp.IsActive == true ? "Active" : "Inactive"
                          }).OrderBy(ob => ob.BankName); 
 
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
 
         public ActionResult GetAutoCompleteData()
         {
             var data = objRepository.BankRepository.Get().Select(ob => ob.BankCode);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
         public ActionResult GetInsuranceInfoByBankID(string bankId)
@@ -138,7 +138,7 @@ namespace ERP_Leather.Controllers
                     IsActive = bank.IsActive == true ? "Active" : "Inactive",
                 }).ToList()
             };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
 
 
         }

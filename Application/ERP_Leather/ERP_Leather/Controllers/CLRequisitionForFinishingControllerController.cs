@@ -1,6 +1,6 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.BusinessLogicLayer.OperationManager;
 using ERP.EntitiesModel.OperationModel;
@@ -28,80 +28,78 @@ namespace ERP_Leather.Controllers
         [CheckUserAccess("CLRequisitionForFinishing/CLRequisitionForFinishing")]
         public ActionResult CLRequisitionForFinishing(PRDYearMonthCrustReqItem model)
         {
-            var msg = objBll.Save(model, Convert.ToInt32(Session["UserID"]));
+            var msg = objBll.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
 
             var RequistionItemList = objDal.GetRequisitionItemList(model.RequisitionDateID.ToString());
-            return Json(new { Msg = msg, RequistionItemList = RequistionItemList }, JsonRequestBehavior.AllowGet);
+            return Json(new { Msg = msg, RequistionItemList = RequistionItemList });
         }
 
 
         public ActionResult AddNewYearMonth(string _ScheduleYear, string _ScheduleMonth, string _ProductionFloor, string _ConcernStore)
         {
-            return Json(new { Msg = objDal.AddNewYearMonth(_ScheduleYear, _ScheduleMonth, _ProductionFloor, _ConcernStore), YearMonID = objDal.ReturnYearMonthID() },
-                    JsonRequestBehavior.AllowGet);
+            return Json(new { Msg = objDal.AddNewYearMonth(_ScheduleYear, _ScheduleMonth, _ProductionFloor, _ConcernStore), YearMonID = objDal.ReturnYearMonthID() });
         }
 
         public ActionResult AddNewRequisitionDate(string _ScheduleID, string _RequiredDate)
         {
             var RequisitionDateID = objDal.AddNewRequisitionDate(_ScheduleID, _RequiredDate);
             var RequisitionNo = objDal.ReturnRequisitionNo(RequisitionDateID);
-            return Json(new { RequisitionDateID = RequisitionDateID, RequisitionNo = RequisitionNo },
-                    JsonRequestBehavior.AllowGet);
+            return Json(new { RequisitionDateID = RequisitionDateID, RequisitionNo = RequisitionNo });
         }
 
         public ActionResult GetAllRequisitionDate(string _ScheduleID)
         {
-            return Json(objDal.GetAllRequisitionDate(_ScheduleID), JsonRequestBehavior.AllowGet);
+            return Json(objDal.GetAllRequisitionDate(_ScheduleID));
         }
 
         public ActionResult GetAllActiveColor()
         {
-            return Json(objDal.GetAllActiveColor(), JsonRequestBehavior.AllowGet);
+            return Json(objDal.GetAllActiveColor());
         }
 
         public ActionResult GetAllActiveBuyer()
         {
-            return Json(objDal.GetAllActiveBuyer(), JsonRequestBehavior.AllowGet);
+            return Json(objDal.GetAllActiveBuyer());
         }
 
         public ActionResult GetCategoryWiseUnit(string _UnitCategory)
         {
-            return Json(objDal.GetCategoryWiseUnit(_UnitCategory), JsonRequestBehavior.AllowGet);
+            return Json(objDal.GetCategoryWiseUnit(_UnitCategory));
         }
 
         public ActionResult GetAllLeatherStatus()
         {
-            return Json(objDal.GetAllLeatherStatus(), JsonRequestBehavior.AllowGet);
+            return Json(objDal.GetAllLeatherStatus());
         }
 
         public ActionResult GetScheduleList(string _ScheduleYear, string _ScheduleMonth, string _ProductionFloor)
         {
-            return Json(objDal.GetScheduleList(_ScheduleYear, _ScheduleMonth, _ProductionFloor), JsonRequestBehavior.AllowGet);
+            return Json(objDal.GetScheduleList(_ScheduleYear, _ScheduleMonth, _ProductionFloor));
         }
 
         public ActionResult GetColorListForScheduleItem(string _ScheduleItemID)
         {
-            return Json(objDal.GetColorListForScheduleItem(_ScheduleItemID), JsonRequestBehavior.AllowGet);
+            return Json(objDal.GetColorListForScheduleItem(_ScheduleItemID));
         }
 
         public ActionResult GetBuyerOrderList(string _BuyerID)
         {
-            return Json(objDal.GetBuyerOrderList(_BuyerID), JsonRequestBehavior.AllowGet);
+            return Json(objDal.GetBuyerOrderList(_BuyerID));
         }
 
         public ActionResult GetColorListForOrderItem(string _BuyerOrderItemID)
         {
-            return Json(objDal.GetColorListForOrderItem(_BuyerOrderItemID), JsonRequestBehavior.AllowGet);
+            return Json(objDal.GetColorListForOrderItem(_BuyerOrderItemID));
         }
 
         public ActionResult GetRequisitionItemList(string _RequisitionDateID)
         {
-            return Json(objDal.GetRequisitionItemList(_RequisitionDateID), JsonRequestBehavior.AllowGet);
+            return Json(objDal.GetRequisitionItemList(_RequisitionDateID));
         }
 
         public ActionResult GetColorListForRequisitionItem(string _RequisitionItemID)
         {
-            return Json(objDal.GetColorListForRequisitionItem(_RequisitionItemID), JsonRequestBehavior.AllowGet);
+            return Json(objDal.GetColorListForRequisitionItem(_RequisitionItemID));
         }
 
         public ActionResult DeleteItem(string _RequisitionItemID, string _PageStatus)
@@ -112,20 +110,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDal.DeleteItem(_RequisitionItemID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
 
 
@@ -140,26 +138,26 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDal.DeleteColorItem(_ReqItemColorID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
         public ActionResult GetSearchInformation()
         {
-            return Json(objDal.GetSearchInformation(), JsonRequestBehavior.AllowGet);
+            return Json(objDal.GetSearchInformation());
         }
 
         public ActionResult ConfirmRequisition(string _RequisitionDateID, string confirmComment)
@@ -168,11 +166,11 @@ namespace ERP_Leather.Controllers
 
             if (checkConfirm)
             {
-                return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Success" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 	}

@@ -1,8 +1,9 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.Utility;
 using ERP.EntitiesModel.BaseModel;
@@ -41,7 +42,7 @@ namespace ERP_Leather.Controllers
                 _unit.LCOpeningRepository.GetByID(comInv.LCID).PINo,
                 RecordStatus = DalCommon.ReturnRecordStatus(comInv.RecordStatus)
             }).ToList();
-            return Json(comInvs.OrderByDescending(ob => ob.CIID), JsonRequestBehavior.AllowGet);
+            return Json(comInvs.OrderByDescending(ob => ob.CIID));
         }
 
         public ActionResult GetLcInfo()
@@ -51,7 +52,7 @@ namespace ERP_Leather.Controllers
             {
                 Lcid = info.LCID, LcNo = info.LCNo, LcDate = info.LCDate.ToString("dd/mm/yyyy"), PiNo = info.PINo
             }).ToList();
-            return Json(allLcInfoMin, JsonRequestBehavior.AllowGet);
+            return Json(allLcInfoMin);
         }
 
         public ActionResult GetShipperInfo()
@@ -61,7 +62,7 @@ namespace ERP_Leather.Controllers
             {
                 Id=info.BuyerID, Code = info.BuyerCode, Name = info.BuyerName, Type = info.BuyerType
             }).ToList();
-            return Json(allShipperInfo, JsonRequestBehavior.AllowGet);
+            return Json(allShipperInfo);
         }
 
         public ActionResult GetShipperForSearch()
@@ -71,7 +72,7 @@ namespace ERP_Leather.Controllers
                     .Where(ob => ob.BuyerCategory == "Chemical")
                     .Select(ob => ob.BuyerName)
                     .ToList();
-            return Json(shipper, JsonRequestBehavior.AllowGet);
+            return Json(shipper);
         }
 
         public ActionResult GetShipperByName(string name)
@@ -84,7 +85,7 @@ namespace ERP_Leather.Controllers
             {
                 Id = item.BuyerID, Code = item.BuyerCode, Name = item.BuyerName, Type = item.BuyerType
             }).ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetPortInfo()
@@ -94,13 +95,13 @@ namespace ERP_Leather.Controllers
             {
                 Id = info.PortID, Code = info.PortCode, Name = info.PortName, Address = info.PortAdress
             }).ToList();
-            return Json(allPortInfo, JsonRequestBehavior.AllowGet);
+            return Json(allPortInfo);
         }
 
         public ActionResult GetPortForSearch()
         {
             var ports = _unit.SysPortRepository.Get().Where(ob => ob.IsActive == true).Select(ob => ob.PortName);
-            return Json(ports, JsonRequestBehavior.AllowGet);
+            return Json(ports);
         }
 
         public ActionResult GetPortByName(string name)
@@ -110,7 +111,7 @@ namespace ERP_Leather.Controllers
             {
                 Id = item.PortID, Code = item.PortCode, Name = item.PortName, Address = item.PortAdress
             }).ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetBillOfLadingMin()
@@ -125,13 +126,13 @@ namespace ERP_Leather.Controllers
                 CiNo = item.CIID == null ? "" : _unit.CommercialInvoiceRepository.GetByID(item.CIID).CINo,
                 RecordStatus = DalCommon.ReturnRecordStatus(item.RecordStatus)
             }).ToList();
-            return Json(blModelMin.OrderByDescending(ob => ob.Blid), JsonRequestBehavior.AllowGet);
+            return Json(blModelMin.OrderByDescending(ob => ob.Blid));
         }
 
         public ActionResult GetBillOfLadingForSearch()
         {
             var bl = _unit.BillOfLadingRepository.Get().Select(ob => ob.BLNo).ToList();
-            return Json(bl, JsonRequestBehavior.AllowGet);
+            return Json(bl);
         }
 
         public ActionResult GetBillOfLadingByBlno(string blno)
@@ -142,7 +143,7 @@ namespace ERP_Leather.Controllers
                 Blid = item.BLID, BlNo = item.BLNo, BlDate = string.Format("{0:dd/MM/yyyy}", item.BLDate), LcNo = item.LCNo,
                 PiNo = _unit.LCOpeningRepository.GetByID(item.LCID).PINo
             }).ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetBillOfLadingById(int blid)
@@ -200,41 +201,41 @@ namespace ERP_Leather.Controllers
                 }
                 blModel.Containers.Add(blcModel);
             }
-            return Json(blModel, JsonRequestBehavior.AllowGet);
+            return Json(blModel);
         }
 
         public ActionResult DeleteBillOfLadingContainer(int blcCntId)
         {
             _validationMsg = _dalLcmBillOfLading.DeleteBillOfLadingContainer(blcCntId);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult DeleteBillOfLading(int blcCntId)
         {
             _validationMsg = _dalLcmBillOfLading.DeleteBillOfLading(blcCntId);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Save(LcmBillOfLadingVM model)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalLcmBillOfLading.Save(model, _userId, "BillOfLading/BillOfLading");
 
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Check(int blid, string checkNote)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalLcmBillOfLading.Check(blid, _userId, checkNote);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Confirm(int blid, string confirmNote)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalLcmBillOfLading.Confirm(blid, _userId, confirmNote);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
     }
 

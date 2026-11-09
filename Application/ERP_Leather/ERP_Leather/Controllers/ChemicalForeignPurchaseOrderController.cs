@@ -1,6 +1,7 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
-using System.Web;
-using System.Web.Mvc;
+
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.BusinessLogicLayer.OperationManager;
 using ERP.EntitiesModel.OperationModel;
@@ -29,20 +30,20 @@ namespace ERP_Leather.Controllers
         {
             if (model.OrderNo == null)
             {
-                var msg = objBllChemicalForeignPurchaseOrder.Save(model, Convert.ToInt32(Session["UserID"]), "ChemicalForeignPurchaseOrder/ChemicalForeignPurchaseOrder");
+                var msg = objBllChemicalForeignPurchaseOrder.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "ChemicalForeignPurchaseOrder/ChemicalForeignPurchaseOrder");
                 long OrderID = objBllChemicalForeignPurchaseOrder.GetpurchaseID();
                 var OrderNo = objDal.GetOrderNo(OrderID);
                 var RequisitionList = objDal.GetRequisitionInformationForSingleOrder((OrderID).ToString());
 
-                return Json(new { Msg = msg, RequisitionList = RequisitionList, OrderID = OrderID, OrderNo = OrderNo }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = msg, RequisitionList = RequisitionList, OrderID = OrderID, OrderNo = OrderNo });
             }
             else
             {
-                var msg = objBllChemicalForeignPurchaseOrder.Update(model, Convert.ToInt32(Session["UserID"]));
+                var msg = objBllChemicalForeignPurchaseOrder.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
                 var RequisitionList = objDal.GetRequisitionInformationForSingleOrder(model.OrderID);
 
 
-                return Json(new { Msg = msg, RequisitionList = RequisitionList }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = msg, RequisitionList = RequisitionList });
 
             }
         }
@@ -61,20 +62,20 @@ namespace ERP_Leather.Controllers
         {
             if (model.OrderNo == null)
             {
-                var msg = objBllChemicalForeignPurchaseOrder.Save(model, Convert.ToInt32(Session["UserID"]), "ChemicalForeignPurchaseOrder/ChemicalForeignPurchaseOrder");
+                var msg = objBllChemicalForeignPurchaseOrder.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "ChemicalForeignPurchaseOrder/ChemicalForeignPurchaseOrder");
                 long OrderID = objBllChemicalForeignPurchaseOrder.GetpurchaseID();
                 var OrderNo = objDal.GetOrderNo(OrderID);
                 var RequisitionList = objDal.GetRequisitionInformationForSingleOrder((OrderID).ToString());
 
-                return Json(new { Msg = msg, RequisitionList = RequisitionList, OrderID = OrderID, OrderNo = OrderNo }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = msg, RequisitionList = RequisitionList, OrderID = OrderID, OrderNo = OrderNo });
             }
             else
             {
-                var msg = objBllChemicalForeignPurchaseOrder.Update(model, Convert.ToInt32(Session["UserID"]));
+                var msg = objBllChemicalForeignPurchaseOrder.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
                 var RequisitionList = objDal.GetRequisitionInformationForSingleOrder(model.OrderID);
 
 
-                return Json(new { Msg = msg, RequisitionList = RequisitionList }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = msg, RequisitionList = RequisitionList });
 
             }
         }
@@ -82,31 +83,31 @@ namespace ERP_Leather.Controllers
         public ActionResult GetSupplierListForChemicalForeignPurchaseOrder(string _SupplierType)
         {
             var Supplier = objDal.GetSupplierListForChemicalForeignPurchaseOrder(_SupplierType);
-            return Json(Supplier, JsonRequestBehavior.AllowGet);
+            return Json(Supplier);
         }
 
         public ActionResult GetLocalAgentListForChemicalForeignPurchaseOrder(string _SupplierType)
         {
             var LocalAgent = objDal.GetLocalAgentListForChemicalForeignPurchaseOrder(_SupplierType);
-            return Json(LocalAgent, JsonRequestBehavior.AllowGet);
+            return Json(LocalAgent);
         }
 
         public ActionResult GetForeignAgentListForChemicalForeignPurchaseOrder(string _SupplierType)
         {
             var ForiegnAgent = objDal.GetForeignAgentListForChemicalForeignPurchaseOrder(_SupplierType);
-            return Json(ForiegnAgent, JsonRequestBehavior.AllowGet);
+            return Json(ForiegnAgent);
         }
 
         public ActionResult GetOrderInformationForSearch(string _OrderCategory)
         {
             var Orders = objDal.GetOrderInformation(_OrderCategory);
-            return Json(Orders, JsonRequestBehavior.AllowGet);
+            return Json(Orders);
         }
 
         public ActionResult GetDetailOrderInformation(string OrderID)
         {
             var AllData = objDal.GetDetailOrderInformation(OrderID);
-            return Json(AllData, JsonRequestBehavior.AllowGet);
+            return Json(AllData);
         }
 
         public ActionResult GetAgentInformation(string SupplierID, string LocalAgentID, string ForeignAgentID)
@@ -114,17 +115,17 @@ namespace ERP_Leather.Controllers
             if(SupplierID != null)
             {
                 var Data = objDal.GetSupplierAgentInformation(Convert.ToInt16(SupplierID), 0, 0);
-                return Json(Data, JsonRequestBehavior.AllowGet);
+                return Json(Data);
             }
             else if (LocalAgentID != null)
             {
                 var Data = objDal.GetSupplierAgentInformation(0, Convert.ToInt16(LocalAgentID), 0);
-                return Json(Data, JsonRequestBehavior.AllowGet);
+                return Json(Data);
             }
             else
             {
                 var Data = objDal.GetSupplierAgentInformation(0, 0, Convert.ToInt16(ForeignAgentID));
-                return Json(Data, JsonRequestBehavior.AllowGet);
+                return Json(Data);
             }
             
         }
@@ -132,7 +133,7 @@ namespace ERP_Leather.Controllers
         public ActionResult GetChemicalRequisition( string _RequisitionCategory, string _SupplierID)
         {
             var Data = objDal.GetChemicalRequisition(_RequisitionCategory, _SupplierID);
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
 
@@ -141,12 +142,12 @@ namespace ERP_Leather.Controllers
             if(OrderID !=null && OrderID != "")
             {
                 var Data = objDal.GetChemicalRequisitionItemList(_RequisitionID, OrderID);
-                return Json(Data, JsonRequestBehavior.AllowGet);
+                return Json(Data);
             }
             else
             {
                 var Data = objDal.GetChemicalRequisitionItemList(_RequisitionID);
-                return Json(Data, JsonRequestBehavior.AllowGet);
+                return Json(Data);
             }
             
         }
@@ -154,25 +155,25 @@ namespace ERP_Leather.Controllers
         public ActionResult GetAllChemicalItem()
         {
             var ItemList = objDal.GetAllChemicalItem();
-            return Json(ItemList, JsonRequestBehavior.AllowGet);
+            return Json(ItemList);
         }
 
          public ActionResult GetAllPackSizeForChemical()
          {
              var Data = objDal.GetAllPackSizeForChemical();
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
          }
 
          public ActionResult GetAllUnitForChemicalPackSize()
          {
              var Data = objDal.GetAllUnitForChemicalPackSize();
-             return Json(Data, JsonRequestBehavior.AllowGet);
+             return Json(Data);
          }
 
          public ActionResult GetAllUnitForChemical()
          {
              var Data = objDal.GetAllUnitForChemical();
-             return Json(Data, JsonRequestBehavior.AllowGet);
+             return Json(Data);
          }
 
          public ActionResult ConfirmOrder(string OrderID, string confirmComment)
@@ -181,11 +182,11 @@ namespace ERP_Leather.Controllers
 
              if (checkConfirm)
              {
-                 return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                 return Json(new { Msg = "Success" });
              }
              else
              {
-                 return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                 return Json(new { Msg = "Fail" });
              }
          }
 
@@ -198,20 +199,20 @@ namespace ERP_Leather.Controllers
                  CheckStatus = objDal.DeleteRequisitionItem(OrderItemID);
                  if (CheckStatus)
                  {
-                     return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                     return Json(new { Msg = "Success" });
                  }
                  else
                  {
-                     return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                     return Json(new { Msg = "Fail" });
                  }
              }
              else if (_PageStatus == "CNF" || _PageStatus== "Confirmed")
              {
-                 return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                 return Json(new { Msg = "CNF" });
              }
              else
              {
-                 return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                 return Json(new { Msg = "Fail" });
              }
          }
 
@@ -223,20 +224,20 @@ namespace ERP_Leather.Controllers
                  CheckStatus = objDal.DeleteRequisition(OrderID, RequisitionID);
                  if (CheckStatus)
                  {
-                     return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                     return Json(new { Msg = "Success" });
                  }
                  else
                  {
-                     return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                     return Json(new { Msg = "Fail" });
                  }
              }
              else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
              {
-                 return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                 return Json(new { Msg = "CNF" });
              }
              else
              {
-                 return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                 return Json(new { Msg = "Fail" });
              }
          }
 
@@ -248,20 +249,20 @@ namespace ERP_Leather.Controllers
                  CheckStatus = objDal.DeleteOrder(OrderID);
                  if (CheckStatus)
                  {
-                     return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                     return Json(new { Msg = "Success" });
                  }
                  else
                  {
-                     return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                     return Json(new { Msg = "Fail" });
                  }
              }
              else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
              {
-                 return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                 return Json(new { Msg = "CNF" });
              }
              else
              {
-                 return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                 return Json(new { Msg = "Fail" });
              }
          }
 
@@ -271,11 +272,11 @@ namespace ERP_Leather.Controllers
 
              if (CheckStatus)
              {
-                 return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                 return Json(new { Msg = "Success" });
              }
              else
              {
-                 return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                 return Json(new { Msg = "Fail" });
              }
          }
 

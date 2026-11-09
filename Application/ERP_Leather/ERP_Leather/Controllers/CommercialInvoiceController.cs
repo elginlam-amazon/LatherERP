@@ -1,9 +1,9 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
@@ -11,8 +11,8 @@ using ERP.DatabaseAccessLayer.Utility;
 using ERP.EntitiesModel.BaseModel;
 using ERP.EntitiesModel.OperationModel;
 using ERP_Leather.ActionFilters;
-using Microsoft.Ajax.Utilities;
-using Microsoft.Scripting.Utils;
+
+
 
 namespace ERP_Leather.Controllers
 {
@@ -51,13 +51,13 @@ namespace ERP_Leather.Controllers
                 RecordStatus = DalCommon.ReturnRecordStatus(item.RecordStatus),
                 LCDate = item.LCDate.ToString("dd-MMM-yyyy")
             }).ToList();
-            return Json(lstLcBasicsInfo.OrderByDescending(ob => ob.LCID), JsonRequestBehavior.AllowGet);
+            return Json(lstLcBasicsInfo.OrderByDescending(ob => ob.LCID));
         }
 
         public ActionResult GetLcInfoForSearch()
         {
             var lc = _unit.LCOpeningRepository.Get().Where(ob => /*ob.RecordStatus == "CNF" &&*/ ob.LCStatus == "RNG").Select(ob => ob.LCNo).ToList();
-            return Json(lc, JsonRequestBehavior.AllowGet);
+            return Json(lc);
         }
 
         public ActionResult GetLcInfoByLcNo(string lcNo)
@@ -70,7 +70,7 @@ namespace ERP_Leather.Controllers
                 LCDate = item.LCDate.ToString("dd-MMM-yyyy"),
                 PINo = item.PINo
             }).ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetAllLCforCommercialInvoice(int lcId)
@@ -126,7 +126,7 @@ namespace ERP_Leather.Controllers
                     lcFull.Items.Add(item);
                 }
             }
-            return Json(lcFull, JsonRequestBehavior.AllowGet);
+            return Json(lcFull);
         }
 
         public ActionResult GetAllInvoiceMin()
@@ -145,13 +145,13 @@ namespace ERP_Leather.Controllers
                 RecordStatus = DalCommon.ReturnRecordStatus(item.RecordStatus)
             }).OrderByDescending(ob=>ob.CIID).ToList();
 
-            return Json(ciList, JsonRequestBehavior.AllowGet);
+            return Json(ciList);
         }
 
         public ActionResult GetInvoiceMinForSearch()
         {
             var commercialInvoice = _unit.CommercialInvoiceRepository.Get().Select( ob => ob.CINo).ToList();
-            return Json(commercialInvoice, JsonRequestBehavior.AllowGet);
+            return Json(commercialInvoice);
         }
 
         public ActionResult  GetInvoiceByCiNo(string ciNo)
@@ -167,7 +167,7 @@ namespace ERP_Leather.Controllers
                 LCDate = _unit.LCOpeningRepository.GetByID(item.LCID).LCDate.ToString("dd/MM/yyyy"),
                 SupplierName = _unit.SysSupplierRepository.GetByID(_unit.PRQ_ChemicalPIRepository.GetByID(_unit.LCOpeningRepository.GetByID(item.LCID).PIID).SupplierID).SupplierName
             }).ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult SearchCIByNo(string ciNo)
@@ -183,14 +183,14 @@ namespace ERP_Leather.Controllers
                              LCNo = temp.LCNo,
                              LCDate = _unit.LCOpeningRepository.GetByID(temp.LCID).LCDate.ToString("dd/MM/yyyy")
                          };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetCINo()
         {
             var sysCI = from temp in _unit.CommercialInvoiceRepository.Get().OrderByDescending(s => s.CIID)
                         select temp.CINo;
-            return Json(sysCI, JsonRequestBehavior.AllowGet);
+            return Json(sysCI);
         }
 
         public ActionResult GetAllInvoice(int CIID)
@@ -246,14 +246,14 @@ namespace ERP_Leather.Controllers
                 }
             }
 
-            return Json(CI, JsonRequestBehavior.AllowGet);
+            return Json(CI);
         }
 
         public ActionResult GetAllChemicalItemForSearch()
         {
             var chemItems =
                 _unit.SysChemicalItemRepository.Get().Where(ob => ob.IsActive != false).Select(ob => ob.ItemName);
-            return Json(chemItems, JsonRequestBehavior.AllowGet);
+            return Json(chemItems);
         }
 
         public ActionResult GetAllChemicalItemByName(string name)
@@ -264,13 +264,13 @@ namespace ERP_Leather.Controllers
             {
                 ItemID = item.ItemID, ItemName = item.ItemName, HSCode = item.HSCode
             }).ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult CheckCiNo(string cino)
         {
             var ci = _unit.CommercialInvoiceRepository.Get().Where(ob => ob.CINo == cino);
-            return Json(ci, JsonRequestBehavior.AllowGet);
+            return Json(ci);
         }
 
         public ActionResult DeleteCommercialInvoiceItem(int CIItemID)
@@ -286,36 +286,36 @@ namespace ERP_Leather.Controllers
                 _validationMsg.Type = Enums.MessageType.Error;
                 _validationMsg.Msg = "Failed to delete";
             }
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult DeleteCommercialInvoice(int ciid)
         {
             _validationMsg = _dalCommercialInvoice.DeleteCommercialInvoice(ciid);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Save(CommercialInvoiceVM model)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
 
             _validationMsg = _dalCommercialInvoice.Save(model, _userId, "CommercialInvoice/CommercialInvoice");
 
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Check(int ciid, string chkNote)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalCommercialInvoice.Check(ciid, _userId, chkNote);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Confirm(int ciid, string apvNote)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalCommercialInvoice.Confirm(ciid, _userId, apvNote);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         //public ValidationMsg ModelCheckForSave(CommercialInvoiceVM model)

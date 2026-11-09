@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DatabaseUtility;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.EntitiesModel.BaseModel;
 using ERP.EntitiesModel.OperationModel;
@@ -14,8 +13,6 @@ namespace ERP.BusinessLogicLayer.OperationManager
     public  class BllStockAdjust
     {
         #region Private Variables
-
-        private readonly DatabseManager _databseManager;
         private DalInvLeatherStockAdjustRequest _dalInvLeatherStockAdjust;
         private int _result;
         private string _connectionString = string.Empty;
@@ -26,7 +23,6 @@ namespace ERP.BusinessLogicLayer.OperationManager
 
         public BllStockAdjust()
         {
-            _databseManager = new DatabseManager(DatabaseConfiguration.ConnectionString, DatabaseConfiguration.DatabaseProvider);
             _connectionString = DatabaseConfiguration.ConnectionString;
         }
 

@@ -1,7 +1,8 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
+using Microsoft.AspNetCore.Mvc;
+
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.EntitiesModel.BaseModel;
@@ -36,11 +37,11 @@ namespace ERP_Leather.Controllers
         {
             if (model != null && model.CurrencyID != 0)
             {
-                _vmMsg = _dalSysCurrency.Update(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysCurrency.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             else
             {
-                _vmMsg = _dalSysCurrency.Save(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysCurrency.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             return Json(new { CurrencyID = _dalSysCurrency.GetCurrencyID(), msg = _vmMsg });
         }
@@ -49,21 +50,21 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult Delete(string currencyId)
         {
-            _vmMsg = _dalSysCurrency.Delete(currencyId, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = _dalSysCurrency.Delete(currencyId, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public ActionResult GetCurrencyList()
         {
             var sysSource = _dalSysCurrency.GetAll().OrderByDescending(s => s.CurrencyID);
-            return Json(sysSource, JsonRequestBehavior.AllowGet);
+            return Json(sysSource);
         }
 
         public ActionResult GetAllActiveCurrency()
         {
             var sysSource = _dalSysCurrency.GetAllActiveCurrency().OrderByDescending(s => s.CurrencyID);
-            return Json(sysSource, JsonRequestBehavior.AllowGet);
+            return Json(sysSource);
         }
     }
 }

@@ -1,9 +1,9 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.Utility;
@@ -12,7 +12,7 @@ using ERP.EntitiesModel.BaseModel;
 using ERP.EntitiesModel.OperationModel;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP_Leather.ActionFilters;
-using Microsoft.Ajax.Utilities;
+
 
 namespace ERP_Leather.Controllers
 {
@@ -53,7 +53,7 @@ namespace ERP_Leather.Controllers
                 _unit.BuyerAddressRepository.Get().FirstOrDefault(ob => ob.BuyerID == buyer.BuyerID && ob.IsActive == true).BuyerAddressID,
                 _unit.BuyerAddressRepository.Get().FirstOrDefault(ob => ob.BuyerID == buyer.BuyerID && ob.IsActive == true).Address
             }).ToList();
-            return Json(result.OrderBy(ob => ob.BuyerName), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderBy(ob => ob.BuyerName));
         }
 
         public ActionResult GetLocalBuyer(string buyerType)
@@ -67,7 +67,7 @@ namespace ERP_Leather.Controllers
                 _unit.BuyerAddressRepository.Get().FirstOrDefault(ob => ob.BuyerID == buyer.BuyerID && ob.IsActive == true).BuyerAddressID,
                 _unit.BuyerAddressRepository.Get().FirstOrDefault(ob => ob.BuyerID == buyer.BuyerID && ob.IsActive == true).Address
             }).ToList();
-            return Json(result.OrderBy(ob => ob.BuyerName), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderBy(ob => ob.BuyerName));
         }
 
         public ActionResult GetBuyerById(int buyerId)
@@ -81,7 +81,7 @@ namespace ERP_Leather.Controllers
                 _unit.BuyerAddressRepository.Get().FirstOrDefault(ob => ob.BuyerID == buyer.BuyerID).BuyerAddressID,
                 _unit.BuyerAddressRepository.Get().FirstOrDefault(ob => ob.BuyerID == buyer.BuyerID).Address
             };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetBuyerAgents(int buyerId)
@@ -94,7 +94,7 @@ namespace ERP_Leather.Controllers
                 AgentName = _unit.SysBuyerRepository.GetByID(buyer.AgentID).BuyerName,
                 buyer.AgentType
             }).ToList().OrderBy(ob => ob.AgentName);
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetLocalAgent()
@@ -113,7 +113,7 @@ namespace ERP_Leather.Controllers
                 _unit.BuyerAddressRepository.Get().FirstOrDefault(ob => ob.BuyerID == agent.BuyerID).BuyerAddressID,
                 _unit.BuyerAddressRepository.Get().FirstOrDefault(ob => ob.BuyerID == agent.BuyerID).Address
             }).ToList();
-            return Json(result.OrderBy(ob => ob.BuyerName), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderBy(ob => ob.BuyerName));
         }
 
         public ActionResult GetLocalAgentById(int agentId)
@@ -127,7 +127,7 @@ namespace ERP_Leather.Controllers
                 AgentCode = _unit.SysBuyerRepository.GetByID(agent.AgentID).BuyerCode,
                 AgentName = _unit.SysBuyerRepository.GetByID(agent.AgentID).BuyerName
             };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetForeignAgent()
@@ -146,7 +146,7 @@ namespace ERP_Leather.Controllers
                 _unit.BuyerAddressRepository.Get().FirstOrDefault(ob => ob.BuyerID == agent.BuyerID).BuyerAddressID,
                 _unit.BuyerAddressRepository.Get().FirstOrDefault(ob => ob.BuyerID == agent.BuyerID).Address
             }).ToList();
-            return Json(result.OrderBy(ob => ob.BuyerName), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderBy(ob => ob.BuyerName));
         }
 
         public ActionResult GetForeignAgentById(int agentId)
@@ -160,7 +160,7 @@ namespace ERP_Leather.Controllers
                 AgentCode = _unit.SysBuyerRepository.GetByID(agent.AgentID).BuyerCode,
                 AgentName = _unit.SysBuyerRepository.GetByID(agent.AgentID).BuyerName
             };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetAgentsBuyer(int agentId)
@@ -174,7 +174,7 @@ namespace ERP_Leather.Controllers
                 _unit.BuyerAddressRepository.Get().FirstOrDefault(ob => ob.BuyerID == buyer.BuyerID && ob.IsActive == true).BuyerAddressID,
                 _unit.BuyerAddressRepository.Get().FirstOrDefault(ob => ob.BuyerID == buyer.BuyerID && ob.IsActive == true).Address,
             };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetArticles()
@@ -186,7 +186,7 @@ namespace ERP_Leather.Controllers
                 article.ArticleNo,
                 article.ArticleName
             }).ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetColors()
@@ -198,7 +198,7 @@ namespace ERP_Leather.Controllers
                 color.ColorCode,
                 color.ColorName
             }).ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetThicknessUnit()
@@ -209,7 +209,7 @@ namespace ERP_Leather.Controllers
                 unit.UnitID,
                 unit.UnitName
             }).ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetBuyerOrder()
@@ -225,7 +225,7 @@ namespace ERP_Leather.Controllers
                 BuyerName = order.BuyerID == null ? "" : _unit.SysBuyerRepository.GetByID(order.BuyerID).BuyerName,
                 RecordStatus = DalCommon.ReturnRecordStatus(order.RecordStatus)
             }).ToList();
-            return Json(result.OrderByDescending(ob => ob.BuyerOrderID), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderByDescending(ob => ob.BuyerOrderID));
         }
 
         public ActionResult GetBuyerOrderById(long orderId)
@@ -366,29 +366,29 @@ namespace ERP_Leather.Controllers
                     OrdDateMeterQty = dlvry.OrdDateMeterQty
                 }).OrderBy(ob => ob.OrdDeliveryDate).ToList(),
             };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         [HttpPost]
         public ActionResult Save(SlsBuyerOrder model)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalSlsBuyerOrder.Save(model, _userId, "BuyerPurcOrder/BuyerPurcOrder");
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Check(long orderId, string comment)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalSlsBuyerOrder.Check(orderId, _userId, comment);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Confirm(long orderId, string comment)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalSlsBuyerOrder.Confirm(orderId, _userId, comment);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Delete(long orderId, string del)
@@ -410,7 +410,7 @@ namespace ERP_Leather.Controllers
                 _validationMsg = _dalSlsBuyerOrder.DeleteDelivery(orderId);
             }
             
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult GetItemsByOrderId(long orderId)
@@ -467,7 +467,7 @@ namespace ERP_Leather.Controllers
                             
                         }).ToList()
             }).ToList();
-            return Json(result.OrderBy(ob => ob.BuyerOrderID), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderBy(ob => ob.BuyerOrderID));
         }
 
         public ActionResult GetItemTypes()
@@ -481,7 +481,7 @@ namespace ERP_Leather.Controllers
                 itemType.ItemTypeID,
                 itemType.ItemTypeName
             }).ToList();
-            return Json(result.OrderBy(ob => ob.ItemTypeName), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderBy(ob => ob.ItemTypeName));
         }
 
         public ActionResult GetLeatherType()
@@ -493,7 +493,7 @@ namespace ERP_Leather.Controllers
                 typ.LeatherTypeName
             }).ToList();
 
-            return Json(result.OrderBy(ob => ob.LeatherTypeName), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderBy(ob => ob.LeatherTypeName));
         }
 
         public ActionResult GetLeatherStatus()
@@ -504,13 +504,13 @@ namespace ERP_Leather.Controllers
                 stat.LeatherStatusID,
                 stat.LeatherStatusName
             }).ToList();
-            return Json(result.OrderBy(ob => ob.LeatherStatusName), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderBy(ob => ob.LeatherStatusName));
         }
 
         public JsonResult GetBuyerListForSearch()
         {
             var buyerList = _dalSlsBuyerOrder.GetBuyerListForSearch();
-            return Json(buyerList, JsonRequestBehavior.AllowGet);
+            return Json(buyerList);
         }
 
         public ActionResult GetBuyerList(string buyer)
@@ -519,13 +519,13 @@ namespace ERP_Leather.Controllers
             var buyerList = _dalSlsBuyerOrder.GetBuyerList(buyer);
             sysBuyer.Count = buyerList.Count > 1 ? 0 : 1;
             sysBuyer.BuyerList = buyerList;
-            return Json(sysBuyer, JsonRequestBehavior.AllowGet);
+            return Json(sysBuyer);
         }
 
         public JsonResult GetLocalAgentListForSearch(string lAgent)
         {
             var buyerList = _dalSlsBuyerOrder.GetLocalAgentListForSearch(lAgent);
-            return Json(buyerList, JsonRequestBehavior.AllowGet);
+            return Json(buyerList);
         }
 
         public ActionResult GetLocalAgentList(string lAgent)
@@ -548,13 +548,13 @@ namespace ERP_Leather.Controllers
                 _unit.BuyerAddressRepository.Get().FirstOrDefault(ob => ob.BuyerID == buyer.BuyerID).Address
             });
 
-            return Json(result.OrderBy(ob => ob.BuyerName), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderBy(ob => ob.BuyerName));
         }
 
         public JsonResult GetForeignAgentListForSearch(string lAgent)
         {
             var buyerList = _dalSlsBuyerOrder.GetForeignAgentListForSearch(lAgent);
-            return Json(buyerList, JsonRequestBehavior.AllowGet);
+            return Json(buyerList);
         }
 
         public ActionResult GetForeignAgentList(string lAgent)
@@ -577,13 +577,13 @@ namespace ERP_Leather.Controllers
                 _unit.BuyerAddressRepository.Get().FirstOrDefault(ob => ob.BuyerID == buyer.BuyerID).Address
             });
 
-            return Json(result.OrderBy(ob => ob.BuyerName), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderBy(ob => ob.BuyerName));
         }
 
         public JsonResult GetArticleForSearch(string article)
         {
             var articleList = _dalSlsBuyerOrder.GetArticleListForSearch(article);
-            return Json(articleList, JsonRequestBehavior.AllowGet);
+            return Json(articleList);
         }
 
         public ActionResult GetArticleList(string article)
@@ -592,13 +592,13 @@ namespace ERP_Leather.Controllers
             var articleList = _dalSlsBuyerOrder.GetArticleList(article);
             //sysBuyer.Count = lAgentList.Count > 1 ? 0 : 1;
             sysArticle.ArticleList = articleList;
-            return Json(sysArticle, JsonRequestBehavior.AllowGet);
+            return Json(sysArticle);
         }
 
         public JsonResult GetColorForSearch(string color)
         {
             var colorList = _dalSlsBuyerOrder.GetColorListForSearch(color);
-            return Json(colorList, JsonRequestBehavior.AllowGet);
+            return Json(colorList);
         }
 
         public ActionResult GetColorList(string color)
@@ -607,20 +607,20 @@ namespace ERP_Leather.Controllers
             var colorList = _dalSlsBuyerOrder.GetColorList(color);
             //sysBuyer.Count = lAgentList.Count > 1 ? 0 : 1;
             sysColor.ColorList = colorList;
-            return Json(sysColor, JsonRequestBehavior.AllowGet);
+            return Json(sysColor);
         }
 
         public ActionResult GetAllBuyerPurchaseOrder()
         {
             var data = _dalSlsBuyerOrder.GetAllBuyerPurchaseOrder();
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         
         }
 
         public JsonResult CheckUniqueOrderNo(string orderNo)
         {
             bool isTrue = _dalSlsBuyerOrder.CheckUniqueOrderNo(orderNo);
-            return new JsonResult { Data = isTrue };
+            return Json(isTrue);
         }
 
         public ActionResult GetOrderListForSearch()
@@ -629,7 +629,7 @@ namespace ERP_Leather.Controllers
                 _unit.SlsBuyerOrederRepository.Get()
                     .Select(ob => ob.OrderNo)
                     .ToList();
-            return Json(order, JsonRequestBehavior.AllowGet);
+            return Json(order);
         }
 
         public ActionResult GetOrderForSearch(string orderNo)
@@ -646,7 +646,7 @@ namespace ERP_Leather.Controllers
                 RecordStatus = DalCommon.ReturnRecordStatus(order.RecordStatus)
             }).ToList();
 
-            return Json(result.OrderByDescending(ob => ob.BuyerOrderID), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderByDescending(ob => ob.BuyerOrderID));
         }
     }
 }

@@ -1,6 +1,6 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.BusinessLogicLayer.OperationManager;
 using ERP.EntitiesModel.OperationModel;
@@ -29,72 +29,72 @@ namespace ERP_Leather.Controllers
         {
             if (model.WBProductionID == 0)
             {
-                var msg = objBll.Save(model, Convert.ToInt32(Session["UserID"]), "ChemConsumption/ChemicalConsumption");
+                var msg = objBll.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "ChemConsumption/ChemicalConsumption");
                 long WBProductionID = objBll.GetProductionID();
 
                 var LeatherList = objDal.GetLeatherListAfterSave(WBProductionID);
                 var ChemicalList = objDal.GetChemicalListAfterSave(WBProductionID, model.ProductionFloor);
-                return Json(new { Msg = msg, WBProductionID = WBProductionID, LeatherList = LeatherList, ChemicalList = ChemicalList }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = msg, WBProductionID = WBProductionID, LeatherList = LeatherList, ChemicalList = ChemicalList });
             }
             else
             {
-                var msg = objBll.Update(model, Convert.ToInt32(Session["UserID"]));
+                var msg = objBll.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
                 var LeatherList = objDal.GetLeatherListAfterSave(model.WBProductionID);
                 var ChemicalList = objDal.GetChemicalListAfterSave(model.WBProductionID, model.ProductionFloor);
 
 
-                return Json(new { Msg = msg, LeatherList = LeatherList, ChemicalList = ChemicalList }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = msg, LeatherList = LeatherList, ChemicalList = ChemicalList });
             }
         }
 
         public ActionResult GetScheduleInformation()
         {
             var Data = objDal.GetScheduleInformation();
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetProductionInformation(string _ScheduleID)
         {
             var Data = objDal.GetProductionInformation(_ScheduleID);
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetProductionDetails(string _ScheduleDateID)
         {
             var Data = objDal.GetProductionDetails(_ScheduleDateID);
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetRecipeForFixedProcess(int _RecipeFor)
         {
             var Data = objDal.GetRecipeForFixedProcess(_RecipeFor);
 
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetRecipeItemListForFixedRecipe(int _RecipeID, int _StoreID, decimal? _Weight, decimal? _Area)
         {
             var Data = objDal.GetRecipeItemListForFixedRecipe(_RecipeID, _StoreID, _Weight, _Area);
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetSearchInformaiton()
         {
             var Data = objDal.GetScheduleInformationForSearch();
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetDetailsSearchInformaiton(long _WBProductionID)
         {
             var Data = objDal.GetDetailsSearchInformaiton(_WBProductionID);
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetChemicalItemListForFixedLeather(long _WBProductionID, long _WBProductionPurchaseID, byte? _StoreID)
         {
             var Data = objDal.GetChemicalItemListForFixedLeather(_WBProductionID, _WBProductionPurchaseID, _StoreID);
 
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult DeleteProductionItem(string _WBProdChemicalID, string _PageStatus)
@@ -105,20 +105,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDal.DeleteProductionItem(_WBProdChemicalID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
@@ -130,20 +130,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDal.DeleteChemicalConsumption(_WBProductionID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
@@ -154,25 +154,25 @@ namespace ERP_Leather.Controllers
 
             if (Data)
             {
-                return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Success" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
         public ActionResult ConfirmChemicalConsumption(long _WBProductionID, string _ConfirmComment)
         {
 
-            var Data = objDal.ConfirmChemicalConsumption(_WBProductionID, _ConfirmComment, Convert.ToInt32(Session["UserID"]));
+            var Data = objDal.ConfirmChemicalConsumption(_WBProductionID, _ConfirmComment, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
 
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetChemicalItemListInProductionFloor(byte _ProductionFloor)
         {
-            return Json(objDal.GetChemicalItemListInProductionFloor(_ProductionFloor), JsonRequestBehavior.AllowGet);
+            return Json(objDal.GetChemicalItemListInProductionFloor(_ProductionFloor));
         }
 	}
 }

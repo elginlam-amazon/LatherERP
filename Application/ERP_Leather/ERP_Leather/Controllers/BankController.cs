@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.Utility;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
 using System;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using ERP_Leather.ActionFilters;
 
@@ -35,11 +36,11 @@ namespace ERP_Leather.Controllers
         {
             if (model != null && model.BankID != 0)
             {
-                _vmMsg = _dalSysBank.Update(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysBank.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             else
             {
-                _vmMsg = _dalSysBank.Save(model, Convert.ToInt32(Session["UserID"]), "Bank/Bank");
+                _vmMsg = _dalSysBank.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "Bank/Bank");
             }
             return Json(new { BankID = _dalSysBank.GetBankID(), msg = _vmMsg });
         }
@@ -54,14 +55,14 @@ namespace ERP_Leather.Controllers
         public ActionResult DelBranch(int branchId)
         {
             _vmMsg = _dalSysBank.DelBranch(branchId);
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+            return Json(_vmMsg);
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public ActionResult GetBankList()
         {
             var sysBank = _dalSysBank.GetAll().OrderByDescending(s => s.BankID);
-            return Json(sysBank, JsonRequestBehavior.AllowGet);
+            return Json(sysBank);
         }
 
         public ActionResult GetBankById(int bankId)
@@ -99,7 +100,7 @@ namespace ERP_Leather.Controllers
                     IsActive = branch.IsActive == true ? "Active" : "Inactive"
                 }).ToList()
             };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
     }
 }

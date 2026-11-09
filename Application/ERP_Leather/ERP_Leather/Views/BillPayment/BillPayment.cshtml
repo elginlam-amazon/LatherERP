@@ -157,19 +157,19 @@
                 <label>Checked By</label>
             </div>
             <div class="col-lg-2">
-                <input type="text" id="txtCheckedBy" class="txtCommandBox" name="" tabindex="" readonly="readonly" value="@Session["UserName"]" />
+                <input type="text" id="txtCheckedBy" class="txtCommandBox" name="" tabindex="" readonly="readonly" value="@Context.Session.GetString("UserName")" />
             </div>
             <div class="col-lg-2">
                 <label>Recommended By</label>
             </div>
             <div class="col-lg-2">
-                <input type="text" id="txtRecommendedBy" class="txtCommandBox" name="" tabindex="" readonly="readonly" value="@Session["UserName"]" />
+                <input type="text" id="txtRecommendedBy" class="txtCommandBox" name="" tabindex="" readonly="readonly" value="@Context.Session.GetString("UserName")" />
             </div>
             <div class="col-lg-2">
                 <label>Approved By</label>
             </div>
             <div class="col-lg-2">
-                <input type="text" id="txtApprovedBy" class="txtCommandBox" name="" tabindex="" readonly="readonly" value="@Session["UserName"]" />
+                <input type="text" id="txtApprovedBy" class="txtCommandBox" name="" tabindex="" readonly="readonly" value="@Context.Session.GetString("UserName")" />
             </div>
         </div>
         @*<div class="row">

@@ -1,6 +1,6 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.BusinessLogicLayer.OperationManager;
 using ERP.EntitiesModel.OperationModel;
@@ -44,35 +44,35 @@ namespace ERP_Leather.Controllers
             if (model.TransactionID == 0)
             {
 
-                var msg = objBLL.Save(model, Convert.ToInt32(Session["UserID"]), "IssueToProduction/IssueToProduction");
+                var msg = objBLL.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "IssueToProduction/IssueToProduction");
                 var TransactionID = objBLL.GetTransactionID();
                 var TransactionNo = objDalIssue.GetTransactionNo(TransactionID);
 
                 if(model.PageName=="Adjustment")
                 {
                     var TransactionItemList = objDalIssue.GetTransactionItemListForStockAdjust(TransactionID, model.TransactionFrom);
-                    return Json(new { Msg = msg, TransactionID = TransactionID, TransactionNo = TransactionNo, TransactionItemList = TransactionItemList }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = msg, TransactionID = TransactionID, TransactionNo = TransactionNo, TransactionItemList = TransactionItemList });
                 }
                 else
                 {
                     var TransactionItemList = objDalIssue.GetTransactionItemList(TransactionID, model.TransactionFrom);
-                    return Json(new { Msg = msg, TransactionID = TransactionID, TransactionNo = TransactionNo, TransactionItemList = TransactionItemList }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = msg, TransactionID = TransactionID, TransactionNo = TransactionNo, TransactionItemList = TransactionItemList });
                 }
 
             }
             else
             {
-                var msg = objBLL.Update(model, Convert.ToInt32(Session["UserID"]));
+                var msg = objBLL.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
 
                 if (model.PageName == "Adjustment")
                 {
                     var TransactionItemList = objDalIssue.GetTransactionItemListForStockAdjust(model.TransactionID, model.TransactionFrom);
-                    return Json(new { Msg = msg, TransactionItemList = TransactionItemList }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = msg, TransactionItemList = TransactionItemList });
                 }
                 else
                 {
                     var TransactionItemList = objDalIssue.GetTransactionItemList(model.TransactionID, model.TransactionFrom);
-                    return Json(new { Msg = msg, TransactionItemList = TransactionItemList }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = msg, TransactionItemList = TransactionItemList });
                 }
             }
         }
@@ -81,13 +81,13 @@ namespace ERP_Leather.Controllers
         public ActionResult GetRequisitionFromFixedStore(string _RequisitionFrom)
         {
             var Data = objDalIssue.GetRequisitionFromFixedStore(_RequisitionFrom);
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetRequisitionDetailsFromFixedStore(int _RequisitionID, byte _RequisitionAt)
         {
             var Data = objDalIssue.GetRequisitionDetailsFromFixedStore(_RequisitionID, _RequisitionAt);
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
 
@@ -108,14 +108,14 @@ namespace ERP_Leather.Controllers
             }
             
             var total = filteredData.Count();
-            return Json(new { total = total, data = FinalData }, JsonRequestBehavior.AllowGet);
+            return Json(new { total = total, data = FinalData });
         }
 
 
         public ActionResult GetTransactionDetailsAfterSearch(long _TransactionID)
         {
             var Data = objDalIssue.GetTransactionDetailsAfterSearch(_TransactionID);
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
 
@@ -127,20 +127,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDalIssue.DeleteTransactionItem(_TransItemID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed" || _PageStatus == "APV" || _PageStatus == "Approved")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
@@ -152,20 +152,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDalIssue.DeleteTransaction(_TransactionID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed" || _PageStatus == "APV" || _PageStatus == "Approved")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
 
         }
@@ -177,31 +177,31 @@ namespace ERP_Leather.Controllers
 
             if (Data)
             {
-                return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Success" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
         public ActionResult ConfirmIssueToProductionTransaction(long _TransactionID, string _CheckComment)
         {
 
-            var Data = objDalIssue.ConfirmIssueToProductionTransaction(_TransactionID, _CheckComment, Convert.ToInt32(Session["UserID"]));
+            var Data = objDalIssue.ConfirmIssueToProductionTransaction(_TransactionID, _CheckComment, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
 
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetStockPackSizeInfo(string _StoreID, int _ItemID)
         {
             var Data = objDalIssue.GetStockPackSizeInfo(_StoreID, _ItemID);
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetAvailableChemicalInStock(byte _RequisitionAt)
         {
-            return Json(objDalIssue.GetAvailableChemicalInStock(_RequisitionAt), JsonRequestBehavior.AllowGet);
+            return Json(objDalIssue.GetAvailableChemicalInStock(_RequisitionAt));
         }
 
 	}

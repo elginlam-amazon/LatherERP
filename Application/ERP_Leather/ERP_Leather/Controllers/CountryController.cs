@@ -1,8 +1,9 @@
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
 using System;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using ERP_Leather.ActionFilters;
 
@@ -32,11 +33,11 @@ namespace ERP_Leather.Controllers
         {
             if (model != null && model.CountryID != 0)
             {
-                _vmMsg = _dalSysCountry.Update(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysCountry.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             else
             {
-                _vmMsg = _dalSysCountry.Save(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysCountry.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             return Json(new { CountryID = _dalSysCountry.GetCountryID(), msg = _vmMsg });
         }
@@ -48,11 +49,11 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public ActionResult GetCountryList()
         {
             var sysCountry = _dalSysCountry.GetAll().OrderByDescending(s => s.CountryID);
-            return Json(sysCountry, JsonRequestBehavior.AllowGet);
+            return Json(sysCountry);
         }
 	}
 }

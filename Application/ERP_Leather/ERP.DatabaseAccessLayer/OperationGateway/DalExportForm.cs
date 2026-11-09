@@ -7,7 +7,6 @@ using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.Utility;
 using ERP.EntitiesModel.BaseModel;
 using ERP.EntitiesModel.OperationModel;
-using IronRuby.Compiler.Ast;
 
 namespace ERP.DatabaseAccessLayer.OperationGateway
 {

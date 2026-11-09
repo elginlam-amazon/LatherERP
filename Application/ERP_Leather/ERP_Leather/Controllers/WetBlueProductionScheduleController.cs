@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.EntitiesModel.AppSetupModel;
@@ -6,8 +7,7 @@ using ERP.EntitiesModel.OperationModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP_Leather.ActionFilters;
 
 
@@ -42,35 +42,35 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult WetBlueProductionSchedule(PrdYearMonth model)
         {
-            _vmMsg = model.YearMonID == 0 ? Dalobject.Save(model, Convert.ToInt32(Session["UserID"]), "WetBlueProductionSchedule/WetBlueProductionSchedule") : Dalobject.Update(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = model.YearMonID == 0 ? Dalobject.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "WetBlueProductionSchedule/WetBlueProductionSchedule") : Dalobject.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { YearMonID = Dalobject.GetYearMonID(), ScheduleNo = Dalobject.GetScheduleNo(), msg = _vmMsg });
         }
 
         public ActionResult GetWetBlueYearMonthList()
         {
             var crustYearMonth = Dalobject.GetWetBlueYearMonthList();
-            return Json(crustYearMonth, JsonRequestBehavior.AllowGet);
+            return Json(crustYearMonth);
         }
         public ActionResult GetWetBlueYearMonthScheduleList(string YearMonID)
         {
             var crustYearMonthScheduleList = Dalobject.GetWetBlueYearMonthScheduleList(YearMonID);
-            return Json(crustYearMonthScheduleList, JsonRequestBehavior.AllowGet);
+            return Json(crustYearMonthScheduleList);
         }
 
         public ActionResult GetYearMonthSchedulePurchaseList(string ScheduleDateID, string StoreId)
         {
             var packItemList = Dalobject.GetYearMonthSchedulePurchaseList(ScheduleDateID, StoreId);
-            return Json(packItemList, JsonRequestBehavior.AllowGet);
+            return Json(packItemList);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedYearMonthSchedule(string ScheduleNo)
         {
             _vmMsg = Dalobject.DeletedYearMonthSchedule(ScheduleNo);
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedYearMonthScheduleDate(string ScheduleDateID, string RecordStatus)
         {
             long scheduleDateID = Convert.ToInt64(ScheduleDateID);
@@ -78,7 +78,7 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedYearMonthSchedulePurchase(string SchedulePurchaseID, string RecordStatus)
         {
             long schedulePurchaseID = Convert.ToInt64(SchedulePurchaseID);
@@ -89,99 +89,99 @@ namespace ERP_Leather.Controllers
         public ActionResult GetWetBlueProductionSchedule()
         {
             var packItemList = Dalobject.GetWetBlueProductionSchedule();
-            return Json(packItemList, JsonRequestBehavior.AllowGet);
+            return Json(packItemList);
         }
 
         public ActionResult GetAllGridList(string ScheduleNo, string StoreId)
         {
             PrdYearMonth model = new PrdYearMonth();
-            if (string.IsNullOrEmpty(ScheduleNo)) return Json(model, JsonRequestBehavior.AllowGet);
+            if (string.IsNullOrEmpty(ScheduleNo)) return Json(model);
             model.PrdYearMonthScheduleDateList = Dalobject.GetYearMonthScheduleDateList(ScheduleNo);
             if (model.PrdYearMonthScheduleDateList.Count > 0)
                 model.PrdYearMonthSchedulePurchaseList = Dalobject.GetYearMonthSchedulePurchaseList(model.PrdYearMonthScheduleDateList[0].ScheduleDateID.ToString(), StoreId);
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return Json(model);
         }
 
         public ActionResult GetAllActiveLeatherType()
         {
             var packItemList = objDalSysLeatherType.GetAllActiveLeatherType();
-            return Json(packItemList, JsonRequestBehavior.AllowGet);
+            return Json(packItemList);
         }
 
         public ActionResult GetAllActiveUnit()
         {
             var packItemList = objDalSysUnit.GetAllActiveLeatherUnit();
-            return Json(packItemList, JsonRequestBehavior.AllowGet);
+            return Json(packItemList);
         }
 
         public ActionResult GetMachineNoInfo()
         {
             var machineList = dalSysMachine.GetAllWetBlueProductionMachine();
-            return Json(machineList, JsonRequestBehavior.AllowGet);
+            return Json(machineList);
         }
 
         public ActionResult GetProductionNoList(string ProductionFloor, string ScheduleID)
         {
             var machineList = Dalobject.GetProductionNoList(ProductionFloor, ScheduleID);
-            return Json(machineList, JsonRequestBehavior.AllowGet);
+            return Json(machineList);
         }
 
         public ActionResult GetScheduleItemList(string ScheduleDateID)
         {
             var machineList = Dalobject.GetYearMonthSchedulePurchaseList(ScheduleDateID);
-            return Json(machineList, JsonRequestBehavior.AllowGet);
+            return Json(machineList);
         }
 
         public ActionResult GetPurchaseNoInfo()
         {
             var packItemList = Dalobject.GetPurchaseNoInfo();
-            return Json(packItemList, JsonRequestBehavior.AllowGet);
+            return Json(packItemList);
         }
 
         [HttpPost]
         public ActionResult ConfirmedWetBlueProductionSchedule(PrdYearMonth model)
         {
-            _vmMsg = Dalobject.ConfirmedWetBlueProductionSchedule(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.ConfirmedWetBlueProductionSchedule(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
         [HttpPost]
         public ActionResult CheckedWetBlueProductionSchedule(PrdYearMonth model)
         {
-            _vmMsg = Dalobject.CheckedWetBlueProductionSchedule(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.CheckedWetBlueProductionSchedule(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
         [HttpPost]
         public ActionResult ConcealWetBlueProductionSchedule(string ScheduleDateID, string ProductionStatus)
         {
-            _vmMsg = Dalobject.ConcealWetBlueProductionSchedule(ScheduleDateID, ProductionStatus, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.ConcealWetBlueProductionSchedule(ScheduleDateID, ProductionStatus, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
         public ActionResult ExecuteWetBlueProductionSchedule(PrdYearMonth model)
         {
-            _vmMsg = Dalobject.ExecuteWetBlueProductionSchedule(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.ExecuteWetBlueProductionSchedule(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
         public JsonResult GetSupplierFromStoreList(string ConcernStore)
         {
             var supplierAgentList = Dalobject.GetSupplierFromStoreList(ConcernStore);
-            return Json(supplierAgentList, JsonRequestBehavior.AllowGet);
+            return Json(supplierAgentList);
         }
 
         public JsonResult GetSupplierListForSearch()
         {
             //var supplierAgentList = Dalobject.GetSupplierListForSearch(ConcernStore);
             var supplierAgentList = Dalobject.GetSupplierListForSearch();
-            return Json(supplierAgentList, JsonRequestBehavior.AllowGet);
+            return Json(supplierAgentList);
         }
 
         public ActionResult GetLeatherInfoList(string ConcernStore, string SupplierID)
         {
             var packItemList = Dalobject.GetLeatherInfoList(ConcernStore, SupplierID);
-            return Json(packItemList, JsonRequestBehavior.AllowGet);
+            return Json(packItemList);
         }
 
         public ActionResult GetSupplierList(string storeId, string supplier)
@@ -191,13 +191,13 @@ namespace ERP_Leather.Controllers
             var supplierList = Dalobject.GetSupplierList(supplier, storeId);
             sysSupplier.Count = supplierList.Count > 1 ? 0 : 1;
             sysSupplier.SupplierList = supplierList;
-            return Json(sysSupplier, JsonRequestBehavior.AllowGet);
+            return Json(sysSupplier);
         }
 
         [HttpPost]
         public ActionResult WetBlueProductionScheduleClosed(string ScheduleNo)
         {
-            _vmMsg = Dalobject.WetBlueProductionScheduleClosed(ScheduleNo, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.WetBlueProductionScheduleClosed(ScheduleNo, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
     }

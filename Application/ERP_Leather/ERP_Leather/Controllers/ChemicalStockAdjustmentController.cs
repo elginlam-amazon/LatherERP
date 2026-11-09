@@ -1,6 +1,6 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.BusinessLogicLayer.OperationManager;
 using ERP.EntitiesModel.OperationModel;
@@ -44,9 +44,9 @@ namespace ERP_Leather.Controllers
         public ActionResult ConfirmChemicalStockAdjustTransaction(long _TransactionID, string _CheckComment)
         {
 
-            var Data = objDalAdjust.ConfirmChemicalStockAdjustTransaction(_TransactionID, _CheckComment, Convert.ToInt32(Session["UserID"]));
+            var Data = objDalAdjust.ConfirmChemicalStockAdjustTransaction(_TransactionID, _CheckComment, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
 
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 	}
 }

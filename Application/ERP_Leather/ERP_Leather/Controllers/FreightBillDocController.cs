@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.Utility;
@@ -50,7 +50,7 @@ namespace ERP_Leather.Controllers
                 RecordStatus = DalCommon.ReturnRecordStatus(inv.RecordStatus)
             }).ToList();
 
-            return Json(comInv.OrderByDescending(ob => ob.CIID), JsonRequestBehavior.AllowGet);
+            return Json(comInv.OrderByDescending(ob => ob.CIID));
         }
 
         public ActionResult GetBillOfLadingListA()
@@ -75,7 +75,7 @@ namespace ERP_Leather.Controllers
                 ShipmentTo = ob.CIID == null ? "" : _unit.ExpCommercialInvoiceRepository.GetByID(ob.CIID).ShipmentTo,
                 RecordStatus = ob.CIID == null ? "" : DalCommon.ReturnRecordStatus(_unit.ExpBillOfLadingRepository.GetByID(ob.BLID).RecordStatus)
             }).ToList();
-            return Json(pl.OrderByDescending(ob => ob.BLID), JsonRequestBehavior.AllowGet);
+            return Json(pl.OrderByDescending(ob => ob.BLID));
         }
 
         public ActionResult GetBillOfLadingListB(long ciid)
@@ -95,7 +95,7 @@ namespace ERP_Leather.Controllers
                 BLDate = string.Format("{0:dd/MM/yyyy}", ob.BLDate),
                 RecordStatus = DalCommon.ReturnRecordStatus(ob.RecordStatus)
             }).ToList();
-            return Json(pl.OrderByDescending(ob => ob.BLID), JsonRequestBehavior.AllowGet);
+            return Json(pl.OrderByDescending(ob => ob.BLID));
         }
 
         public ActionResult GetFrghtAgnt()
@@ -106,46 +106,46 @@ namespace ERP_Leather.Controllers
                 ob.BuyerCode,
                 ob.BuyerName
             }).ToList();
-            return Json(pl.OrderBy(ob => ob.BuyerName), JsonRequestBehavior.AllowGet);
+            return Json(pl.OrderBy(ob => ob.BuyerName));
         }
 
         public ActionResult Save(ExpFreightBill model)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalExpFreightBillDoc.Save(model, _userId, "EXPPackingList/EXPPackingList");
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult GetFreightBillDocs()
         {
             var frghtBillDocs = _dalExpFreightBillDoc.GetFrghtBillDocs();
-            return Json(frghtBillDocs, JsonRequestBehavior.AllowGet);
+            return Json(frghtBillDocs);
         }
 
         public ActionResult GetFrghtBillDoc(long fbdId)
         {
             var frghtBillDoc = _dalExpFreightBillDoc.GetFrghtBillDoc(fbdId);
-            return Json(frghtBillDoc, JsonRequestBehavior.AllowGet);
+            return Json(frghtBillDoc);
         }
 
         public ActionResult Delete(long id)
         {
             _validationMsg = _dalExpFreightBillDoc.Delete(id);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Confirm(long id, string note)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalExpFreightBillDoc.Confirm(id, _userId, note);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Check(long id, string note)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalExpFreightBillDoc.Check(id, _userId, note);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
     }
 }

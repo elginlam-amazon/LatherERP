@@ -1,9 +1,9 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
+using Microsoft.AspNetCore.Mvc;
+
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
@@ -36,11 +36,11 @@ namespace ERP_Leather.Controllers
         {
             if (model != null && model.BuyerID != 0)
             {
-                _vmMsg = _dalSysBuyer.Update(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysBuyer.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             else
             {
-                _vmMsg = _dalSysBuyer.Save(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysBuyer.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             return Json(new { BuyerID = _dalSysBuyer.GetBuyerId(), msg = _vmMsg });
         }
@@ -51,14 +51,14 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedAddress(string buyerAddressId)
         {
             _vmMsg = _dalSysBuyer.DeletedAddress(buyerAddressId);
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedAgent(string buyerAgentId)
         {
             _vmMsg = _dalSysBuyer.DeletedAgent(buyerAgentId);
@@ -68,13 +68,13 @@ namespace ERP_Leather.Controllers
         public ActionResult GetBuyerAgentList()
         {
             var buyerAgentList = _dalSysBuyer.GetBuyerAgentList();
-            return Json(buyerAgentList, JsonRequestBehavior.AllowGet);
+            return Json(buyerAgentList);
         }
 
         public ActionResult GetBuyerForSearchList()
         {
             var buyerAgentList = _dalSysBuyer.GetBuyerForSearchList().OrderByDescending(m => m.BuyerID);
-            return Json(buyerAgentList, JsonRequestBehavior.AllowGet);
+            return Json(buyerAgentList);
         }
 
         public ActionResult GetBuyerList(string buyer)
@@ -91,7 +91,7 @@ namespace ERP_Leather.Controllers
                 sysBuyer.Count = 1;
             }
             sysBuyer.BuyerList = buyerList;
-            return Json(sysBuyer, JsonRequestBehavior.AllowGet);
+            return Json(sysBuyer);
         }
 
         public ActionResult GetBuyerAgentSearchList(string buyer)
@@ -109,19 +109,19 @@ namespace ERP_Leather.Controllers
                 sysBuyer.Count = 1;
             }
             sysBuyer.BuyerAgentList = buyerList;
-            return Json(sysBuyer, JsonRequestBehavior.AllowGet);
+            return Json(sysBuyer);
         }
 
         public JsonResult GetBuyerListForSearch()
         {
             var buyerAgentList = _dalSysBuyer.GetBuyerListForSearch();
-            return Json(buyerAgentList, JsonRequestBehavior.AllowGet);
+            return Json(buyerAgentList);
         }
 
         public ActionResult GetBuyerAddressAndAgentList(string BuyerID)
         {
             var _sysBuyer = _dalSysBuyer.GetBuyerAddressAndAgentList(BuyerID);
-            return Json(_sysBuyer, JsonRequestBehavior.AllowGet);
+            return Json(_sysBuyer);
         }
     }
 }

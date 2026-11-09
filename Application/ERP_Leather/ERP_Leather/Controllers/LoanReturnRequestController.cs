@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.Utility;
@@ -10,8 +11,8 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Mvc;
+
+using Microsoft.AspNetCore.Mvc;
 
 namespace ERP_Leather.Controllers
 {
@@ -43,19 +44,19 @@ namespace ERP_Leather.Controllers
             var resultSet = dalLoanOb.LoanRequestDatas(type);
                 
             
-            return Json(resultSet.OrderByDescending(ob=>ob.RequestID), JsonRequestBehavior.AllowGet);
+            return Json(resultSet.OrderByDescending(ob=>ob.RequestID));
         }
         public ActionResult LoanRequestDataWithItem(string type, long RequestID)
         {
             var data = dalLoanOb.LoanRequestDataWithItem(type, RequestID); 
-            return Json(data, JsonRequestBehavior.AllowGet); 
-           //var resultSet = data; return Json(resultSet, JsonRequestBehavior.AllowGet); 
+            return Json(data); 
+           //var resultSet = data; return Json(resultSet); 
         }
 
         public ActionResult ChemicalItemDropdown()
         {
             var resultSet = from temp in repository.SysChemicalItemRepository.Get() select new { temp.ItemName, temp.ItemID };
-            return Json(resultSet, JsonRequestBehavior.AllowGet);
+            return Json(resultSet);
         }
 
         [HttpPost]
@@ -96,8 +97,8 @@ namespace ERP_Leather.Controllers
                        ob.ReturnMethod = dataSet.ReturnMethod;
                     }
                   
-                    ob.SetBy = Convert.ToInt32(Session["UserID"]);
-                    ob.ModifiedBy = Convert.ToInt32(Session["UserID"]);
+                    ob.SetBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
+                    ob.ModifiedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                     ob.ModifiedOn = DateTime.Now;
                     ob.IPAddress = GetIPAddress.LocalIPAddress();
                     repository.InvTransRequestRepository.Insert(ob);
@@ -108,8 +109,8 @@ namespace ERP_Leather.Controllers
                     obRef.RefRequestID = Convert.ToInt64(dataSet.RefRequestID);
                     obRef.Remark = dataSet.Remarks;
                     obRef.SetOn = DateTime.Now;
-                    obRef.SetBy = Convert.ToInt32(Session["UserID"]);
-                    obRef.ModifiedBy = Convert.ToInt32(Session["UserID"]);
+                    obRef.SetBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
+                    obRef.ModifiedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                     obRef.ModifiedOn = DateTime.Now;
                     obRef.IPAddress = GetIPAddress.LocalIPAddress();
                     repository.InvTransRequestRefRepository.Insert(obRef);
@@ -164,9 +165,9 @@ namespace ERP_Leather.Controllers
                             }
                             obReqItem.RefItemDueQty = 0;//Math.Round(item.RemainingQty - ((item.ReturnQuantity * item.RemainingQty) / (TotalReturnQty == 0 ? 1 : TotalReturnQty)),2);
                             obReqItem.ReturnValue = Convert.ToDecimal(item.ReturnQuantity);//Math.Round(((item.ReturnQuantity * item.RemainingQty) / (TotalReturnQty == 0 ? 1 : TotalReturnQty)),2);
-                            obReqItem.SetBy = Convert.ToInt32(Session["UserID"]);
+                            obReqItem.SetBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                             obReqItem.SetOn = DateTime.Now;
-                            obReqItem.ModifiedBy = Convert.ToInt32(Session["UserID"]);
+                            obReqItem.ModifiedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                             obReqItem.ModifiedOn = DateTime.Now;
                             obReqItem.IPAddress = GetIPAddress.LocalIPAddress();                          
                             repository.InvTransRequestItemRepository.Insert(obReqItem);
@@ -213,13 +214,13 @@ namespace ERP_Leather.Controllers
                     ob.ExpectetReturnTime = Convert.ToByte(dataSet.ExpectetReturnTime);
                     ob.Remarks = dataSet.Remarks;
                     ob.ModifiedOn = DateTime.Now;
-                    ob.ModifiedBy = Convert.ToInt32(Session["UserID"]);
+                    ob.ModifiedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                     ob.IPAddress = GetIPAddress.LocalIPAddress();
                     repository.InvTransRequestRepository.Update(ob);
 
                     INV_TransRequestRef obRef = repository.InvTransRequestRefRepository.Get(filter: o => o.RequestID == dataSet.RequestID).FirstOrDefault();               
                     obRef.Remark = dataSet.Remarks;
-                    obRef.ModifiedBy = Convert.ToInt32(Session["UserID"]);
+                    obRef.ModifiedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                     obRef.ModifiedOn = DateTime.Now;
                     obRef.IPAddress = GetIPAddress.LocalIPAddress();
                     repository.InvTransRequestRefRepository.Update(obRef);
@@ -270,9 +271,9 @@ namespace ERP_Leather.Controllers
                                 }
                                 obReqItem.RefItemDueQty = 0;//Math.Round((item.RemainingQty + (obReqItem.ReturnValue == null?0 : Convert.ToDecimal(obReqItem.ReturnValue))) - ((item.ReturnQuantity * item.RemainingQty) / (TotalReturnQty == 0 ? 1 : TotalReturnQty)), 2);
                                 obReqItem.ReturnValue = Convert.ToDecimal(item.ReturnQuantity);//Math.Round(((item.ReturnQuantity * item.RemainingQty) / (TotalReturnQty == 0 ? 1 : TotalReturnQty)), 2);
-                                obReqItem.SetBy = Convert.ToInt32(Session["UserID"]);
+                                obReqItem.SetBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                                 obReqItem.SetOn = DateTime.Now;
-                                obReqItem.ModifiedBy = Convert.ToInt32(Session["UserID"]);
+                                obReqItem.ModifiedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                                 obReqItem.ModifiedOn = DateTime.Now;
                                 obReqItem.IPAddress = GetIPAddress.LocalIPAddress();        
                                 repository.InvTransRequestItemRepository.Update(obReqItem);
@@ -346,36 +347,36 @@ namespace ERP_Leather.Controllers
                 RecordStatus =t.RecordStatus,
                 ReturnMethod =t.ReturnMethod
             };
-           return Json(data, JsonRequestBehavior.AllowGet);
+           return Json(data);
         }
 
         public ActionResult SearchLoanReturnRequest(string search)
         {
             var data = dalLoanOb.SearchLoanReturnRequest(search);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
         public ActionResult GetAutoCompleteData()
         {
             var search = repository.InvTransRequestRepository.Get(filter: o => o.RequestType == "RLRR", orderBy: q => q.OrderByDescending(d => d.RequestDate)).Select(ob => ob.RequestNo);
-            return Json(search, JsonRequestBehavior.AllowGet);
+            return Json(search);
         }
         public ActionResult GetLoanReturnRequestInfoByID(long RequestID)
         {
            var data= dalLoanOb.GetLoanReturnRequestInfoByID(RequestID);
-           return Json(data, JsonRequestBehavior.AllowGet);
+           return Json(data);
         }
         public ActionResult GetLoanReturnRequestItemInfoByID(long RequestID)
         {
             var data = dalLoanOb.GetLoanReturnRequestItemInfoByID2(RequestID);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
         public ActionResult LoanReturnRequestStatusUpdate(string type, long requestID, string note)
         { 
             if (type.Equals("Checker"))
             {
                 INV_TransRequest item = repository.InvTransRequestRepository.GetByID(requestID);
-                item.CheckedBy = Convert.ToInt32(Session["UserID"]);
+                item.CheckedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                 item.CheckComments = note;
                 item.CheckDate = DateTime.Now;
                 item.RecordStatus = "CHK";
@@ -388,7 +389,7 @@ namespace ERP_Leather.Controllers
             else if (type.Equals("Recommend"))
             {
                 INV_TransRequest item = repository.InvTransRequestRepository.GetByID(requestID);
-                item.RecommendBy = Convert.ToInt32(Session["UserID"]);
+                item.RecommendBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                 item.RecommendComments = note;
                 item.RecommendDate = DateTime.Now;
                 item.RecordStatus = "REC";
@@ -400,7 +401,7 @@ namespace ERP_Leather.Controllers
             else if (type.Equals("Approver"))
             {
                 INV_TransRequest item = repository.InvTransRequestRepository.GetByID(requestID);
-                item.RecommendBy = Convert.ToInt32(Session["UserID"]);
+                item.RecommendBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                 item.RecommendComments = note;
                 item.RecommendDate = DateTime.Now;
                 item.RecordStatus = "CNF";

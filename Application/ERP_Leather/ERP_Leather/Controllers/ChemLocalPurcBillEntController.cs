@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
@@ -47,7 +47,7 @@ namespace ERP_Leather.Controllers
                 OrderDate = string.Format("{0:dd/MM/yyyy}", order.OrderDate),
                 OrderType = order.OrderType
             }).ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetLocalPurchaseReceive(int supplierId)
@@ -104,7 +104,7 @@ namespace ERP_Leather.Controllers
             //    //ReceiveID = receive.ReceiveID, ReceiveNo = receive.ReceiveNo, ReceiveDate = string.Format("{0:dd/MM/yyyy}", receive.ReceiveDate), 
             //    //ReceiveType = receive.ReceiveType
             //});
-            return Json(pos.OrderByDescending(ob => ob.POReceiveID), JsonRequestBehavior.AllowGet);
+            return Json(pos.OrderByDescending(ob => ob.POReceiveID));
         }
 
         public ActionResult GetPurchaseReceiveItems(long receiveId, int orderId)
@@ -129,7 +129,7 @@ namespace ERP_Leather.Controllers
                     UnitName = item.ItemID == null || item.ItemID == 0 ? "" : _unit.SysUnitRepository.GetByID(item.UnitID).UnitName,
                     ManufacturerName = item.ManufacturerID == null || item.ManufacturerID == 0 ? "" : _unit.SysSupplierRepository.GetByID(item.ManufacturerID).SupplierName
                 }).ToList();
-            return Json(rItems, JsonRequestBehavior.AllowGet);
+            return Json(rItems);
         }
 
         public ActionResult GetBills()
@@ -145,7 +145,7 @@ namespace ERP_Leather.Controllers
                     SupplierBillNo = bill.SupplierBillNo, 
                     RecordStatus = DalCommon.ReturnRecordStatus(bill.RecordStatus)
                 }).ToList();
-            return Json(bills.OrderByDescending(ob => ob.BillID), JsonRequestBehavior.AllowGet);
+            return Json(bills.OrderByDescending(ob => ob.BillID));
         }
 
         public ActionResult GetBillById(long billId)
@@ -181,29 +181,29 @@ namespace ERP_Leather.Controllers
                     }).ToList()
                 }).ToList(),
             };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult Save(PrqChemLocalPurcBill model)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             const string url = "ChemLocalPurcBillEnt/ChemLocalPurcBillEnt";
             //model.OtherCost = 0;
             _validationMsg = _chemLocalPurcBillEnt.Save(model, _userId, url);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Check(int billId, string comment)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _chemLocalPurcBillEnt.Check(billId, _userId, comment);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Confirm(int billId, string comment)
         {
             _validationMsg = _chemLocalPurcBillEnt.Confirm(billId, comment);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult CheckRefBeforeDelete(int billRefId)
@@ -215,31 +215,31 @@ namespace ERP_Leather.Controllers
             {
                 flag = 1;
             }
-            return Json(flag, JsonRequestBehavior.AllowGet);
+            return Json(flag);
         }
 
         public ActionResult DeleteReference(int billRefId)
         {
             _validationMsg = _chemLocalPurcBillEnt.DeleteReference(billRefId);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult DeleteItem(int billItemId)
         {
             _validationMsg = _chemLocalPurcBillEnt.DeleteItem(billItemId);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult DeleteBill(int billId)
         {
             _validationMsg = _chemLocalPurcBillEnt.DeleteBill(billId);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public JsonResult GetBillListForSearch(string billNo)
         {
             var billList = _chemLocalPurcBillEnt.GeBillListForSearch(billNo);
-            return Json(billList, JsonRequestBehavior.AllowGet);
+            return Json(billList);
         }
 
         public ActionResult GetBillList(string billNo)
@@ -258,19 +258,19 @@ namespace ERP_Leather.Controllers
                 x.RecordStatus = bill.RecordStatus;
                 sysBill.Add(x);
             }
-            return Json(sysBill.OrderByDescending(ob => ob.BillID), JsonRequestBehavior.AllowGet);
+            return Json(sysBill.OrderByDescending(ob => ob.BillID));
         }
 
         public JsonResult GetSupplierListForSearch(string supplier)
         {
             var supplierList = _chemLocalPurcBillEnt.GeSupplierListForSearch(supplier);
-            return Json(supplierList, JsonRequestBehavior.AllowGet);
+            return Json(supplierList);
         }
 
         public ActionResult GetSupplierList(string supplier)
         {
             var supplierList = _chemLocalPurcBillEnt.GetSupplierList(supplier);
-            return Json(supplierList.OrderByDescending(ob => ob.SupplierName), JsonRequestBehavior.AllowGet);
+            return Json(supplierList.OrderByDescending(ob => ob.SupplierName));
         }
     }
 

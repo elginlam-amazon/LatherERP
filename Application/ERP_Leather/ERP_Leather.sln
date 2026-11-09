@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
@@ -11,14 +11,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERP_Leather", "ERP_Leather\
 		{3AF7A7D2-56E3-4CD1-8F60-A53A857DC95B} = {3AF7A7D2-56E3-4CD1-8F60-A53A857DC95B}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERP.BusinessLogicLayer", "ERP.BusinessLogicLayer\ERP.BusinessLogicLayer.csproj", "{D5B3F09A-E8CD-49A1-B344-4B001DF45140}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ERP.BusinessLogicLayer", "ERP.BusinessLogicLayer\ERP.BusinessLogicLayer.csproj", "{D5B3F09A-E8CD-49A1-B344-4B001DF45140}"
 	ProjectSection(ProjectDependencies) = postProject
 		{3F8FE4B4-0621-455A-BCE5-807C0A6C63B1} = {3F8FE4B4-0621-455A-BCE5-807C0A6C63B1}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERP.DatabaseAccessLayer", "ERP.DatabaseAccessLayer\ERP.DatabaseAccessLayer.csproj", "{93BE2317-D951-409D-89AD-ACD5D1FA6E1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ERP.DatabaseAccessLayer", "ERP.DatabaseAccessLayer\ERP.DatabaseAccessLayer.csproj", "{93BE2317-D951-409D-89AD-ACD5D1FA6E1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERP.EntitiesModel", "ERP.EntitiesModel\ERP.EntitiesModel.csproj", "{3F8FE4B4-0621-455A-BCE5-807C0A6C63B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ERP.EntitiesModel", "ERP.EntitiesModel\ERP.EntitiesModel.csproj", "{3F8FE4B4-0621-455A-BCE5-807C0A6C63B1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityAdministration", "..\ERP\SecurityAdministration\SecurityAdministration.csproj", "{3AF7A7D2-56E3-4CD1-8F60-A53A857DC95B}"
 EndProject

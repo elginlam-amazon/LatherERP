@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
+using Microsoft.AspNetCore.Http;
 
 namespace ERP.DatabaseAccessLayer.OperationGateway
 {
@@ -28,7 +28,7 @@ namespace ERP.DatabaseAccessLayer.OperationGateway
             return new KendoGridFilterCollection();
         }
 
-        public static KendoGridFilterCollection BuildCollection(HttpRequestBase request)
+        public static KendoGridFilterCollection BuildCollection(HttpRequest request)
         {
             var collection = BuildEmptyCollection();
 
@@ -37,9 +37,9 @@ namespace ERP.DatabaseAccessLayer.OperationGateway
             {
                 var filter = new KendoGridFilter()
                 {
-                    Field = request.Params["filter[filters][" + idex + "][field]"],
-                    Operator = request.Params["filter[filters][" + idex + "][operator]"],
-                    Value = request.Params["filter[filters][" + idex + "][value]"]
+                    Field = request.Query["filter[filters][" + idex + "][field]"],
+                    Operator = request.Query["filter[filters][" + idex + "][operator]"],
+                    Value = request.Query["filter[filters][" + idex + "][value]"]
                 };
 
                 if (filter.Field == null) { break; }

@@ -2,7 +2,6 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Transactions;
-using DatabaseUtility;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.EntitiesModel.BaseModel;
 using ERP.EntitiesModel.OperationModel;
@@ -15,8 +14,6 @@ namespace ERP.BusinessLogicLayer.OperationManager
     public class BllCrustChallanPreparation
     {
         #region Private Variables
-
-        private readonly DatabseManager _databseManager;
         private DalCrustChallanPreparation _dalCrustChallanPreparation;
 
         //private int _result;
@@ -29,8 +26,6 @@ namespace ERP.BusinessLogicLayer.OperationManager
 
         public BllCrustChallanPreparation()
         {
-            _databseManager = new DatabseManager(DatabaseConfiguration.ConnectionString, DatabaseConfiguration.DatabaseProvider);
-
         }
 
         #endregion

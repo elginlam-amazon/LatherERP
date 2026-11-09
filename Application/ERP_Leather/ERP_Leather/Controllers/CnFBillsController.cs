@@ -1,10 +1,11 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.Utility;
@@ -38,13 +39,13 @@ namespace ERP_Leather.Controllers
         public ActionResult GetCnFBuyerList()
         {
             var bankList = objDalLCMCnFBillInfo.GetCnFBuyerList();
-            return Json(bankList, JsonRequestBehavior.AllowGet);
+            return Json(bankList);
         }
 
         public ActionResult GetLCNoList()
         {
             //var listLCNo = from temp in objRepository.LCOpeningRepository.Get().OrderByDescending(ob=>ob.LCID) select new { temp.LCID, temp.LCNo, temp.PIID, temp.PINo }; //obLCOpeningDAL.GetLCOpeningInfo();
-            //return Json(listLCNo, JsonRequestBehavior.AllowGet);
+            //return Json(listLCNo);
             var result = from temp in objRepository.CommercialInvoiceRepository.Get().AsEnumerable()
                          join temp2 in objRepository.LCOpeningRepository.Get() on temp.LCID equals temp2.LCID
                          select new
@@ -57,7 +58,7 @@ namespace ERP_Leather.Controllers
                              CINo = temp.CINo
                              
                          };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
 
 
 
@@ -67,7 +68,7 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult Save(CnFBill dataSet)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
 
             objValMssg = objDalLCMCnFBillInfo.SaveLCM_CnFBill(dataSet, _userId, "CnFBills/CnFBills");
             return Json(new { msg = objValMssg });
@@ -76,7 +77,7 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult Update(CnFBill dataSet)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             objValMssg = objDalLCMCnFBillInfo.UpdateLCM_CnFBill(dataSet, _userId);
             return Json(new { msg = objValMssg });
         }
@@ -100,21 +101,21 @@ namespace ERP_Leather.Controllers
                                     RecordStatus = DalCommon.ReturnRecordStatus(temp.RecordStatus),
 
                                       }).OrderByDescending(ob => ob.CnfBillID); //obLCOpeningDAL.GetLCOpeningInfo();
-            return Json(listCnFBillInfo, JsonRequestBehavior.AllowGet);
+            return Json(listCnFBillInfo);
         }
         public ActionResult SearchLcmCnFBillInfoByLCNo(string search)//InsuranceNo
         {
             var lcInfo = from temp in objRepository.LcmCnFBillRpository.Get().Where(ob => ob.LCNo.StartsWith(search) || ob.LCNo == search)
                          select new { temp.CnfAgentID, temp.CnfBillNo, temp.LCNo, temp.LCID, temp.BillOfEntryNo,temp.RecordStatus};
 
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
 
 
         public ActionResult GetAutoCompleteData()
         {
             var data = objRepository.LcmCnFBillRpository.Get().Select(ob => ob.LCNo);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
         public ActionResult GetCnFBillInfoByCnfBillID(string CnfBillID)
@@ -191,7 +192,7 @@ namespace ERP_Leather.Controllers
             ob.BuyerName = objRepository.SysBuyerRepository.GetByID(dataSet.CnfAgentID).BuyerName;
             ob.PINo = objRepository.LCOpeningRepository.GetByID(dataSet.LCID).PINo;
 
-            return Json(ob, JsonRequestBehavior.AllowGet);
+            return Json(ob);
 
         }
 
@@ -256,7 +257,7 @@ namespace ERP_Leather.Controllers
                     if (ob.RecordStatus == "NCF")
                     {
                         ob.RecordStatus = "CNF";
-                        //ob.CheckedBy = Convert.ToInt32(Session["UserID"]);
+                        //ob.CheckedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                         //ob.CheckDate = DateTime.Now;
                         objRepository.LcmCnFBillRpository.Update(ob);
                         int flag = objRepository.Save();
@@ -303,7 +304,7 @@ namespace ERP_Leather.Controllers
         public ActionResult DeleteCnFBillList(int cnfBillID)
         {
             objValMssg = objDalLCMCnFBillInfo.DeleteCnFBillList(cnfBillID);//DeletePackingList(cnfBillID);
-            return Json(objValMssg, JsonRequestBehavior.AllowGet);
+            return Json(objValMssg);
         }
 
 

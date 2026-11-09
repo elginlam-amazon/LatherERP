@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.EntitiesModel.AppSetupModel;
@@ -6,8 +7,7 @@ using ERP.EntitiesModel.OperationModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP_Leather.ActionFilters;
 
 namespace ERP_Leather.Controllers
@@ -41,28 +41,28 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult LoanReceive(INVStoreTrans model)
         {
-            _vmMsg = model.TransactionID == 0 ? Dalobject.Save(model, Convert.ToInt32(Session["UserID"]), "LoanReceive/LoanReceive") : Dalobject.Update(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = model.TransactionID == 0 ? Dalobject.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "LoanReceive/LoanReceive") : Dalobject.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { TransactionID = Dalobject.GetReceiveID(), TransactionNo = Dalobject.GetReceiveNo(), msg = _vmMsg });
         }
 
         [HttpPost]
         public ActionResult ConfirmChemicalPurchase(INVStoreTrans model)
         {
-            _vmMsg = Dalobject.ConfirmChemicalPurchase(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.ConfirmChemicalPurchase(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
         [HttpPost]
         public ActionResult CheckedChemicalPurchase(string receiveId, string checkComment)
         {
-            _vmMsg = Dalobject.CheckedChemicalPurchase(receiveId, checkComment, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.CheckedChemicalPurchase(receiveId, checkComment, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
         public ActionResult GetChemicalSupplierList()
         {
             var chemicalSupplier = objDalSysSupplier.GetAllChemicalSupplier();
-            return Json(chemicalSupplier, JsonRequestBehavior.AllowGet);
+            return Json(chemicalSupplier);
         }
 
         public ActionResult GetLoanRequestInfoList(string RequestID)
@@ -71,31 +71,31 @@ namespace ERP_Leather.Controllers
             model.InvStoreTransRequestList = Dalobject.GetLoanRequestInfoList(RequestID);
             if (model.InvStoreTransRequestList.Count() > 0)
                 model.InvStoreTransItemList = Dalobject.GetLoanRequestItemList(model.InvStoreTransRequestList[0].RequestID.ToString());
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return Json(model);
         }
 
         public ActionResult GetLoanRequestItemList(string RequestID)
         {
             var packingInfoList = Dalobject.GetLoanRequestItemList(RequestID);
-            return Json(packingInfoList, JsonRequestBehavior.AllowGet);
+            return Json(packingInfoList);
         }
 
         public ActionResult GetLoanRequestAfterSaveList(string TransactionID)
         {
             var packItemList = Dalobject.GetLoanRequestAfterSaveList(TransactionID);
-            return Json(packItemList, JsonRequestBehavior.AllowGet);
+            return Json(packItemList);
         }
 
         public ActionResult GetLoanRequestItemAfterSaveList(string TransactionID)
         {
             var packItemList = Dalobject.GetRecvItemListList(TransactionID);
-            return Json(packItemList, JsonRequestBehavior.AllowGet);
+            return Json(packItemList);
         }
 
         public ActionResult GetChallanAfterSaveList(string TransactionID)
         {
             var challanList = Dalobject.GetChallanList(TransactionID);
-            return Json(challanList, JsonRequestBehavior.AllowGet);
+            return Json(challanList);
         }
 
         public ActionResult GetAllChemicalSupplierList(string supplier)
@@ -112,31 +112,31 @@ namespace ERP_Leather.Controllers
                 sysSupplier.Count = 1;
             }
             sysSupplier.ChemicalSupplierList = supplierList;
-            return Json(sysSupplier, JsonRequestBehavior.AllowGet);
+            return Json(sysSupplier);
         }
 
         public ActionResult GetChemicalPurchaseReceiveList()
         {
             var chemicalPurchaseReceiveList = Dalobject.GetChemicalPurchaseReceiveList();
-            return Json(chemicalPurchaseReceiveList, JsonRequestBehavior.AllowGet);
+            return Json(chemicalPurchaseReceiveList);
         }
 
         public ActionResult GetLoanReceiveRequestList()
         {
             var loanReceiveRequestList = Dalobject.GetLoanReceiveRequestList();
-            return Json(loanReceiveRequestList, JsonRequestBehavior.AllowGet);
+            return Json(loanReceiveRequestList);
         }
 
         public ActionResult GetSupplierSoruceList()
         {
             var SupplierSoruceList = Dalobject.GetSupplierSoruceList();
-            return Json(SupplierSoruceList, JsonRequestBehavior.AllowGet);
+            return Json(SupplierSoruceList);
         }
 
         public ActionResult GetStoreSoruceList()
         {
             var StoreSoruceList = Dalobject.GetStoreSoruceList();
-            return Json(StoreSoruceList, JsonRequestBehavior.AllowGet);
+            return Json(StoreSoruceList);
         }
 
         public ActionResult GetAllGridList(string TransactionID)
@@ -148,34 +148,34 @@ namespace ERP_Leather.Controllers
                 model.InvStoreTransChallanList = Dalobject.GetChallanList(TransactionID);
                 model.InvStoreTransItemList = Dalobject.GetRecvItemListList(TransactionID);
             }
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return Json(model);
         }
 
         public ActionResult GetAllActiveChemicalPackSize()
         {
             var chemicalItemSizeList = objDalSysSize.GetAllActiveChemicalPackSize();
-            return Json(chemicalItemSizeList, JsonRequestBehavior.AllowGet);
+            return Json(chemicalItemSizeList);
         }
 
         public ActionResult GetAllActiveChemicalPackUnit()
         {
             var chemicalUnitList = objDalSysUnit.GetAllActiveChemicalPack();
-            return Json(chemicalUnitList, JsonRequestBehavior.AllowGet);
+            return Json(chemicalUnitList);
         }
 
         public ActionResult GetAllActiveChemicalUnit()
         {
             var chemicalUnitList = objDalSysUnit.GetAllActiveLeatherChemical();
-            return Json(chemicalUnitList, JsonRequestBehavior.AllowGet);
+            return Json(chemicalUnitList);
         }
 
         public ActionResult GetChemicalItemList()
         {
             var chemicalList = Dalobject.GetChemicalItemList();
-            return Json(chemicalList, JsonRequestBehavior.AllowGet);
+            return Json(chemicalList);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedReceive(string TransactionID)
         {
             long? transactionID = Convert.ToInt64(TransactionID);
@@ -183,7 +183,7 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedReceiveChallan(string TransChallanID)
         {
             long? transChallanID = Convert.ToInt64(TransChallanID);
@@ -191,7 +191,7 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedReceiveItem(string TransItemID)
         {
             long? transItemID = Convert.ToInt64(TransItemID);

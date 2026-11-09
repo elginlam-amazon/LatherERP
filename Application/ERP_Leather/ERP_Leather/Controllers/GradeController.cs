@@ -1,9 +1,9 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
+using Microsoft.AspNetCore.Mvc;
+
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
@@ -36,11 +36,11 @@ namespace ERP_Leather.Controllers
         {
             if (model != null && model.GradeID != 0)
             {
-                _vmMsg = _dalGrade.Update(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalGrade.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             else
             {
-                _vmMsg = _dalGrade.Save(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalGrade.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             return Json(new { GradeID = _dalGrade.GetGradeID(), msg = _vmMsg });
         }
@@ -49,19 +49,19 @@ namespace ERP_Leather.Controllers
         public JsonResult GetGradeList()
         {
             var AllData = _dalGrade.GetAll().OrderByDescending(s => s.GradeID);
-            return Json(AllData, JsonRequestBehavior.AllowGet);
+            return Json(AllData);
         }
 
         public JsonResult GetGradeInfoList()
         {
             var AllData = _dalGrade.GetAll().OrderBy(s => s.GradeID);
-            return Json(AllData, JsonRequestBehavior.AllowGet);
+            return Json(AllData);
         }
 
         [HttpPost]
         public ActionResult Delete(string GradeID)
         {
-            _vmMsg = _dalGrade.Delete(GradeID, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = _dalGrade.Delete(GradeID, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
 
             return Json(new { msg = _vmMsg });
         }

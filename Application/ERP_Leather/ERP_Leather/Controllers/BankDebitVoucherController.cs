@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
 ﻿using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.Utility;
@@ -9,8 +10,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ERP_Leather.Controllers
 {
@@ -37,19 +37,19 @@ namespace ERP_Leather.Controllers
         public ActionResult GetBankDebitVoucherInfo()
         {
             var result = _dalBDV.GetBankDebitVoucherInfo();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult SearchBankDebitVoucherByBDVNo(string search)
         {
             var result = _dalBDV.SearchBankDebitVoucherByBDVNo(search);
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetAutoCompleteData()
         {
             var search = repo.LcmBankDebitVoucherRpository.Get(orderBy: q => q.OrderByDescending(d => d.BDVID)).Select(ob => ob.BDVNo);
-            return Json(search, JsonRequestBehavior.AllowGet);
+            return Json(search);
         }
         
         [HttpPost]
@@ -71,7 +71,7 @@ namespace ERP_Leather.Controllers
         public ActionResult GetBankDebitVoucherByBDVID(string BDVID)
         {
             var result = _dalBDV.GetBankDebitVoucherByBDVID(BDVID);
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult UpdateRecordStatus(string note, string BDVID)

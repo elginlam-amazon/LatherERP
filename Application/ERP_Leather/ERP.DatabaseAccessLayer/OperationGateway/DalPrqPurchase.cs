@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Globalization;
-using System.Web;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using DatabaseUtility;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.Utility;
 using ERP.EntitiesModel.OperationModel;
@@ -16,21 +14,7 @@ namespace ERP.DatabaseAccessLayer.OperationGateway
     public class DalPrqPurchase : ExecuteSqlStatement
     {
         private readonly BLC_DEVEntities _context;
-        private readonly DatabseManager _databseManager;
-        //private string _procedureName;
-        private List<InputParameter> _lstInputParameter;
-        private List<OutpuParameters> _lstOutputParameter;
-        private string _query;
-        //private int _affectedRow;
-        
-        public DalPrqPurchase(DatabseManager databseManager)
-        {
-            _databseManager = databseManager;
-            _lstInputParameter = new List<InputParameter>();
-            _lstOutputParameter = new List<OutpuParameters>();
-            _query = string.Empty;
 
-        }
         public DalPrqPurchase()
         {
             _context = new BLC_DEVEntities();

@@ -2,8 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 
@@ -47,7 +46,7 @@ namespace ERP_Leather.Controllers
                              ItemName = t.ItemName,
                              HSCode = t.HSCode
                          };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
       
         public ActionResult GetItemInfo(int itemID)
@@ -60,7 +59,7 @@ namespace ERP_Leather.Controllers
                              ItemName = t.ItemName,
                              HSCode = t.HSCode
                          };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
          
@@ -76,7 +75,7 @@ namespace ERP_Leather.Controllers
                                  ItemName = t.ItemName,
                                  HSCode = t.HSCode
                              };
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(result);
             }
             else
             {
@@ -90,7 +89,7 @@ namespace ERP_Leather.Controllers
                                  ItemName = t.ItemName,
                                  HSCode = t.HSCode
                              };
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(result);
             }
 
         }
@@ -103,24 +102,24 @@ namespace ERP_Leather.Controllers
                          ItemName =t.ItemName
                          };
 
-            return Json(search, JsonRequestBehavior.AllowGet);
+            return Json(search);
         }
         #endregion
 
         public ActionResult CrustBuyerList()
         {
             var res = from t in _repository.SysBuyerRepository.Get(filter:ob=>ob.BuyerCategory =="Buyer" && ob.IsActive==true) select new { t.BuyerID,t.BuyerName,t.BuyerCode};
-            return Json(res, JsonRequestBehavior.AllowGet);
+            return Json(res);
         }
         public ActionResult CrustChallanList() 
         {
             var res = from t in _repository.Prd_YearMonthCrustReqItemRepo.Get() select new { t.ArticleChallanID, t.ArticleChallanNo};
-            return Json(res, JsonRequestBehavior.AllowGet);
+            return Json(res);
         }
         public ActionResult CrustArticleList()
         {
             var res = from t in _repository.Prd_YearMonthCrustReqItemRepo.Get() select new { t.ArticleID, t.ArticleNo };
-            return Json(res, JsonRequestBehavior.AllowGet);
+            return Json(res);
         }
         public ActionResult GetPIList()
         {
@@ -131,7 +130,7 @@ namespace ERP_Leather.Controllers
                     RecordStatus=t.RecordStatus=="CNF"?"Confirmed":t.RecordStatus=="CHK"?"Checked":t.RecordStatus=="NCF"?"Not Confirmed":t.RecordStatus,
                     PICategory=t.PICategory=="PI"?"Proforma Invoice":t.PICategory=="IO"? "Indent Order":t.PICategory
             };
-            return Json(res, JsonRequestBehavior.AllowGet);
+            return Json(res);
         }
 
         public ActionResult GetPLList()
@@ -143,7 +142,7 @@ namespace ERP_Leather.Controllers
                            PLDate =Convert.ToDateTime(t.PLDate).ToString("dd/MM/yyyy"),
                            RecordStatus =t.RecordStatus
                        };
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
         public ActionResult GetBLList()
@@ -156,7 +155,7 @@ namespace ERP_Leather.Controllers
                            BLDate = Convert.ToDateTime(t.BLDate).ToString("dd/MM/yyyy"),
                            RecordStatus = t.RecordStatus
                        };
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
         public ActionResult GetCnfBillList()
         {
@@ -168,7 +167,7 @@ namespace ERP_Leather.Controllers
                            CnfBillDate = Convert.ToDateTime(t.CnfBillDate).ToString("dd/MM/yyyy"),
                            RecordStatus = DalCommon.ReturnRecordStatus(t.RecordStatus)//t.RecordStatus
                        };
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
         public ActionResult GetLimList()
         {
@@ -180,7 +179,7 @@ namespace ERP_Leather.Controllers
                            LimDate = Convert.ToDateTime(t.LimDate).ToString("dd/MM/yyyy"),
                            RecordStatus = t.RecordStatus
                        };
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
         public ActionResult GetLCRetirementList()
         {
@@ -193,7 +192,7 @@ namespace ERP_Leather.Controllers
                            LCRetirementDate = Convert.ToDateTime(t.LCRetirementDate).ToString("dd/MM/yyyy"),
                            RecordStatus = DalCommon.ReturnRecordStatus(t.RecordStatus)
                        };
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
 
@@ -209,7 +208,7 @@ namespace ERP_Leather.Controllers
                            CnfBillDate = Convert.ToDateTime(t.CnfBillDate).ToString("dd/MM/yyyy"),
                            RecordStatus = DalCommon.ReturnRecordStatus(t.RecordStatus)
                        };
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
 
@@ -223,7 +222,7 @@ namespace ERP_Leather.Controllers
                            LCRetirementDate = Convert.ToDateTime(t.LCRetirementDate).ToString("dd/MM/yyyy"),
                            RecordStatus = DalCommon.ReturnRecordStatus(t.RecordStatus)
                        };
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
 
@@ -237,7 +236,7 @@ namespace ERP_Leather.Controllers
                            DeliverChallanDate = Convert.ToDateTime(t.DeliverChallanDate).ToString("dd/MM/yyyy"),
                            RecordStatus = DalCommon.ReturnRecordStatus(t.RecordStatus)
                        };
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
         public ActionResult GetExpPLList()
@@ -250,7 +249,7 @@ namespace ERP_Leather.Controllers
                            PLDate = Convert.ToDateTime(t.PLDate).ToString("dd/MM/yyyy"),
                            RecordStatus = t.RecordStatus
                        };
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
 
@@ -265,7 +264,7 @@ namespace ERP_Leather.Controllers
                            CIDate = Convert.ToDateTime(t.CIDate).ToString("dd/MM/yyyy"),
                            RecordStatus = DalCommon.ReturnRecordStatus(t.RecordStatus)
                        };
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
 
@@ -281,14 +280,14 @@ namespace ERP_Leather.Controllers
                       };
           var data= res.GroupBy(test => test.ArticleID)
                     .Select(grp => grp.First());
-          return Json(data, JsonRequestBehavior.AllowGet);
+          return Json(data);
         }
 
         public ActionResult CrustLeatherChallanList()
         {
             var res = (from t in _repository.CrustLeatherIssueItem.Get() select new { t.ArticleChallanID, t.ArticleChallanNo })
                 .GroupBy(ob=>ob.ArticleChallanID).Select(temp=>temp.First());
-            return Json(res, JsonRequestBehavior.AllowGet);
+            return Json(res);
         }
 
         public ActionResult FinishedLeatherIssueArticle()
@@ -303,30 +302,30 @@ namespace ERP_Leather.Controllers
                       };
             var data = res.GroupBy(test => test.ArticleID)
                       .Select(grp => grp.First());
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
         public ActionResult FinishedLeatherChallanList()
         {
             var res = (from t in _repository.FinishLeatherIssueItem.Get() select new { t.ArticleChallanID, t.ArticleChallanNo })
                 .GroupBy(ob => ob.ArticleChallanID).Select(temp => temp.First());
-            return Json(res, JsonRequestBehavior.AllowGet);
+            return Json(res);
         }
         public ActionResult CrustStoreList()
         {
             var res = (from t in _repository.StoreRepository.Get() where (t.StoreCategory == "Leather" && t.IsDelete==false) select new { t.StoreID, t.StoreCode, t.StoreName });                
-            return Json(res, JsonRequestBehavior.AllowGet);
+            return Json(res);
         }
 
         public ActionResult GetGradingSize() {
             var res = (from t in _repository.SysSizeRepository.Get() where (t.SizeCategory == "GradeSize" && t.IsDelete == false) select new { SizeID = t.SizeID, SizeName = t.SizeName }).OrderBy(ob=>ob.SizeID).AsQueryable();
-            return Json(res, JsonRequestBehavior.AllowGet);
+            return Json(res);
         }
 
         public ActionResult GetGrade()
         {
             var res = (from t in _repository.SysGrade.Get() where (t.IsActive == true && t.IsDelete == false) select new { GradeID = t.GradeID, GradeName = t.GradeName }).OrderBy(ob => ob.GradeID).AsQueryable();
-            return Json(res, JsonRequestBehavior.AllowGet);
+            return Json(res);
         }
         
         

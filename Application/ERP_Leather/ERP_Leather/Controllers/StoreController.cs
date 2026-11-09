@@ -1,9 +1,9 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
+using Microsoft.AspNetCore.Mvc;
+
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
@@ -36,40 +36,40 @@ namespace ERP_Leather.Controllers
         {
             if (model != null && model.StoreID != 0)
             {
-                _vmMsg = _dalSysStore.Update(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysStore.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             else
             {
-                _vmMsg = _dalSysStore.Save(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysStore.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             return Json(new { StoreID = _dalSysStore.GetStoreId(), msg = _vmMsg });
         }
         [HttpPost]
         public ActionResult Delete(string storeId)
         {
-            _vmMsg = _dalSysStore.Delete(storeId, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = _dalSysStore.Delete(storeId, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public ActionResult GetStoreList()
         {
             var sysSource = _dalSysStore.GetAll().OrderByDescending(s => s.StoreID);
-            return Json(sysSource, JsonRequestBehavior.AllowGet);
+            return Json(sysSource);
         }
 
 
         public ActionResult GetWetBlueStoreList()
         {
             var sysSource = _dalSysStore.GetAllActiveWetBlueStore().OrderByDescending(s => s.StoreID);
-            return Json(sysSource, JsonRequestBehavior.AllowGet);
+            return Json(sysSource);
         }
 
 
         public ActionResult GetAllProductionStoreList()
         {
             var sysSource = _dalSysStore.GetAllActiveProductionStore().OrderByDescending(s => s.StoreID);
-            return Json(sysSource, JsonRequestBehavior.AllowGet);
+            return Json(sysSource);
         }
 
 
@@ -77,13 +77,13 @@ namespace ERP_Leather.Controllers
         {
             store = store.ToUpper();
             var supplierData = _dalSysStore.GetAll().Where(ob => ob.StoreName.StartsWith(store)).ToList();
-            return Json(supplierData, JsonRequestBehavior.AllowGet);
+            return Json(supplierData);
         }
 
         public JsonResult GetStoreListForSearch()
         {
             var supplierAgentList = _dalSysStore.GetStoreListForSearch();
-            return Json(supplierAgentList, JsonRequestBehavior.AllowGet);
+            return Json(supplierAgentList);
         }
 
 

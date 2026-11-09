@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.Utility;
@@ -87,7 +87,7 @@ namespace ERP_Leather.Controllers
                           };
 
 
-            return Json(allData, JsonRequestBehavior.AllowGet);
+            return Json(allData);
         }
         #endregion
 
@@ -95,7 +95,7 @@ namespace ERP_Leather.Controllers
         public ActionResult GetCrustTransferItemGrid(string TransactionStore)
         {
             var packItemList = _objDalCrustedLeatherTransferTreatment.GetCrustTransferPopUpGridDetail(TransactionStore);
-            return Json(packItemList, JsonRequestBehavior.AllowGet);
+            return Json(packItemList);
         }
 
         public ActionResult GetCrustDataItemAndGradeGrid(string TransactionStore, string BuyerID, string BuyerOrderID, string ArticleID, string ItemTypeID, string LeatherStatusID, string ColorID, string ArticleChallanID)
@@ -104,7 +104,7 @@ namespace ERP_Leather.Controllers
             model.TransferFromList = _objDalCrustedLeatherTransferTreatment.GetCrustTransferMasterGridDetail(TransactionStore, BuyerID, BuyerOrderID, ArticleID, ItemTypeID, LeatherStatusID, ColorID, ArticleChallanID);
             if (model.TransferFromList.Count > 0)
                 model.TransferToList = _objDalCrustedLeatherTransferTreatment.GetCrustTransferChildGridDetail(TransactionStore, BuyerID, BuyerOrderID, ArticleID, ItemTypeID, LeatherStatusID, ColorID, ArticleChallanID);
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return Json(model);
 
         }
   
@@ -114,27 +114,27 @@ namespace ERP_Leather.Controllers
         public ActionResult GetAllItemType()
         {
             var allData = _objDalCrustedLeatherTransferTreatment.GetAllItemTypeGridData();
-            return Json(allData, JsonRequestBehavior.AllowGet);
+            return Json(allData);
 
         }
 
         public ActionResult GetAllLeatherStatus()
         {
             var allData = _objDalCrustedLeatherTransferTreatment.GetAllLeatherStatusGridData();
-            return Json(allData, JsonRequestBehavior.AllowGet);
+            return Json(allData);
         }
 
         public ActionResult GetAllBuyer()
         {
             var allData = _objDalCrustedLeatherTransferTreatment.GetAllBuyerGridData();
-            return Json(allData, JsonRequestBehavior.AllowGet);
+            return Json(allData);
         }
 
         public ActionResult GetAllBuyerOrder()
         {
 
             var allData = _objDalCrustedLeatherTransferTreatment.GetAllBuyerOrderGridData();
-            return Json(allData, JsonRequestBehavior.AllowGet);
+            return Json(allData);
 
         }
 
@@ -142,7 +142,7 @@ namespace ERP_Leather.Controllers
         {
 
             var allData = _objDalCrustedLeatherTransferTreatment.GetAllColorGridData();
-            return Json(allData, JsonRequestBehavior.AllowGet);
+            return Json(allData);
 
         }
 
@@ -150,7 +150,7 @@ namespace ERP_Leather.Controllers
         //{
 
         //    var allData = _objDalCrustedLeatherTransferTreatment.GetAllGradeGridData();
-        //    return Json(allData, JsonRequestBehavior.AllowGet);
+        //    return Json(allData);
 
         //}
 
@@ -158,7 +158,7 @@ namespace ERP_Leather.Controllers
         {
 
             var allData = _objDalCrustedLeatherTransferTreatment.GetAllArticleGridData();
-            return Json(allData, JsonRequestBehavior.AllowGet);
+            return Json(allData);
 
         }
 
@@ -168,7 +168,7 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult CrustedLeatherTransferTreatment(clTransfer model)
         {
-            _vmMsg = model.CLTransferID == 0 ? _objDalCrustedLeatherTransferTreatment.Save(model, Convert.ToInt32(Session["UserID"]), "CrustedLeatherTransferTreatment/CrustedLeatherTransferTreatment") : _objDalCrustedLeatherTransferTreatment.Update(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = model.CLTransferID == 0 ? _objDalCrustedLeatherTransferTreatment.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "CrustedLeatherTransferTreatment/CrustedLeatherTransferTreatment") : _objDalCrustedLeatherTransferTreatment.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { CLTransferID = _objDalCrustedLeatherTransferTreatment.GetCLTransferID(), CLTransferFromID = _objDalCrustedLeatherTransferTreatment.GetCLTransferFromID(), CLTransferToID = _objDalCrustedLeatherTransferTreatment.GetCLTransferToID(), CLTransferNo = _objDalCrustedLeatherTransferTreatment.GetCLTransferNo(), msg = _vmMsg });
         }
 
@@ -195,19 +195,19 @@ namespace ERP_Leather.Controllers
                                          IssueStoreName = t.IssueStoreName,
                                          RecordStatus = DalCommon.ReturnRecordStatus(t.RecordStatus),
                                      };
-            return Json(searchIssueDetails, JsonRequestBehavior.AllowGet);
+            return Json(searchIssueDetails);
 
         }
         public ActionResult GetAllGridDetailsList(string CLTransferID)
         {
             clTransfer model = new clTransfer();
-            if (string.IsNullOrEmpty(CLTransferID)) return Json(model, JsonRequestBehavior.AllowGet);
+            if (string.IsNullOrEmpty(CLTransferID)) return Json(model);
             model.TransferFromList = _objDalCrustedLeatherTransferTreatment.GetCLTransferFromList(CLTransferID);
             if (model.TransferFromList.Count > 0)
             {
                 model.TransferToList = _objDalCrustedLeatherTransferTreatment.GetCLTransferToList(model.TransferFromList[0].CLTransferFromID.ToString());
             }
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return Json(model);
         }
         #endregion
 
@@ -265,7 +265,7 @@ namespace ERP_Leather.Controllers
 
             }
 
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+            return Json(_vmMsg);
         }
         #endregion
 
@@ -298,7 +298,7 @@ namespace ERP_Leather.Controllers
                 }
 
             }
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+            return Json(_vmMsg);
         }
 
         public ActionResult DeleteChildItemGridInfo(long CLTransferToID)
@@ -330,7 +330,7 @@ namespace ERP_Leather.Controllers
                 }
 
             }
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+            return Json(_vmMsg);
         }
 
 
@@ -338,7 +338,7 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult ConfirmCrustLeatherTransferTreatment(long CLTransferID, int userid)
         {
-            _vmMsg = _objDalCrustedLeatherTransferTreatment.ConfirmCrustleatherTransferTreatmentStock(CLTransferID, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = _objDalCrustedLeatherTransferTreatment.ConfirmCrustleatherTransferTreatmentStock(CLTransferID, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
         #endregion

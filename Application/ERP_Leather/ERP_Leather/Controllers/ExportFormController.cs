@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.Utility;
@@ -39,9 +39,9 @@ namespace ERP_Leather.Controllers
 
         public ActionResult Save(ExpExportForm model)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalExportForm.Save(model, _userId, "");
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult GetExpFormList()
@@ -58,33 +58,33 @@ namespace ERP_Leather.Controllers
                 RecordStatus = DalCommon.ReturnRecordStatus(expFrm.RecordStatus)
             }).ToList();
 
-            return Json(result.OrderByDescending(ob => ob.ExportFormID), JsonRequestBehavior.AllowGet);
+            return Json(result.OrderByDescending(ob => ob.ExportFormID));
         }
 
         public ActionResult GetExportForm(long id)
         {
             var expFrm = _dalExportForm.GetExpFrm(id);
-            return Json(expFrm, JsonRequestBehavior.AllowGet);
+            return Json(expFrm);
         }
 
         public ActionResult Confirm(long id)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalExportForm.Confirm(id, _userId);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Check(long id)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalExportForm.Check(id, _userId);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Delete(long id)
         {
             _validationMsg = _dalExportForm.Delete(id);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
     }
 }

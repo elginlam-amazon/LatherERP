@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.EntitiesModel.OperationModel;
@@ -36,8 +36,8 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult FinishLeatherBuyerQC(PrdCrustLeatherQC model)
         {
-            _vmMsg = model.CrustLeatherQCID == 0 ? Dalobject.Save(model, Convert.ToInt32(Session["UserID"]), "FinishLeatherQC/FinishLeatherQC") : Dalobject.Update(model, Convert.ToInt32(Session["UserID"]));
-            //_vmMsg = model.CrustLeatherQCID == 0 ? Dalobject.Save(model, Convert.ToInt32(Session["UserID"]), "ChemicalConsumption/ChemConsumption") : Dalobject.Update(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = model.CrustLeatherQCID == 0 ? Dalobject.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "FinishLeatherQC/FinishLeatherQC") : Dalobject.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
+            //_vmMsg = model.CrustLeatherQCID == 0 ? Dalobject.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "ChemicalConsumption/ChemConsumption") : Dalobject.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { CrustLeatherQCID = Dalobject.GetQCID(), CrustLeatherQCNo = Dalobject.GetQCNo(), msg = _vmMsg });
         }
 
@@ -48,12 +48,12 @@ namespace ERP_Leather.Controllers
                 case "FOQC":
                     {
                         var ddlFinishOwnQCStoreList = objDalSysStore.GetAllActiveFinishOwnQCStore();
-                        return Json(ddlFinishOwnQCStoreList, JsonRequestBehavior.AllowGet);
+                        return Json(ddlFinishOwnQCStoreList);
                     }
                 case "FBQC":
                     {
                         var ddlFinishBuyerQCStoreList = objDalSysStore.GetAllActiveFinishBuyerQCStore();
-                        return Json(ddlFinishBuyerQCStoreList, JsonRequestBehavior.AllowGet);
+                        return Json(ddlFinishBuyerQCStoreList);
                     }
                 default:
                     return null;
@@ -63,50 +63,50 @@ namespace ERP_Leather.Controllers
         public ActionResult GetQCScheduleItemInfo(string ProductionFloor)
         {
             var crustYearMonthScheduleList = Dalobject.GetScheduleItemInfo(ProductionFloor);
-            return Json(crustYearMonthScheduleList, JsonRequestBehavior.AllowGet);
+            return Json(crustYearMonthScheduleList);
         }
 
         public ActionResult GetCrustLeatherQCInfo()
         {
             var crustLeatherQCInfoList = Dalobject.GetCrustLeatherQCInfo();
-            return Json(crustLeatherQCInfoList, JsonRequestBehavior.AllowGet);
+            return Json(crustLeatherQCInfoList);
         }
 
         public ActionResult GetColorAndGradeList(string ProductionFloor, string BuyerID, string BuyerOrderID, string ArticleID, string ItemTypeID, string LeatherStatusID, string ColorID, string ArticleChallanID)
         {
             PrdCrustLeatherQC model = new PrdCrustLeatherQC();
-            //if (string.IsNullOrEmpty(ScheduleItemID)) return Json(model, JsonRequestBehavior.AllowGet);
+            //if (string.IsNullOrEmpty(ScheduleItemID)) return Json(model);
             model.PrdCrustLeatherQCItemList = Dalobject.GetScheduleColorList(ProductionFloor, BuyerID, BuyerOrderID, ArticleID, ItemTypeID, LeatherStatusID, ColorID, ArticleChallanID);
             if (model.PrdCrustLeatherQCItemList.Count > 0)
                 model.PrdCrustLeatherQCSelectionList = Dalobject.GetScheduleGradeList(ProductionFloor, BuyerID, BuyerOrderID, ArticleID, ItemTypeID, LeatherStatusID, ColorID, ArticleChallanID);
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return Json(model);
         }
 
         public ActionResult GetAllGridList(string CrustLeatherQCID, string StoreId)
         {
             PrdCrustLeatherQC model = new PrdCrustLeatherQC();
-            if (string.IsNullOrEmpty(CrustLeatherQCID)) return Json(model, JsonRequestBehavior.AllowGet);
+            if (string.IsNullOrEmpty(CrustLeatherQCID)) return Json(model);
             model.PrdCrustLeatherQCItemList = Dalobject.GetQCColorList(CrustLeatherQCID);
             if (model.PrdCrustLeatherQCItemList.Count > 0)
                 model.PrdCrustLeatherQCSelectionList = Dalobject.GetQCSelectionList(model.PrdCrustLeatherQCItemList[0].CLQCItemID.ToString(), StoreId);
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return Json(model);
         }
 
         [HttpPost]
         public ActionResult ConfirmedCrustQC(PrdCrustLeatherQC model)
         {
-            _vmMsg = Dalobject.ConfirmedCrustQC(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.ConfirmedCrustQC(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
         [HttpPost]
         public ActionResult CheckedCrustProductionSchedule(PrdCrustLeatherQC model)
         {
-            _vmMsg = Dalobject.CheckedCrustProductionSchedule(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.CheckedCrustProductionSchedule(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedCrustLeatherQC(string CrustLeatherQCID)
         {
             long crustLeatherQCID = Convert.ToInt64(CrustLeatherQCID);
@@ -114,7 +114,7 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedCrustQCItem(string CLQCItemID)
         {
             long itemID = Convert.ToInt64(CLQCItemID);
@@ -123,7 +123,7 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedQCSelection(string CLQCSelectionID)
         {
             long QCSelectionID = Convert.ToInt64(CLQCSelectionID);
@@ -135,7 +135,7 @@ namespace ERP_Leather.Controllers
         public ActionResult GetGradeInfoInFromQCStock(string ProductionFloor, string BuyerID, string BuyerOrderID, string ArticleID, string ItemTypeID, string LeatherStatusID, string ColorID, string ArticleChallanID)
         {
             var gradeList = Dalobject.GetGradeInfoInFromQCStock(ProductionFloor, BuyerID, BuyerOrderID, ArticleID, ItemTypeID, LeatherStatusID, ColorID, ArticleChallanID);
-            return Json(gradeList, JsonRequestBehavior.AllowGet);
+            return Json(gradeList);
         }
     }
 }

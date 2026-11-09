@@ -1,49 +1,44 @@
-﻿using System;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ERP_Leather.ActionFilters
 {
     public class CheckUserAccess : ActionFilterAttribute
     {
-
         private readonly string _urlString;
 
         public CheckUserAccess(string urlString)
         {
             _urlString = urlString;
         }
+
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            var session = filterContext.HttpContext.Session;
+            var userUrlPermission = session.GetString("userUrlPermission");
 
-            HttpContext ctx = HttpContext.Current;
-
-            if (ctx.Session["userUrlPermission"] == null)
+            if (userUrlPermission == null)
             {
-                //String redirectTo = string.Format("~/Home/login");
-                String redirectTo = string.Format("~/Home/SessionOutMsg");
-                filterContext.Result = new RedirectResult(redirectTo);
+                filterContext.Result = new RedirectResult("~/Home/SessionOutMsg");
             }
             else
             {
-                var userUrlList = ctx.Session["userUrlPermission"] as IEnumerable<string>;
+                var userUrlList = Newtonsoft.Json.JsonConvert.DeserializeObject<IEnumerable<string>>(userUrlPermission);
 
                 if (userUrlList != null)
                 {
-                    var isExists = Enumerable.Any(userUrlList, v => v.ToUpper().Equals(_urlString.ToUpper()));
+                    var isExists = userUrlList.Any(v => v.ToUpper().Equals(_urlString.ToUpper()));
                     if (isExists) return;
-                    String redirectTo = string.Format("~/Home/login");
-                    filterContext.Result = new RedirectResult(redirectTo);
+                    filterContext.Result = new RedirectResult("~/Home/login");
                 }
                 else
                 {
-                    String redirectTo = string.Format("~/Home/login");
-                    filterContext.Result = new RedirectResult(redirectTo);
+                    filterContext.Result = new RedirectResult("~/Home/login");
                 }
-
-                
             }
         }
     }

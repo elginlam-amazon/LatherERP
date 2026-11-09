@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
@@ -36,7 +37,7 @@ namespace ERP_Leather.Controllers
         public ActionResult GetLCNoList()
         {
             var lcList = objDalLCRetirement.GetLCNoList();
-            return Json(lcList, JsonRequestBehavior.AllowGet);
+            return Json(lcList);
         }
 
         //********************************************* SAVE CODE ***************************************************//
@@ -46,8 +47,8 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult SaveAndUpdate(LCMLCRetirement model)
         {
-            objValMssg = model.LCRetirementID == 0 ? objDalLCRetirement.SaveLCM_LCRetirement(model, Convert.ToInt32(Session["UserID"]), "LCMLCRetirement/LCMLCRetirement") :
-                                                    objDalLCRetirement.UpdateLCM_LCRetirement(model, Convert.ToInt32(Session["UserID"]));
+            objValMssg = model.LCRetirementID == 0 ? objDalLCRetirement.SaveLCM_LCRetirement(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "LCMLCRetirement/LCMLCRetirement") :
+                                                    objDalLCRetirement.UpdateLCM_LCRetirement(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = objValMssg });
         }
 
@@ -58,7 +59,7 @@ namespace ERP_Leather.Controllers
         //[HttpPost]
         //public ActionResult Update(LCMLCRetirement dataSet)
         //{
-        //    _userId = Convert.ToInt32(Session["UserID"]);
+        //    _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
         //    objValMssg = objDalLCRetirement.UpdateLCM_LCRetirement(dataSet, _userId);
         //    return Json(new { msg = objValMssg });
         //}
@@ -85,7 +86,7 @@ namespace ERP_Leather.Controllers
                                   RecordStatus = DalCommon.ReturnRecordStatus(temp.RecordStatus)
 
                               }).OrderByDescending(o => o.LCRetirementID);
-            return Json(searchList, JsonRequestBehavior.AllowGet);
+            return Json(searchList);
         }
         public ActionResult SearchLCByLCNo(string search)
         {
@@ -106,7 +107,7 @@ namespace ERP_Leather.Controllers
 
                           }).Where(ob => (ob.LCRetirementNo.StartsWith(search) || ob.LCRetirementNo == search)).OrderByDescending(o => o.LCRetirementID);
 
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
         public ActionResult BtnSearchLCByLCNo(string search)
         {
@@ -127,7 +128,7 @@ namespace ERP_Leather.Controllers
 
                           }).Where(ob => (ob.LCRetirementNo.StartsWith(search) || ob.LCRetirementNo == search)).OrderByDescending(o => o.LCRetirementID);
 
-            return Json(lcInfo, JsonRequestBehavior.AllowGet);
+            return Json(lcInfo);
         }
 
 
@@ -227,7 +228,7 @@ namespace ERP_Leather.Controllers
                     ob.GrandTotal = lcInfo.GrandTotal;
                 }
             }
-            return Json(ob, JsonRequestBehavior.AllowGet);
+            return Json(ob);
         }
 
 
@@ -239,7 +240,7 @@ namespace ERP_Leather.Controllers
         public ActionResult DeleteLCRetirementID(int lcRetirementID)
         {
             objValMssg = objDalLCRetirement.DeleteLCRetirementID(lcRetirementID);//DeletePackingList(cnfBillID);
-            return Json(objValMssg, JsonRequestBehavior.AllowGet);
+            return Json(objValMssg);
         }
 
         //******************************************END OF DELETE CODE ************************************************//
@@ -257,7 +258,7 @@ namespace ERP_Leather.Controllers
                     if (ob.RecordStatus == "NCF")
                     {
                         ob.RecordStatus = "CNF";
-                        //ob.CheckedBy = Convert.ToInt32(Session["UserID"]);
+                        //ob.CheckedBy = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
                         //ob.CheckDate = DateTime.Now;
                         objRepository.LcmRetirementRpository.Update(ob);
                         int flag = objRepository.Save();

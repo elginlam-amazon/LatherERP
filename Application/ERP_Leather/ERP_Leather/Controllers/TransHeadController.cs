@@ -1,9 +1,9 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
+using Microsoft.AspNetCore.Mvc;
+
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
@@ -39,11 +39,11 @@ namespace ERP_Leather.Controllers
         {
             if (model != null && model.HeadID != 0)
             {
-                _vmMsg = _dalTransHead.Update(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalTransHead.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             else
             {
-                _vmMsg = _dalTransHead.Save(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalTransHead.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             return Json(new { HeadID = _dalTransHead.GetHeadID(), msg = _vmMsg });
         }
@@ -52,32 +52,32 @@ namespace ERP_Leather.Controllers
         public JsonResult GetHeadList()
         {
             var AllData = _dalTransHead.GetAll().OrderByDescending(s => s.HeadID);
-            return Json(AllData, JsonRequestBehavior.AllowGet);
+            return Json(AllData);
         }
 
         public JsonResult GetAllActiveHead()
         {
             var AllData = _dalTransHead.GetAllActiveHead().OrderByDescending(s => s.HeadID);
-            return Json(AllData, JsonRequestBehavior.AllowGet);
+            return Json(AllData);
         }
 
         public JsonResult GetHeadInfoList()
         {
             var AllData = _dalTransHead.GetAll().OrderBy(s => s.HeadID);
-            return Json(AllData, JsonRequestBehavior.AllowGet);
+            return Json(AllData);
         }
 
         //public ActionResult GetCategoryWiseTransHead(string _HeadCategory)
         //{
         //    var Data = _dalTransHead.GetCategoryWiseTransHead(_HeadCategory);
 
-        //    return Json(Data, JsonRequestBehavior.AllowGet);
+        //    return Json(Data);
         //}
 
         [HttpPost]
         public ActionResult Delete(string HeadID)
         {
-            _vmMsg = _dalTransHead.Delete(HeadID, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = _dalTransHead.Delete(HeadID, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
 
             return Json(new { msg = _vmMsg });
         }

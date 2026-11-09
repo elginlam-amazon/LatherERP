@@ -1,6 +1,6 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.BusinessLogicLayer.OperationManager;
 using ERP.EntitiesModel.OperationModel;
@@ -38,32 +38,32 @@ namespace ERP_Leather.Controllers
         {
             if (model.TransactionID == 0)
             {
-                var msg = objBllReceive.Save(model, Convert.ToInt32(Session["UserID"]), "StoreTransferIssue/StoreTransferIssue");
+                var msg = objBllReceive.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "StoreTransferIssue/StoreTransferIssue");
                 var TransactionID = objBllReceive.GetTransactionID();
                 var TransactionNo = objReceive.GetTransactionNo(TransactionID);
 
                 var TransactionItemList = objReceive.GetTransactionItemList(TransactionID);
-                return Json(new { Msg = msg, TransactionID = TransactionID, TransactionNo = TransactionNo, TransactionItemList = TransactionItemList }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = msg, TransactionID = TransactionID, TransactionNo = TransactionNo, TransactionItemList = TransactionItemList });
             }
             else
             {
                 var msg = objBllReceive.Update(model, 1);
                 var TransactionItemList = objReceive.GetTransactionItemList(model.TransactionID);
 
-                return Json(new { Msg = msg, TransactionItemList = TransactionItemList }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = msg, TransactionItemList = TransactionItemList });
             }
         }
 
         public ActionResult GetTransactionInfoForSearch()
         {
             var Data = objReceive.GetTransactionInfoForSearch();
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetTransactionDetailsAfterSearch(long _TransactionID)
         {
             var Data = objReceive.GetTransactionDetailsAfterSearch(_TransactionID);
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
 
@@ -71,28 +71,28 @@ namespace ERP_Leather.Controllers
         public ActionResult GetIssuedItemForLOV()
         {
             var Data = objReceive.GetIssuedItemForLOV();
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetIssuedItemDetailsAfterLOV(long _TransactionID)
         {
             var Data = objReceive.GetIssuedItemDetailsAfterLOV(_TransactionID);
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
 
         public ActionResult GetSupplierForChemical()
         {
             var Data = objReceive.GetSupplierForChemical();
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult ConfirmIssueToProductionTransaction(long _TransactionID, string _CheckComment)
         {
 
-            var Data = objReceive.ConfirmIssueToProductionTransaction(_TransactionID, _CheckComment, Convert.ToInt32(Session["UserID"]));
+            var Data = objReceive.ConfirmIssueToProductionTransaction(_TransactionID, _CheckComment, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
 
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 	}
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
-using DatabaseUtility;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.OperationModel;

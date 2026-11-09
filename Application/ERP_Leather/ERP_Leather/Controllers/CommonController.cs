@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.BusinessLogicLayer.OperationManager;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.Utility;
@@ -24,27 +23,27 @@ namespace ERP_Leather.Controllers
         public ActionResult GetSupplierList()
         {
             var supplier = objSupplier.GetAllSupplier();
-            return Json(supplier, JsonRequestBehavior.AllowGet);
+            return Json(supplier);
         }
 
         public ActionResult GetSupplierListSearchById(string supplier)
         {
             supplier = supplier.ToUpper();
             var supplierData = objSupplier.GetAllSupplier().Where(ob => ob.SupplierName.StartsWith(supplier)).ToList();
-            return Json(supplierData, JsonRequestBehavior.AllowGet);
+            return Json(supplierData);
         }
         public ActionResult GetLocationList()
         {
             DalSysLocation objLocation = new DalSysLocation();
             var locations = objLocation.GetAllActiveLocation();
-            return Json(locations, JsonRequestBehavior.AllowGet);
+            return Json(locations);
         }
         public ActionResult GetSourceList()
         {
             DalSysSource objSource = new DalSysSource();
 
             var AllData = objSource.GetAllActiveSource();
-            return Json(AllData, JsonRequestBehavior.AllowGet);
+            return Json(AllData);
         }
 
         public ActionResult GetAllItemSize()
@@ -52,7 +51,7 @@ namespace ERP_Leather.Controllers
             DalSysSize objSource = new DalSysSize();
 
             var items = objSource.GetAllActiveItemSize();
-            return Json(items, JsonRequestBehavior.AllowGet);
+            return Json(items);
         }
 
         public ActionResult GetAllStore()
@@ -60,7 +59,7 @@ namespace ERP_Leather.Controllers
             DalSysStore objStore = new DalSysStore();
 
             var allData = objStore.GetAllActiveStore();
-            return Json(allData, JsonRequestBehavior.AllowGet);
+            return Json(allData);
         }
 
         public ActionResult GetAllUnit()
@@ -68,7 +67,7 @@ namespace ERP_Leather.Controllers
             DalSysUnit objUnit = new DalSysUnit();
 
             var allData = objUnit.GetAllActiveUnit();
-            return Json(allData, JsonRequestBehavior.AllowGet);
+            return Json(allData);
         }
 
         public ActionResult GetAllLeatherUnit()
@@ -76,7 +75,7 @@ namespace ERP_Leather.Controllers
             var objUnit = new DalSysUnit();
 
             var allData = objUnit.GetAllActiveLeatherUnit();
-            return Json(allData, JsonRequestBehavior.AllowGet);
+            return Json(allData);
         }
 
         public ActionResult GetAllItemType()
@@ -84,7 +83,7 @@ namespace ERP_Leather.Controllers
             DalSysItemType objSource = new DalSysItemType();
 
             var allData = objSource.GetAllActiveItemTypeLeather();
-            return Json(allData, JsonRequestBehavior.AllowGet);
+            return Json(allData);
         }
 
         public ActionResult GetPaymentTypeList()
@@ -92,7 +91,7 @@ namespace ERP_Leather.Controllers
             DalSysSource objSource = new DalSysSource();
 
             var AllData = objSource.GetAllActiveSource();
-            return Json(AllData, JsonRequestBehavior.AllowGet);
+            return Json(AllData);
         }
 
         public ActionResult GetPaymentMethodList()
@@ -100,7 +99,7 @@ namespace ERP_Leather.Controllers
             DalSysSize objSource = new DalSysSize();
 
             var items = objSource.GetAllActiveItemSize();
-            return Json(items, JsonRequestBehavior.AllowGet);
+            return Json(items);
         }
 
         public ActionResult GetAllActiveCurrency()
@@ -108,7 +107,7 @@ namespace ERP_Leather.Controllers
             DalSysCurrency objSource = new DalSysCurrency();
 
             var allData = objSource.GetAllActiveCurrency();
-            return Json(allData, JsonRequestBehavior.AllowGet);
+            return Json(allData);
         }
 
         public ActionResult GetLCOpeningBankList()
@@ -123,7 +122,7 @@ namespace ERP_Leather.Controllers
                 ob.BankCode = item.BankCode;
                 lstBank.Add(ob);
             }
-            return Json(lstBank, JsonRequestBehavior.AllowGet);
+            return Json(lstBank);
         }
 
         public ActionResult SearchLCOpeningBankByBank(string bank)
@@ -139,7 +138,7 @@ namespace ERP_Leather.Controllers
                 ob.BankCode = item.BankCode;
                 lstBank.Add(ob);
             }
-            return Json(lstBank, JsonRequestBehavior.AllowGet);
+            return Json(lstBank);
         }
 
 	}

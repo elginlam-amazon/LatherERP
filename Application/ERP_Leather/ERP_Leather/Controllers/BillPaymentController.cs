@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.EntitiesModel.BaseModel;
@@ -5,8 +6,7 @@ using ERP.EntitiesModel.OperationModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP_Leather.ActionFilters;
 
 namespace ERP_Leather.Controllers
@@ -39,28 +39,28 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult BillPayment(PrqBillPayment model)
         {
-            _vmMsg = model.PaymentID == 0 ? Dalobject.Save(model, Convert.ToInt32(Session["UserID"])) : Dalobject.Update(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = model.PaymentID == 0 ? Dalobject.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID"))) : Dalobject.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { PaymentID = Dalobject.GetPaymentID(), msg = _vmMsg });
         }
 
         [HttpPost]
         public ActionResult BillPaymentChecked(string paymentId, string checkComment, string recordStatus)
         {
-            _vmMsg = Dalobject.BillPaymentChecked(paymentId, checkComment, recordStatus, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.BillPaymentChecked(paymentId, checkComment, recordStatus, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
         [HttpPost]
         public ActionResult BillPaymentRecommended(string paymentId, string recommendedComment, string recordStatus)
         {
-            _vmMsg = Dalobject.BillPaymentRecommended(paymentId, recommendedComment, recordStatus, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.BillPaymentRecommended(paymentId, recommendedComment, recordStatus, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
         [HttpPost]
         public ActionResult BillPaymentApproved(string paymentId, string approveComment, string recordStatus)
         {
-            _vmMsg = Dalobject.BillPaymentApproved(paymentId, approveComment, recordStatus, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.BillPaymentApproved(paymentId, approveComment, recordStatus, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
@@ -68,44 +68,44 @@ namespace ERP_Leather.Controllers
         public ActionResult GetSupplierBillPaymentAmount(PrqBillPayment model)
         {
             var billPaymentAmount = Dalobject.GetSupplierBillPaymentAmount(model);
-            return Json(billPaymentAmount, JsonRequestBehavior.AllowGet);
+            return Json(billPaymentAmount);
         }
 
         //[Authorize()]
         public ActionResult GetSupplierList()
         {
             var supplier = Dalobject.GetSupplierList();
-            return Json(supplier, JsonRequestBehavior.AllowGet);
+            return Json(supplier);
         }
         public ActionResult GetBillRefList(string supplierId)
         {
             int supid = string.IsNullOrEmpty(supplierId) ? 0 : Convert.ToInt32(supplierId);
             var challanList = Dalobject.GetBillRefList(supid);
-            return Json(challanList, JsonRequestBehavior.AllowGet);
+            return Json(challanList);
         }
 
         public ActionResult GetPayBillRefInfo(string PaymentID)
         {
             int payID = string.IsNullOrEmpty(PaymentID) ? 0 : Convert.ToInt32(PaymentID);
             var PayBillRefList = Dalobject.GetPayBillRefInfo(payID);
-            return Json(PayBillRefList, JsonRequestBehavior.AllowGet);
+            return Json(PayBillRefList);
         }
 
         //public ActionResult GetBillPaymentInformation(string supplierid)
         //{
         //    var supid = string.IsNullOrEmpty(supplierid) ? 0 : Convert.ToInt32(supplierid);
         //    var billPaymentlist = Dalobject.GetBillPaymentList(supid);
-        //    return Json(billPaymentlist, JsonRequestBehavior.AllowGet);
+        //    return Json(billPaymentlist);
         //}
 
         public ActionResult GetBillPaymentInformation()
         {
             //var supid = string.IsNullOrEmpty(supplierid) ? 0 : Convert.ToInt32(supplierid);
             var billPaymentlist = Dalobject.GetBillPaymentList();
-            return Json(billPaymentlist, JsonRequestBehavior.AllowGet);
+            return Json(billPaymentlist);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedBillPayment(string paymentId)
         {
             int paymentid = string.IsNullOrEmpty(paymentId) ? 0 : Convert.ToInt32(paymentId);
@@ -113,7 +113,7 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public ActionResult DeletedBillRefGridData(string SupplierBillID)
         {
             if (!string.IsNullOrEmpty(SupplierBillID))
@@ -121,13 +121,13 @@ namespace ERP_Leather.Controllers
                 int supplierBillId = Convert.ToInt32(SupplierBillID);
                 _vmMsg = Dalobject.DeletedBillRefGridData(supplierBillId);
             }
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+            return Json(_vmMsg);
         }
 
         public JsonResult GetSupplierListForSearch()
         {
             var supplierAgentList = Dalobject.GetSupplierListForSearch();
-            return Json(supplierAgentList, JsonRequestBehavior.AllowGet);
+            return Json(supplierAgentList);
         }
 
         public ActionResult GetBillPaymentListForSearch(string supplier)
@@ -135,7 +135,7 @@ namespace ERP_Leather.Controllers
             PrqBillPayment model = new PrqBillPayment();
             model.BillPaymentList = Dalobject.GetBillPaymentList().Where(m => m.SupplierName.StartsWith(supplier)).ToList();
             model.Count = model.BillPaymentList.Count > 1 ? model.Count = 0 : model.Count = 1;
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return Json(model);
         }
     }
 }

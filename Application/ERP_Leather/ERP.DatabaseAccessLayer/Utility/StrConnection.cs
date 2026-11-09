@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DatabaseUtility;
 using ERP.EntitiesModel.BaseModel;
 
 namespace ERP.DatabaseAccessLayer.Utility

@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.BusinessLogicLayer.OperationManager;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.EntitiesModel.OperationModel;
@@ -33,28 +33,28 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult PrqPurchaseYearPeriodItemv(PrqPurchaseYearTarget model)
         {
-            _vmMsg = model.YearID == 0 ? Dalobject.Save(model, Convert.ToInt32(Session["UserID"])) : Dalobject.Update(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = model.YearID == 0 ? Dalobject.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID"))) : Dalobject.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { YearID = Dalobject.GetYearID(), msg = _vmMsg });
         }
 
         [HttpPost]
         public ActionResult YearlyTargetConfirmed(PrqPurchaseYearTarget model)
         {
-            _vmMsg = Dalobject.YearlyTargetConfirmed(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.YearlyTargetConfirmed(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
         [HttpPost]
         public ActionResult YearlyTargetRevisioned(PrqPurchaseYearTarget model)
         {
-            _vmMsg = Dalobject.YearlyTargetRevisioned(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.YearlyTargetRevisioned(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
         public ActionResult GetYearList()
         {
             var yearData = Dalobject.GetYearList();
-            return Json(yearData, JsonRequestBehavior.AllowGet);
+            return Json(yearData);
         }
 
         public ActionResult GetPeriodList(string yearId)
@@ -72,17 +72,17 @@ namespace ERP_Leather.Controllers
             }
 
 
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return Json(model);
         }
 
         public ActionResult GetPeriodItemList(string periodId)
         {
             var periodid = string.IsNullOrEmpty(periodId) ? 0 : Convert.ToInt32(periodId);
             var periodItemList = Dalobject.GetPeriodItemList(periodid);
-            return Json(periodItemList, JsonRequestBehavior.AllowGet);
+            return Json(periodItemList);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedTargetYear(string yearId)
         {
             int yearid = Convert.ToInt16(yearId);
@@ -90,7 +90,7 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedPeriod(string periodId, string RecordStatus)
         {
             int periodid = Convert.ToInt16(periodId);
@@ -98,7 +98,7 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedPeriodItem(string periodItemId, string RecordStatus)
         {
             int perItemId = Convert.ToInt16(periodItemId);

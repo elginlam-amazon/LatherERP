@@ -1,16 +1,15 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.OperationModel;
-using System.Web.Script.Serialization;
+
 using ERP_Leather.ActionFilters;
-using CrystalDecisions.CrystalReports.Engine;
-using CrystalDecisions.Shared;
 using System.Data;
 using ERP.DatabaseAccessLayer.DB;
 
@@ -52,24 +51,24 @@ namespace ERP_Leather.Controllers
         {
             var challanList = _dalPrqPurchaseChallan.GetChallanListInfo(supplierId);
             var items = challanList.Select(cl => new SelectListItem { Text = cl.ChallanNo, Value = Convert.ToString(cl.ChallanID) }).ToList();
-            return new JsonResult { Data = items };
+            return Json(items);
         }
 
         public JsonResult GetPurchaseList(string supplierId, string storeId)
         {
             var purchaseList = _dalPrqPurchaseChallan.GetPurchaseListInfo(supplierId, storeId);
           //  var items = purchaseList.Select(cl => new SelectListItem { Text = cl.PurchaseID.ToString(), Value = Convert.ToString(cl.PurchaseID) }).ToList();
-            return new JsonResult { Data = purchaseList };
+            return Json(purchaseList);
         }
 
         //public ActionResult GetChallanItemSumBySourceID(string id)
         //{
         //    //string id = "1002";
         //    var challanList = _dalPrqPurchaseChallan.GetChallanItemSumBySourceID(id);
-        //    JavaScriptSerializer ob = new JavaScriptSerializer();
-        //    return Json(challanList, JsonRequestBehavior.AllowGet);
+        //    
+        //    return Json(challanList);
         //    //var items = challanList.Select(cl => new SelectListItem {Text = cl.ChallanNo, Value = Convert.ToString(cl.ChallanID)}).ToList();
-        //    //return new JsonResult { Data = items };
+        //    //return Json(items);
         //}
 
 
@@ -77,25 +76,25 @@ namespace ERP_Leather.Controllers
         {
             var storeLocationList = _dalPrqPurchaseChallan.GetStoreLoactionList(supplierId);
             var items = storeLocationList.Select(cl => new SelectListItem { Text = cl.StoreName, Value = Convert.ToString(cl.StoreID) }).ToList();
-            return new JsonResult { Data = items };
+            return Json(items);
         }
 
         public JsonResult GetChallanInfoForChallanTable(string purchaseID)
         {
             var purchaseInfo = _dalPrqPreGradeSelection.GetChallanInfoForChallanTable(purchaseID);
-            return new JsonResult { Data = purchaseInfo };
+            return Json(purchaseInfo);
         }
 
         public JsonResult SaveGradeSelectionData(PreGradeSelectionData model)
         {
             var confirmMessage =  _dalPrqPreGradeSelection.SaveGradeSelectionData(model);
-            return new JsonResult { Data = confirmMessage };
+            return Json(confirmMessage);
         }
 
         public JsonResult GetSelectionQtyData(string purchaseId, string itemTypeID)
         {
             var gradeSelectionInfo = _dalPrqPreGradeSelection.GetGradeSelectionData(Convert.ToInt64(purchaseId),Convert.ToByte( itemTypeID));
-            return new JsonResult { Data = gradeSelectionInfo };
+            return Json(gradeSelectionInfo);
         }
 
         public JsonResult GradeSelectionConfirm(string selectionID)
@@ -105,7 +104,7 @@ namespace ERP_Leather.Controllers
                 selectionID = "0";
             }
             var confirmMessage = _dalPrqPreGradeSelection.GradeSelectionConfirm(Convert.ToInt64(selectionID));
-            return new JsonResult { Data = confirmMessage };
+            return Json(confirmMessage);
         }
 
         public JsonResult setSNR(string purchaseId) 
@@ -113,10 +112,10 @@ namespace ERP_Leather.Controllers
             if (purchaseId != "")
             {
               var  confirmMessage = _dalPrqPreGradeSelection.setSNR(purchaseId);
-              return new JsonResult { Data = confirmMessage };
+              return Json(confirmMessage);
             }
 
-            return new JsonResult { Data = "" };
+            return Json("");
 
         }
         

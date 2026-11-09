@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.BusinessLogicLayer.OperationManager;
 using ERP.EntitiesModel.OperationModel;
@@ -43,7 +43,7 @@ namespace ERP_Leather.Controllers
             if (model.PIID == 0)
             {
 
-                var msg = objBLLPI.Save(model, Convert.ToInt32(Session["UserID"]), "ProformaInvoice/ProformaInvoice");
+                var msg = objBLLPI.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "ProformaInvoice/ProformaInvoice");
                 var PIID = objBLLPI.GetPIID();
                 var GrandTotalSFT = objDALExportPI.GetGrandTotalSFT(PIID);
                 var GrandTotalSMT = objDALExportPI.GetGrandTotalSMT(PIID);
@@ -57,11 +57,11 @@ namespace ERP_Leather.Controllers
                     GrandTotalSMT = GrandTotalSMT,
                     PIItemList = PIItemList,
                     OrderDeliveryList = OrderDeliveryList,
-                }, JsonRequestBehavior.AllowGet);
+                });
             }
             else
             {
-                var msg = objBLLPI.Update(model, Convert.ToInt32(Session["UserID"]));
+                var msg = objBLLPI.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
                 var PIItemList = objDALExportPI.GetPIItemList(model.PIID);
                 var GrandTotalSFT = objDALExportPI.GetGrandTotalSFT(model.PIID);
                 var GrandTotalSMT = objDALExportPI.GetGrandTotalSMT(model.PIID);
@@ -73,7 +73,7 @@ namespace ERP_Leather.Controllers
                     GrandTotalSMT = GrandTotalSMT,
                     PIItemList = PIItemList,
                     OrderDeliveryList = OrderDeliveryList,
-                }, JsonRequestBehavior.AllowGet);
+                });
             }
         }
 
@@ -81,65 +81,65 @@ namespace ERP_Leather.Controllers
         public ActionResult GetBuyerListForPI()
         {
             var Data = objDALExportPI.GetBuyerListForPI();
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetLocalBuyerAgent()
         {
             var Data = objDALExportPI.GetLocalBuyerAgent();
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetForeignBuyerAgent()
         {
             var Data = objDALExportPI.GetForeignBuyerAgent();
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetBeneficiaryListForPI()
         {
             var Data = objDALExportPI.GetBeneficiaryListForPI();
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetOrderListForParticularBuyer(string _BuyerID)
         {
-            return Json(objDALExportPI.GetOrderListForParticularBuyer(_BuyerID), JsonRequestBehavior.AllowGet);
+            return Json(objDALExportPI.GetOrderListForParticularBuyer(_BuyerID));
         }
 
         public ActionResult GetBuyerOrderDetails(string _BuyerOrderID)
         {
             var BuyerOrderDeliveryList = objDALExportPI.BuyerOrderDeliveryList(Convert.ToInt64(_BuyerOrderID));
 
-            return Json(new { BuyerOrderDeliveryList = BuyerOrderDeliveryList }, JsonRequestBehavior.AllowGet);
+            return Json(new { BuyerOrderDeliveryList = BuyerOrderDeliveryList });
         }
 
         public ActionResult GetOrderItemList(string _BuyerOrderID)
         {
-            return Json(objDALExportPI.GetOrderItemList(_BuyerOrderID), JsonRequestBehavior.AllowGet);
+            return Json(objDALExportPI.GetOrderItemList(_BuyerOrderID));
         }
 
         public ActionResult GetOrderItemColorList(string _BuyerOrderID, string _BuyerOrderItemId)
         {
-            return Json(objDALExportPI.GetOrderItemColorList(_BuyerOrderID, _BuyerOrderItemId), JsonRequestBehavior.AllowGet);
+            return Json(objDALExportPI.GetOrderItemColorList(_BuyerOrderID, _BuyerOrderItemId));
         }
 
         public ActionResult GetPIInformationForSearch()
         {
             var Data = objDALExportPI.GetPIInformationForSearch();
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetPIDetailsAfterSearch(int PIID)
         {
             var Data = objDALExportPI.GetPIDetailsAfterSearch(PIID);
 
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetColorListForPIItem(long _PIItemID)
         {
-            return Json(objDALExportPI.GetColorListForPIItem(_PIItemID), JsonRequestBehavior.AllowGet);
+            return Json(objDALExportPI.GetColorListForPIItem(_PIItemID));
         }
 
         public ActionResult DeletePIItem(string _PIItemID, string _PageStatus)
@@ -150,20 +150,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDALExportPI.DeletePIItem(_PIItemID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
@@ -175,20 +175,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDALExportPI.DeletePIItemColor(_PIItemColorID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
@@ -201,20 +201,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDALExportPI.DeleteDelivery(_BuyerOrderDeliveryID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
@@ -227,20 +227,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDALExportPI.DeletePrice(_BuyerOrderPriceID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
@@ -253,20 +253,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDALExportPI.DeletePI(_PIID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
@@ -277,11 +277,11 @@ namespace ERP_Leather.Controllers
 
             if (checkConfirm)
             {
-                return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Success" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
@@ -289,14 +289,14 @@ namespace ERP_Leather.Controllers
         {
             var objColor = new DalSysColor();
 
-            return Json(objColor.GetAllActiveColor(), JsonRequestBehavior.AllowGet);
+            return Json(objColor.GetAllActiveColor());
         }
 
 
         public ActionResult GetAllExportPi()
         {
             var data = objDALExportPI.GetAllExportPi();
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
     }
 }

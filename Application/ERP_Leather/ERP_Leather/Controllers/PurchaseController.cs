@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.BusinessLogicLayer.OperationManager;
 using ERP.EntitiesModel.OperationModel;
@@ -36,20 +36,20 @@ namespace ERP_Leather.Controllers
             if ( model.PurchaseID == 0)
             {
                 
-                var msg = objBllPrqPurchase.SavePurchaseReceiveWithChallanItem(model, Convert.ToInt32(Session["UserID"]));
+                var msg = objBllPrqPurchase.SavePurchaseReceiveWithChallanItem(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
                 long purchaseID = objBllPrqPurchase.GetpurchaseID();
                 string PurchaseNo = objPurchase.GetPurchaseNumber(purchaseID);
                 var ChallanList = objPurchase.GetChallanList(purchaseID);
 
-                return Json(new { Msg = msg, purchaseID = purchaseID, PurchaseNo = PurchaseNo, challanList = ChallanList }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = msg, purchaseID = purchaseID, PurchaseNo = PurchaseNo, challanList = ChallanList });
             }
             else
             {
-                var msg = objBllPrqPurchase.UpdatePurchaseReceiveWithChallanItem(model, Convert.ToInt32(Session["UserID"]));
+                var msg = objBllPrqPurchase.UpdatePurchaseReceiveWithChallanItem(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
                 var ChallanList = objPurchase.GetChallanList(Convert.ToInt64(model.PurchaseID));
 
 
-                return Json(new { Msg = msg, challanList = ChallanList }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = msg, challanList = ChallanList });
             }
 
         }
@@ -57,7 +57,7 @@ namespace ERP_Leather.Controllers
         public ActionResult GetSupplierList()
         {
             var supplier = objSupplier.GetCategoryWiseSupplier("Leather");
-            return Json(supplier, JsonRequestBehavior.AllowGet);
+            return Json(supplier);
         }
 
 
@@ -66,19 +66,19 @@ namespace ERP_Leather.Controllers
         {
 
             var allData = objPurchase.GetPurchaseInformation();
-            return Json(allData, JsonRequestBehavior.AllowGet);
+            return Json(allData);
         }
 
         public ActionResult GetDetailPurchaseInformation(string PurchaseNumber)
         {
             var AllData = objPurchase.GetDetailPurchaseInformation(PurchaseNumber);
-            return Json(AllData, JsonRequestBehavior.AllowGet);
+            return Json(AllData);
         }
 
         public ActionResult GetItemListForChallan(string ChallanID)
         {
             var ItemList = objPurchase.GetItemListForChallan(ChallanID);
-            return Json(ItemList, JsonRequestBehavior.AllowGet);
+            return Json(ItemList);
         }
 
         public ActionResult ConfirmPurchase(string purchaseNumber, string confirmComment)
@@ -87,11 +87,11 @@ namespace ERP_Leather.Controllers
 
             if (checkConfirm)
             {
-                return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Success" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
@@ -103,20 +103,20 @@ namespace ERP_Leather.Controllers
                  CheckStatus = objPurchase.DeleteChallanItem(ChallanItemID);
                  if (CheckStatus)
                  {
-                     return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                     return Json(new { Msg = "Success" });
                  }
                  else
                  {
-                     return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                     return Json(new { Msg = "Fail" });
                  }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
             
 
@@ -131,20 +131,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objPurchase.DeleteChallan(ChallanID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
@@ -156,20 +156,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objPurchase.DeletePurchase(PurchaseID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
 
 

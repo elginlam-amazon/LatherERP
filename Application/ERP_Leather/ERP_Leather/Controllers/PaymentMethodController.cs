@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
+
+using Microsoft.AspNetCore.Mvc;
+
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
@@ -35,27 +36,27 @@ namespace ERP_Leather.Controllers
         {
             if (model != null && model.ID != 0)
             {
-                _vmMsg = _dalPaymentMethod.Update(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalPaymentMethod.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             else
             {
-                _vmMsg = _dalPaymentMethod.Save(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalPaymentMethod.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             return Json(new { SourceID = _dalPaymentMethod.GetPaymentMethodID(), msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public JsonResult Get()
         {
             var sysUnit = _dalPaymentMethod.GetAll().OrderByDescending(s => s.ID);
-            return Json(sysUnit, JsonRequestBehavior.AllowGet);
+            return Json(sysUnit);
         }
 
         [HttpPost]
         public ActionResult Delete(string id)
         {
-            _vmMsg = _dalPaymentMethod.Delete(id, Convert.ToInt32(Session["UserID"]));
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+            _vmMsg = _dalPaymentMethod.Delete(id, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
+            return Json(_vmMsg);
         }
     }
 }

@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
+
+using Microsoft.AspNetCore.Mvc;
+
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
@@ -39,11 +40,11 @@ namespace ERP_Leather.Controllers
         {
             if (model != null && model.LeatherTypeID != 0)
             {
-                _vmMsg = _dalSysLeatherType.Update(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysLeatherType.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             else
             {
-                _vmMsg = _dalSysLeatherType.Save(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysLeatherType.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             return Json(new { SourceID = _dalSysLeatherType.GetLeatherTypeID(), msg = _vmMsg });
         }
@@ -51,15 +52,15 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult Delete(string sourceId)
         {
-            _vmMsg = _dalSysLeatherType.Delete(sourceId, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = _dalSysLeatherType.Delete(sourceId, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public ActionResult GetLeatherType()
         {
             var sysSource = _dalSysLeatherType.GetAll().OrderByDescending(s => s.LeatherTypeID);
-            return Json(sysSource, JsonRequestBehavior.AllowGet);
+            return Json(sysSource);
         }
     }
 }

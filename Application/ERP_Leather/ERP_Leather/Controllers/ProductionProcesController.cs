@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
 using System;
 using System.Linq;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP_Leather.ActionFilters;
 
 namespace ERP_Leather.Controllers
@@ -31,11 +32,11 @@ namespace ERP_Leather.Controllers
         {
             if (model != null && model.ProcessID != 0)
             {
-                _vmMsg = _dalSysProductionProces.Update(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysProductionProces.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             else
             {
-                _vmMsg = _dalSysProductionProces.Save(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysProductionProces.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             return Json(new { ProcessID = _dalSysProductionProces.GetProcessID(), msg = _vmMsg });
         }
@@ -43,15 +44,15 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult Delete(string ProcessID)
         {
-            _vmMsg = _dalSysProductionProces.Delete(ProcessID, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = _dalSysProductionProces.Delete(ProcessID, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
+        [HttpGet]
         public ActionResult GetProductionProcesList()
         {
             var sysProductionProces = _dalSysProductionProces.GetAll().OrderByDescending(s => s.ProcessID);
-            return Json(sysProductionProces, JsonRequestBehavior.AllowGet);
+            return Json(sysProductionProces);
         }
 	}
 }

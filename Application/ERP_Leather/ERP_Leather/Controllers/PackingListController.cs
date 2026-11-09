@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.Utility;
@@ -38,39 +38,39 @@ namespace ERP_Leather.Controllers
         public ActionResult DeletePackingListPacksItem(int plPackID)
         {
             _validationMsg = _dalLcmPackingList.DeletePackingListPacks(plPackID);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult DeletePackingListItem(int plItemID)
         {
             _validationMsg = _dalLcmPackingList.DeletePackingListItem(plItemID);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult DeletePackingList(int plid)
         {
             _validationMsg = _dalLcmPackingList.DeletePackingList(plid);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
         public ActionResult Save(PackingListVM model)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalLcmPackingList.Save(model, _userId, "PackingList/PackingList");
 
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
         public ActionResult Check(int plid, string checkNote)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalLcmPackingList.Check(plid, _userId, checkNote);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Confirm(int plid, string confirmNote)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalLcmPackingList.Confirm(plid, _userId, confirmNote);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult GetCIItemByCIID(int ciid)
@@ -99,7 +99,7 @@ namespace ERP_Leather.Controllers
                 pushItem.PlUnitName = _unit.SysUnitRepository.GetByID(item.CIUnit).UnitName;
                 plItemList.Add(pushItem);
             }
-            return Json(plItemList, JsonRequestBehavior.AllowGet);
+            return Json(plItemList);
         }
 
         public ActionResult GetAllPackingListMin()
@@ -116,7 +116,7 @@ namespace ERP_Leather.Controllers
                 CiNo = item.CINo,
                 RecordStatus = DalCommon.ReturnRecordStatus(item.RecordStatus)
             }).ToList();
-            return Json(packingListsShow.OrderByDescending(ob => ob.Plid), JsonRequestBehavior.AllowGet);
+            return Json(packingListsShow.OrderByDescending(ob => ob.Plid));
         }
 
         public ActionResult GetPackingListById(int plid)
@@ -210,13 +210,13 @@ namespace ERP_Leather.Controllers
                     result.packingListPacks.Add(packingListPack);
                 }
             }
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetAllPackingListForSearch()
         {
             var pl = _unit.PackingListRepository.Get().Select(ob => ob.PLNo).ToList();
-            return Json(pl, JsonRequestBehavior.AllowGet);
+            return Json(pl);
         }
 
         public ActionResult GetPackingListByPlNo(string plno)
@@ -230,7 +230,7 @@ namespace ERP_Leather.Controllers
                 LcNo = item.LCNo,
                 CiNo = item.CINo
             }).ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetCiNo(long plid)
@@ -242,13 +242,13 @@ namespace ERP_Leather.Controllers
                 cino.CINo
             };
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult DelPckLstCont(long plid)
         {
             _validationMsg = _dalLcmPackingList.DelPckLstCont(plid);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
     }
 

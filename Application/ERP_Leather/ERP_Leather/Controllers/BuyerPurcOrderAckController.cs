@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.Utility;
 using ERP.EntitiesModel.BaseModel;
@@ -41,21 +41,21 @@ namespace ERP_Leather.Controllers
                 RecordStatus = DalCommon.ReturnRecordStatus(order.RecordStatus) 
             }).ToList();
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult Save(SlsBuyerOrder model)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalSlsBuyerOrder.SaveAck(model, _userId);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Confirm(long id, string comment)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalSlsBuyerOrder.ConfirmAck(id, _userId, comment);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult GetBuyerOrderById(long orderId)
@@ -196,7 +196,7 @@ namespace ERP_Leather.Controllers
                     OrdDateMeterQty = dlvry.OrdDateMeterQty
                 }).OrderBy(ob => ob.OrdDeliverySL).ToList(),
             };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
     }
 }

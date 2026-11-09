@@ -1,10 +1,10 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
+using Microsoft.AspNetCore.Mvc;
+
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.EntitiesModel.AppSetupModel;
 using ERP.EntitiesModel.BaseModel;
@@ -37,11 +37,11 @@ namespace ERP_Leather.Controllers
         {
             if (model != null && model.ID != 0)
             {
-                _vmMsg = _dalSysPaymentType.Update(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysPaymentType.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             else
             {
-                _vmMsg = _dalSysPaymentType.Save(model, Convert.ToInt32(Session["UserID"]));
+                _vmMsg = _dalSysPaymentType.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             }
             return Json(new { SourceID = _dalSysPaymentType.GetPaymentTypeID(), msg = _vmMsg });
         }
@@ -49,14 +49,14 @@ namespace ERP_Leather.Controllers
         public JsonResult GetPaymentType()
         {
             var sysPaymentType = _dalSysPaymentType.GetAll().OrderByDescending(s => s.ID);
-            return Json(sysPaymentType, JsonRequestBehavior.AllowGet);
+            return Json(sysPaymentType);
         }
 
         [HttpPost]
         public ActionResult DeletePaymentType(string models)
         {
-            _vmMsg = _dalSysPaymentType.Delete(models, Convert.ToInt32(Session["UserID"]));
-            return Json( _vmMsg, JsonRequestBehavior.AllowGet);
+            _vmMsg = _dalSysPaymentType.Delete(models, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
+            return Json( _vmMsg);
         }
 	}
 }

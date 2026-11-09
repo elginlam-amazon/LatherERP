@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.EntitiesModel.BaseModel;
@@ -5,8 +6,7 @@ using ERP.EntitiesModel.OperationModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP_Leather.ActionFilters;
 
 namespace ERP_Leather.Controllers
@@ -29,21 +29,21 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult TransferReceive(InvLeatherTransferRecieve model)
         {
-            _vmMsg = model.ReceiveID == 0 ? DalObj.Save(model, Convert.ToInt32(Session["UserID"])) : DalObj.Update(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = model.ReceiveID == 0 ? DalObj.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID"))) : DalObj.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { ReceiveID = DalObj.GetReceiveID(), msg = _vmMsg });
         }
 
         [HttpPost]
         public ActionResult TransferReceiveChecked(string receiveId, string checkComment)
         {
-            _vmMsg = DalObj.TransferReceiveChecked(Convert.ToInt32(receiveId), checkComment, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = DalObj.TransferReceiveChecked(Convert.ToInt32(receiveId), checkComment, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
         [HttpPost]
         public ActionResult StoreTransferReceiveConfirmed(InvLeatherTransferRecieve model)
         {
-            _vmMsg = DalObj.StoreTransferReceiveConfirmed(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = DalObj.StoreTransferReceiveConfirmed(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
 
@@ -52,21 +52,21 @@ namespace ERP_Leather.Controllers
         {
             DalInvLeatherIssue dalChallan = new DalInvLeatherIssue();
             var challanList = dalChallan.GetIssueForReiceveList();
-            return Json(challanList, JsonRequestBehavior.AllowGet);
+            return Json(challanList);
         }
 
         public ActionResult GetIssueforReceiveList(string issueid)
         {
             DalInvLeatherIssue dalChallan = new DalInvLeatherIssue();
             var challanList = dalChallan.GetIssueForReiceveList(issueid).FirstOrDefault();
-            return Json(challanList, JsonRequestBehavior.AllowGet);
+            return Json(challanList);
         }
 
         public ActionResult GetTransferReceiveItemFromIssueList(string issueid)
         {
             long issid = string.IsNullOrEmpty(issueid) ? 0 : Convert.ToInt64(issueid);
             var issueItemList = DalObj.GetTransferReceiveItemFromIssueList(issid);
-            return Json(issueItemList, JsonRequestBehavior.AllowGet);
+            return Json(issueItemList);
         }
 
         [HttpGet]
@@ -74,16 +74,16 @@ namespace ERP_Leather.Controllers
         {
             long recid = string.IsNullOrEmpty(receiveID) ? 0 : Convert.ToInt64(receiveID);
             var receiveItemListList = DalObj.GetTransferReceiveItemList(recid);
-            return Json(receiveItemListList, JsonRequestBehavior.AllowGet);
+            return Json(receiveItemListList);
         }
 
         public ActionResult GetTransferReceiveList()
         {
             var transferReceiveList = DalObj.GetTransferReceiveList();
-            return Json(transferReceiveList, JsonRequestBehavior.AllowGet);
+            return Json(transferReceiveList);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedReceive(string receiveId)
         {
             int receiveid = string.IsNullOrEmpty(receiveId) ? 0 : Convert.ToInt16(receiveId);
@@ -91,7 +91,7 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedReceiveItem(string itemReceiveId)
         {
             int itemReceiveid = string.IsNullOrEmpty(itemReceiveId) ? 0 : Convert.ToInt16(itemReceiveId);

@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.Utility;
@@ -38,10 +38,10 @@ namespace ERP_Leather.Controllers
         public ActionResult WetBlueIssue(InvWetBlueIssue model)
         {
             _vmMsg = model != null && model.WetBlueIssueID == 0
-                ? _objWbIssue.SaveData(model, Convert.ToInt32(Session["UserID"]), "WetBlueIssue/WetBlueIssue")
-                : _objWbIssue.UpdateData(model, Convert.ToInt32(Session["UserID"]));
+                ? _objWbIssue.SaveData(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "WetBlueIssue/WetBlueIssue")
+                : _objWbIssue.UpdateData(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
 
-            return Json(new { msg = _vmMsg }, JsonRequestBehavior.AllowGet);
+            return Json(new { msg = _vmMsg });
 
         }
 
@@ -55,12 +55,12 @@ namespace ERP_Leather.Controllers
         public ActionResult GetWetBlueIssueAllInfo(long wetBlueIssueId, string issueCategory, byte storeId)
         {
             var issueInfo = _objWbIssue.GetWetBlueIssueAllInfo(wetBlueIssueId, issueCategory, storeId);
-            return Json(issueInfo, JsonRequestBehavior.AllowGet);
+            return Json(issueInfo);
         }
         public ActionResult GetAllWetBlueIssueList(string pageMode)
         {
             var issues = _objWbIssue.GetAllWetBlueIssueList(pageMode);
-            return Json(issues, JsonRequestBehavior.AllowGet);
+            return Json(issues);
         }
         public ActionResult DeletedWetBlueIssue(long wetBlueIssueId)
         {
@@ -84,15 +84,15 @@ namespace ERP_Leather.Controllers
 
         public ActionResult CheckData(long wetBlueIssueId, string chkComment)
         {
-            _vmMsg = _objWbIssue.CheckData(wetBlueIssueId, chkComment, Convert.ToInt32(Session["UserID"]));
-            return Json(new { msg = _vmMsg }, JsonRequestBehavior.AllowGet);
+            _vmMsg = _objWbIssue.CheckData(wetBlueIssueId, chkComment, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
+            return Json(new { msg = _vmMsg });
         }
 
         public ActionResult ConfirmData(long wetBlueIssueId, string cnfComment)
         {
-            _vmMsg = _objWbIssue.ConfirmData(wetBlueIssueId, cnfComment, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = _objWbIssue.ConfirmData(wetBlueIssueId, cnfComment, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
 
-            return Json(new { msg = _vmMsg }, JsonRequestBehavior.AllowGet);
+            return Json(new { msg = _vmMsg });
         }
 
 
@@ -103,34 +103,34 @@ namespace ERP_Leather.Controllers
             //    _unit.SlsBuyerOrederRepository.Get()
             //        .Where(ob => ob.BuyerID == buyerId && ob.BuyerOrderStatus == "OG")
             //        .Select(b => new { b.BuyerOrderID, b.BuyerOrderNo, b.BuyerOrderStatus });
-            //return Json(result, JsonRequestBehavior.AllowGet);
+            //return Json(result);
 
             var wbObj = _objWbIssue.GetAllSLSBuyerOrderOG(buyerId);
-            return Json(wbObj, JsonRequestBehavior.AllowGet);
+            return Json(wbObj);
         }
 
         public ActionResult GetWetBlueStockForCrust(byte storeId, string gradeName, string supplierName, string purchaseNo)
         {
             var wbObj = _objWbIssue.GetWetBlueStockForCrust(storeId, gradeName, supplierName, purchaseNo);
-            return Json(wbObj, JsonRequestBehavior.AllowGet);
+            return Json(wbObj);
         }
         public ActionResult GetSupplierListByStoreId(byte storeId)
         {
             var wbObj = _objWbIssue.GetSupplierListByStoreId(storeId);
-            return Json(wbObj, JsonRequestBehavior.AllowGet);
+            return Json(wbObj);
         }
         //public ActionResult GetSupplierListSearchById(string supplier, int storeId)
         //{
         //    supplier = supplier.ToUpper();
         //    var supplierData = _objWbIssue.GetSupplierListByStoreId(storeId).Where(ob => ob.SupplierName.StartsWith(supplier)).ToList();
-        //    return Json(supplierData, JsonRequestBehavior.AllowGet);
+        //    return Json(supplierData);
         //}
 
 
         public ActionResult GetItemsByBuyerRefId(long wetBlueIssueRefId, byte storeId, long wetBlueIssueId)
         {
             var wbObj = _objWbIssue.GetIssueItemsByRef(wetBlueIssueRefId, storeId, wetBlueIssueId, "");
-            return Json(wbObj, JsonRequestBehavior.AllowGet);
+            return Json(wbObj);
 
         }
 
@@ -147,40 +147,40 @@ namespace ERP_Leather.Controllers
                     storeList = new DalSysStore().GetAllActiveWetBlueLeatherStore();
                     break;
             }
-            return Json(storeList, JsonRequestBehavior.AllowGet);
+            return Json(storeList);
         }
 
         public ActionResult GetAllReqBuyerItems(string requisitionId)
         {
             var wbObj = _objWbIssue.GetAllReqBuyerItems(Convert.ToInt64(requisitionId));
-            return Json(wbObj, JsonRequestBehavior.AllowGet);
+            return Json(wbObj);
         }
         public ActionResult GetArticleInfo()
         {
             var packItemList = new DalSysArticle().GetAllActiveArticle();
-            return Json(packItemList, JsonRequestBehavior.AllowGet);
+            return Json(packItemList);
         }
         public ActionResult GetChallanArticleInfo()
         {
             var packItemList = _objWbIssue.GetAllActiveChallanArticle();
-            return Json(packItemList, JsonRequestBehavior.AllowGet);
+            return Json(packItemList);
         }
         public ActionResult GetAllRequisitionForCrust()
         {
             var data = _objWbIssue.GetAllRequisitionForCrust();
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
         public ActionResult GetAllRequisitionItemsForCrust(long requisitionId)
         {
             var wbObj = _objWbIssue.GetAllRequisitionItemsForCrust(requisitionId);
-            return Json(wbObj, JsonRequestBehavior.AllowGet);
+            return Json(wbObj);
         }
 
         public ActionResult GetChallanAllInfo(long articleChallanId)
         {
             var packItemList = _objWbIssue.GetChallanAllInfo(articleChallanId);
-            return Json(packItemList, JsonRequestBehavior.AllowGet);
+            return Json(packItemList);
         }
 
         public ActionResult GetAllBuyerOrder()
@@ -188,7 +188,7 @@ namespace ERP_Leather.Controllers
             var result =
                 _unit.SlsBuyerOrederRepository.Get()
                     .Select(b => new { b.BuyerOrderID, b.BuyerOrderNo, b.OrderNo });
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
     }
 }

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.EntitiesModel.AppSetupModel;
@@ -6,8 +7,7 @@ using ERP.EntitiesModel.OperationModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP_Leather.ActionFilters;
 using System.Data.OleDb;
 using System.Data;
@@ -38,58 +38,58 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult EXPPackingList(EXPPackingList model)
         {
-            _vmMsg = model.PLID == 0 ? Dalobject.Save(model, Convert.ToInt32(Session["UserID"]), "EXPPackingList/EXPPackingList") : Dalobject.Update(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = model.PLID == 0 ? Dalobject.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "EXPPackingList/EXPPackingList") : Dalobject.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { PLID = Dalobject.GetPLID(), PLNo = Dalobject.GetPLNo(), PLPIID = Dalobject.GetPLPIID(), msg = _vmMsg });
         }
 
         public ActionResult GetCIPIColorInformation(string CIPIID)
         {
-            return Json(Dalobject.GetCIPIColorInformation(CIPIID), JsonRequestBehavior.AllowGet);
+            return Json(Dalobject.GetCIPIColorInformation(CIPIID));
         }
 
         public ActionResult GetPIColorInformation(string PIID)
         {
-            return Json(Dalobject.GetPIColorInformation(PIID), JsonRequestBehavior.AllowGet);
+            return Json(Dalobject.GetPIColorInformation(PIID));
         }
 
         public ActionResult GetPackingListInformation()
         {
-            return Json(Dalobject.GetPackingListInformation(), JsonRequestBehavior.AllowGet);
+            return Json(Dalobject.GetPackingListInformation());
         }
 
         public ActionResult GetPLPIInformation(string PLID)
         {
-            return Json(Dalobject.GetPLPIInformation(PLID), JsonRequestBehavior.AllowGet);
+            return Json(Dalobject.GetPLPIInformation(PLID));
         }
 
         public ActionResult GetExpPLPIItemColorBaleList(string PLPIItemColorID)
         {
-            return Json(Dalobject.GetExpPLPIItemColorBaleList(PLPIItemColorID), JsonRequestBehavior.AllowGet);
+            return Json(Dalobject.GetExpPLPIItemColorBaleList(PLPIItemColorID));
         }
 
         public ActionResult GetAllGridList(string PLPIID)
         {
             EXPPackingList model = new EXPPackingList();
-            if (string.IsNullOrEmpty(PLPIID)) return Json(model, JsonRequestBehavior.AllowGet);
+            if (string.IsNullOrEmpty(PLPIID)) return Json(model);
             model.EXPPLPIItemColorList = Dalobject.GetExpPLPIItemColorList(PLPIID);
             if (model.EXPPLPIItemColorList.Count > 0)
                 model.EXPPLPIItemColorBaleList = Dalobject.GetExpPLPIItemColorBaleList(model.EXPPLPIItemColorList[0].PLPIItemColorID.ToString());
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return Json(model);
         }
 
         public ActionResult LoadExcelFile(string fileName)
         {
-            //return Json(Dalobject.LoadExcelFile(fileName), JsonRequestBehavior.AllowGet);
+            //return Json(Dalobject.LoadExcelFile(fileName));
             try
             {
                 if (string.IsNullOrEmpty(TempData["file"].ToString()))
                 {
-                    return Json("", JsonRequestBehavior.AllowGet);
+                    return Json("");
                 }
                 var results = new List<EXPPLPIItemColorBale>();
 
                 string connectionString = "";
-                string filename = Path.Combine(Server.MapPath("~/Content"), TempData["file"].ToString());
+                string filename = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Content"), TempData["file"].ToString());
                 //string filename = @"C:\Test\" + TempData["file"].ToString();
                 string[] d = filename.Split('.');
                 string fileExtension = "." + d[d.Length - 1].ToString();
@@ -159,7 +159,7 @@ namespace ERP_Leather.Controllers
                     results.Add(objColorBale);
                 }
                 Remove(TempData["file"].ToString());
-                return Json(results, JsonRequestBehavior.AllowGet);
+                return Json(results);
             }
             catch (Exception ex)
             {
@@ -167,10 +167,10 @@ namespace ERP_Leather.Controllers
                 //return _vmMsg.Msg;
             }
 
-            return Json(new { msg = _vmMsg }, JsonRequestBehavior.AllowGet);
+            return Json(new { msg = _vmMsg });
         }
 
-        public ActionResult UploadFile(IEnumerable<HttpPostedFileBase> files)
+        public ActionResult UploadFile(IEnumerable<IFormFile> files)
         {
             ViewBag.FileName = "";
             // The Name of the Upload component is "files"
@@ -179,8 +179,8 @@ namespace ERP_Leather.Controllers
                 foreach (var file in files)
                 {
                     var fileName = Path.GetFileName(file.FileName);
-                    var physicalPath = Path.Combine(Server.MapPath("~/Content"), fileName);
-                    file.SaveAs(physicalPath);
+                    var physicalPath = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Content"), fileName);
+                    using (var stream = System.IO.File.Create(physicalPath)) { file.CopyTo(stream); }
                     TempData["file"] = fileName;
                     break;
                 }
@@ -196,7 +196,7 @@ namespace ERP_Leather.Controllers
             if (!string.IsNullOrEmpty(fileNames))
             {
                 var fileName = Path.GetFileName(fileNames);
-                var physicalPath = Path.Combine(Server.MapPath("~/Content"), fileName);
+                var physicalPath = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Content"), fileName);
                 // TODO: Verify user permissions
                 if (System.IO.File.Exists(physicalPath))
                 {
@@ -209,7 +209,7 @@ namespace ERP_Leather.Controllers
             return Content("");
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedPackingList(string PLID)
         {
             long? pLID = Convert.ToInt64(PLID);
@@ -217,7 +217,7 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedEXPPLPIItemColor(string PLPIItemColorID)
         {
             long? pLPIItemColorID = Convert.ToInt64(PLPIItemColorID);
@@ -225,7 +225,7 @@ namespace ERP_Leather.Controllers
             return Json(new { msg = _vmMsg });
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult DeletedEXPPLPIItemColorBale(string PLPIItemColorBaleID)
         {
             long? pLPIItemColorBaleID = Convert.ToInt64(PLPIItemColorBaleID);
@@ -236,7 +236,7 @@ namespace ERP_Leather.Controllers
         [HttpPost]
         public ActionResult ConfirmedEXPPackingList(EXPPackingList model)
         {
-            _vmMsg = Dalobject.ConfirmedEXPPackingList(model, Convert.ToInt32(Session["UserID"]));
+            _vmMsg = Dalobject.ConfirmedEXPPackingList(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
             return Json(new { msg = _vmMsg });
         }
     }

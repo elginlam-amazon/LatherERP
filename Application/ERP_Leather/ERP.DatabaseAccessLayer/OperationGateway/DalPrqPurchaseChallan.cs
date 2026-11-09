@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.EntitiesModel.AppSetupModel;
-using SecurityAdministration.BLL.ViewModels;
 using ERP.EntitiesModel.OperationModel;
 
 namespace ERP.DatabaseAccessLayer.OperationGateway

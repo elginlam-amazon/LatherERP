@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.BusinessLogicLayer.OperationManager;
 using ERP.EntitiesModel.OperationModel;
@@ -34,50 +34,50 @@ namespace ERP_Leather.Controllers
             if (model.BVID == 0)
             {
 
-                var msg = objBLL.Save(model, Convert.ToInt32(Session["UserID"]), "BankVoucher/BankVoucher");
+                var msg = objBLL.Save(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")), "BankVoucher/BankVoucher");
                 var BVID = objBLL.GetBVID();
                 //var TransactionNo = objDalBankVoucher.GetTransactionNo(TransactionID);
 
                 var VouchertemList = objDalBankVoucher.GetVouchertemList(BVID);
-                return Json(new { Msg = msg, BVID = BVID, VouchertemList = VouchertemList }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = msg, BVID = BVID, VouchertemList = VouchertemList });
             }
             else
             {
-                var msg = objBLL.Update(model, Convert.ToInt32(Session["UserID"]));
+                var msg = objBLL.Update(model, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
 
                 var VouchertemList = objDalBankVoucher.GetVouchertemList(model.BVID);
-                return Json(new { Msg = msg, VouchertemList = VouchertemList }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = msg, VouchertemList = VouchertemList });
             }
         }
 
         public ActionResult GetTransactionInfoForSearch()
         {
             var Data = objDalBankVoucher.GetTransactionInfoForSearch();
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetTransactionDetailsAfterSearch(long _BVID)
         {
             var Data = objDalBankVoucher.GetVouchertemList(_BVID);
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetLocalBankList()
         {
             var Data = objDalBankVoucher.GetCategoryTypeWiseBankList("BNK", "LOC");
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetBranchListForSpecificBank(long _BankID)
         {
             var Data = objDalBankVoucher.GetBranchListForSpecificBank(_BankID);
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult GetCIList()
         {
             var Data = objDalBankVoucher.GetCIList();
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 
         public ActionResult DeleteVoucherItem(string _BVDTLID, string _PageStatus)
@@ -88,20 +88,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDalBankVoucher.DeleteVoucherItem(_BVDTLID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed" || _PageStatus == "APV" || _PageStatus == "Approved")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
         }
 
@@ -113,20 +113,20 @@ namespace ERP_Leather.Controllers
                 CheckStatus = objDalBankVoucher.DeleteVoucher(_BVID);
                 if (CheckStatus)
                 {
-                    return Json(new { Msg = "Success" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Success" });
                 }
                 else
                 {
-                    return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "Fail" });
                 }
             }
             else if (_PageStatus == "CNF" || _PageStatus == "Confirmed" || _PageStatus == "APV" || _PageStatus == "Approved")
             {
-                return Json(new { Msg = "CNF" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "CNF" });
             }
             else
             {
-                return Json(new { Msg = "Fail" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Msg = "Fail" });
             }
 
         }
@@ -136,7 +136,7 @@ namespace ERP_Leather.Controllers
 
             var Data = objDalBankVoucher.ConfirmVoucher(_BVID, _CheckComment);
 
-            return Json(Data, JsonRequestBehavior.AllowGet);
+            return Json(Data);
         }
 	}
 }

@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
 ﻿using ERP.DatabaseAccessLayer.AppSetupGateway;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
@@ -8,8 +10,8 @@ using ERP_Leather.ActionFilters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+
+using Microsoft.AspNetCore.Mvc;
 
 namespace ERP_Leather.Controllers
 {
@@ -55,7 +57,7 @@ namespace ERP_Leather.Controllers
                                       Phone = temp.Phone,
                                       Mobile = temp.Mobile
                                   };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult SearchUserByFirstName(string search)
@@ -71,7 +73,7 @@ namespace ERP_Leather.Controllers
                                  Phone = temp.Phone,
                                  Mobile = temp.Mobile
                              };
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(result);
             }
             else
             { 
@@ -86,7 +88,7 @@ namespace ERP_Leather.Controllers
                                  Phone = temp.Phone,
                                  Mobile = temp.Mobile
                              };
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(result);
             }
           
         }
@@ -94,7 +96,7 @@ namespace ERP_Leather.Controllers
         public ActionResult GetUserAutocompleteData()
         {
             var search = repository.SysUserRepository.Get(filter: o => o.IsActive == true).Select(ob => ob.FirstName);
-            return Json(search, JsonRequestBehavior.AllowGet);
+            return Json(search);
         }
 
         #endregion
@@ -110,7 +112,7 @@ namespace ERP_Leather.Controllers
                              SourceAddress = temp.SourceAddress,
                              ContactNumber = temp.ContactNumber
                          };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult SearchSourceByFirstName(string search)
@@ -125,7 +127,7 @@ namespace ERP_Leather.Controllers
                                  SourceAddress = temp.SourceAddress,
                                  ContactNumber = temp.ContactNumber
                              };
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(result);
             }
             else
             {
@@ -139,7 +141,7 @@ namespace ERP_Leather.Controllers
                                  SourceAddress = temp.SourceAddress,
                                  ContactNumber = temp.ContactNumber
                              };
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(result);
             }
 
         }
@@ -147,7 +149,7 @@ namespace ERP_Leather.Controllers
         public ActionResult GetSourceAutocompleteData()
         {
             var search = repository.SysSourceRepository.Get(filter: o => o.IsActive == true).Select(ob => ob.SourceName);
-            return Json(search, JsonRequestBehavior.AllowGet);
+            return Json(search);
         }
 
         #endregion
@@ -156,19 +158,19 @@ namespace ERP_Leather.Controllers
         public ActionResult GetPurchaseInfo()
         {
             var result = _dalFinalGradeObj.GetPurchaseInfo();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult SearchPurchaseByFirstName(string search, int SupplierID, int ConcernStore)
         {
             var result = _dalFinalGradeObj.SearchPurchaseByFirstName(search, SupplierID, ConcernStore);
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetPurchaseAutocompleteData()
         {
             var search = _dalFinalGradeObj.GetPurchaseAutocompleteData();
-            return Json(search, JsonRequestBehavior.AllowGet);
+            return Json(search);
         }
 
         #endregion
@@ -179,7 +181,7 @@ namespace ERP_Leather.Controllers
                 GradeID = temp.GradeID,
                 GradeName = temp.GradeName
             };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         #endregion
@@ -191,7 +193,7 @@ namespace ERP_Leather.Controllers
                               UnitID = temp.UnitID,
                               UnitName = temp.UnitName
                           };
-            return Json(sysUnit, JsonRequestBehavior.AllowGet);
+            return Json(sysUnit);
         }
 
         #region Item Type Popup Grid
@@ -199,7 +201,7 @@ namespace ERP_Leather.Controllers
         public ActionResult GetItemTypeInfo(long purchaseID)
         {
             var result = _dalFinalGradeObj.GetItemTypeInfo(purchaseID);
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult SearchItemTypeByFirstName(string search,long purchaseID)
@@ -207,12 +209,12 @@ namespace ERP_Leather.Controllers
             if(search == null)
             {
                 var result = _dalFinalGradeObj.GetItemTypeInfo(purchaseID);
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(result);
             }
             else
             {
                 var result = _dalFinalGradeObj.SearchItemTypeByFirstName(search, purchaseID);  
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(result);
             }
           
         }
@@ -222,7 +224,7 @@ namespace ERP_Leather.Controllers
             var search = from temp in repository.SysItemTypeRepository.Get(filter: o => o.IsActive == true && o.ItemTypeCategory == "Leather").AsEnumerable()
                          join temp2 in repository.PrdWetBlueProductionStockRepo.Get() on temp.ItemTypeID equals temp2.ItemTypeID
                          select temp.ItemTypeName;
-            return Json(search, JsonRequestBehavior.AllowGet);
+            return Json(search);
         }
 
         #endregion
@@ -232,38 +234,38 @@ namespace ERP_Leather.Controllers
         {
             int suppID = repository.SysSupplierRepository.Get(filter: o => o.SupplierCode == supplierID).FirstOrDefault().SupplierID;
             var data = _dalFinalGradeObj.GetSelectionInfo(suppID, purchaseID, itemTypeID, 22, leatherStatusId);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
         
         #region Save Data
         public ActionResult Save(wbSelection data)
         {
-            ValidationMsg _vmMsg = _dalFinalGradeObj.Save(data, Convert.ToInt32(Session["UserID"]));            
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+            ValidationMsg _vmMsg = _dalFinalGradeObj.Save(data, Convert.ToInt32(HttpContext.Session.GetString("UserID")));            
+            return Json(_vmMsg);
         }
         #endregion
 
         #region Update Data
         public ActionResult Update(wbSelection data)
         {
-            ValidationMsg _vmMsg = _dalFinalGradeObj.Update(data, Convert.ToInt32(Session["UserID"]), data.WBSelectionID);
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+            ValidationMsg _vmMsg = _dalFinalGradeObj.Update(data, Convert.ToInt32(HttpContext.Session.GetString("UserID")), data.WBSelectionID);
+            return Json(_vmMsg);
         }
         #endregion
 
         #region Check
         public ActionResult CheckedRecordStatus(long wbSelectionID, string status)
         {
-            ValidationMsg _vmMsg = _dalFinalGradeObj.CheckedRecordStatus(wbSelectionID, status, Convert.ToInt32(Session["UserID"]));
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+            ValidationMsg _vmMsg = _dalFinalGradeObj.CheckedRecordStatus(wbSelectionID, status, Convert.ToInt32(HttpContext.Session.GetString("UserID")));
+            return Json(_vmMsg);
         }
         #endregion
 
         #region Confirm
         public ActionResult ConfirmRecordStatus(wbSelection data)
         {
-           ValidationMsg _vmMsg= _dalFinalGradeObj.ConfirmRecordStatus(data,Convert.ToInt32(Session["UserID"]));         
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+           ValidationMsg _vmMsg= _dalFinalGradeObj.ConfirmRecordStatus(data,Convert.ToInt32(HttpContext.Session.GetString("UserID")));         
+            return Json(_vmMsg);
 
         }
         #endregion
@@ -284,13 +286,13 @@ namespace ERP_Leather.Controllers
                 SelectionQty = Convert.ToDecimal(temp.SelectionComplete),
                 RecordStatus = DalCommon.ReturnRecordStatus(temp.RecordStatus)
             }).OrderByDescending(ob=>ob.WBSelectionID);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
         
         public ActionResult GetSelectionInfoByID(long id)
         {
             var result =_dalFinalGradeObj.GetFinalGradeSelectionInfo(id);         
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
         
         public ActionResult SearchFinalGradeSelectionNo(string search)
@@ -311,32 +313,32 @@ namespace ERP_Leather.Controllers
                              SelectionQty = Convert.ToDecimal(temp.SelectionComplete),
                              RecordStatus = DalCommon.ReturnRecordStatus(temp.RecordStatus)
                          }).ToList();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetAutoCompleteData()
         {
             var search = repository.PrdWBSelectionRepository.Get().Select(ob => ob.WBSelectionNo);
-            return Json(search, JsonRequestBehavior.AllowGet);
+            return Json(search);
         }
         #endregion
 
         public JsonResult GetSupplierFromStoreList(string ConcernStore)
         {
             var supplierAgentList = _dalFinalGradeObj.GetSupplierFromStoreList(ConcernStore);
-            return Json(supplierAgentList, JsonRequestBehavior.AllowGet);
+            return Json(supplierAgentList);
         }
 
         public JsonResult GetSupplierListSearchById(string supplier)
         {
             var supplierAgentList = _dalFinalGradeObj.GetSupplierListSearchById(supplier);
-            return Json(supplierAgentList, JsonRequestBehavior.AllowGet);
+            return Json(supplierAgentList);
         }
 
         public ActionResult GetLeatherInfoList(string ConcernStore, string SupplierID)
         {
             var packItemList = _dalFinalGradeObj.GetLeatherInfoList(ConcernStore, SupplierID);
-            return Json(packItemList, JsonRequestBehavior.AllowGet);
+            return Json(packItemList);
         }
 
         public ActionResult DeleteSelectionGradeInfo(long WBSelectionGradeID)
@@ -367,7 +369,7 @@ namespace ERP_Leather.Controllers
                  }
                
             }
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+            return Json(_vmMsg);
         }
 
         [HttpPost]
@@ -417,13 +419,13 @@ namespace ERP_Leather.Controllers
                 _vmMsg.Msg = "Please Delete Grade Info First.";
                 
             }
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+            return Json(_vmMsg);
         }
 
         public ActionResult GetGradeInfo(long id)
         {
             var _vmMsg = _dalFinalGradeObj.GetGrade(id);
-            return Json(_vmMsg, JsonRequestBehavior.AllowGet);
+            return Json(_vmMsg);
         }
 
       

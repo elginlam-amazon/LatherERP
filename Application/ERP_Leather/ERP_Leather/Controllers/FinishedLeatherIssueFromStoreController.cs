@@ -1,15 +1,15 @@
+using Microsoft.AspNetCore.Http;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ERP.DatabaseAccessLayer.DB;
 using ERP.DatabaseAccessLayer.OperationGateway;
 using ERP.DatabaseAccessLayer.Utility;
 using ERP.EntitiesModel.BaseModel;
 using ERP.EntitiesModel.OperationModel;
 using ERP_Leather.ActionFilters;
-using Microsoft.Ajax.Utilities;
+
 
 namespace ERP_Leather.Controllers
 {
@@ -49,7 +49,7 @@ namespace ERP_Leather.Controllers
                 article.ArticleChallanNo
             }).ToList();
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetStoreByTrans()
@@ -62,7 +62,7 @@ namespace ERP_Leather.Controllers
                         store.StoreID,
                         store.StoreName
                     }).ToList();
-            return Json(stores.OrderBy(ob => ob.StoreName), JsonRequestBehavior.AllowGet);
+            return Json(stores.OrderBy(ob => ob.StoreName));
         }
 
         public ActionResult GetStoreByPack()
@@ -75,7 +75,7 @@ namespace ERP_Leather.Controllers
                         store.StoreID,
                         store.StoreName
                     }).ToList();
-            return Json(stores.OrderBy(ob => ob.StoreName), JsonRequestBehavior.AllowGet);
+            return Json(stores.OrderBy(ob => ob.StoreName));
         }
 
         public ActionResult GetBuyerByStore(int storeId, string qclabel)
@@ -93,19 +93,19 @@ namespace ERP_Leather.Controllers
             {
                 result = _dalInvFinishedLeatherIssueFromStore.GetBuyerAll(storeId);
             }
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetOrderByBuyer(byte storeId, long buyerId)
         {
             var result = _dalInvFinishedLeatherIssueFromStore.GetOrderByBuyer(storeId, buyerId);
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetColorByComb(byte storeId, long buyerId, long orderId, byte itemTypeId, byte leatherTypeId, byte leatherStatusID, int articleId)
         {
             var result = _dalInvFinishedLeatherIssueFromStore.GetColorByComb(storeId, buyerId, orderId, itemTypeId, leatherTypeId, leatherStatusID, articleId);
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetIssueById(long issueId)
@@ -211,7 +211,7 @@ namespace ERP_Leather.Controllers
                 }
             }
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult GetFinishLeatherIssues()
@@ -223,28 +223,28 @@ namespace ERP_Leather.Controllers
                 FinishLeatherIssueDate = string.Format("{0:dd/MM/yyyy}", issue.FinishLeatherIssueDate),
                 RecordStatus = DalCommon.ReturnRecordStatus(issue.RecordStatus)
             }).ToList();
-            return Json(issues.OrderBy(ob => ob.FinishLeatherIssueDate), JsonRequestBehavior.AllowGet);
+            return Json(issues.OrderBy(ob => ob.FinishLeatherIssueDate));
         }
 
         public ActionResult Save(InvFinishLeatherIssue model)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalInvFinishedLeatherIssueFromStore.Save(model, _userId, "FinishedLeatherIssueFromStore/FinishedLeatherIssueFromStore");
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Check(long issueId, string comment)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalInvFinishedLeatherIssueFromStore.Check(issueId, _userId, comment);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Issue(InvFinishLeatherIssue model)
         {
-            _userId = Convert.ToInt32(Session["UserID"]);
+            _userId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             _validationMsg = _dalInvFinishedLeatherIssueFromStore.Confirm(model, _userId);
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
 
         public ActionResult Delete(long id, string del)
@@ -261,7 +261,7 @@ namespace ERP_Leather.Controllers
             {
                 _validationMsg = _dalInvFinishedLeatherIssueFromStore.DeleteColor(id);
             }
-            return Json(_validationMsg, JsonRequestBehavior.AllowGet);
+            return Json(_validationMsg);
         }
     }
 
